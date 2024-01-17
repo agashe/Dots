@@ -2,3 +2,26 @@
   margin: 0px;
   padding: 0px;
 }
+
+:root {
+  --brand: #d90f19;
+}
+
+.logo {
+  font-size: 36px;
+  color: #000000;
+  font-weight: bold;
+  font-style: italic;
+  text-shadow: 0px 1px, 1px 0px, 1px 1px;
+  letter-spacing: 0px;
+}
+.logo .red-dot {
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+  margin-left: 5px;
+  margin-right: -5px;
+  border: 5px solid #000000;
+  border-radius: 50px;
+  background-color: var(--brand);
+}

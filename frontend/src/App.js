@@ -1,9 +1,10 @@
 import {
-  Outlet,
   redirect,
   RouterProvider,
   createBrowserRouter,
 } from "react-router-dom";
+
+import { ChakraProvider, extendTheme, defineStyleConfig } from '@chakra-ui/react';
 
 import { Home } from "./pages/Home";
 import { About } from "./pages/About";
@@ -11,6 +12,7 @@ import { Contact } from "./pages/Contact";
 import { SignIn } from "./pages/auth/SignIn";
 import { PageNotFound } from "./pages/errors/PageNotFound";
 import { Profile } from "./pages/users/Profile";
+import { Layout } from "./components/Layout";
 
 const router = createBrowserRouter([
   {
@@ -48,39 +50,49 @@ const router = createBrowserRouter([
   }
 ]);
 
+const Button = defineStyleConfig({
+  variants: {
+    outline: {
+      border: '2px solid',
+      borderColor: 'brand.main',
+      color: 'brand.main',
+    },
+    solid: {
+      bg: 'brand.main',
+      color: 'white',
+      _hover: {
+        bg: 'brand.200',
+        color: 'white',
+      },
+    },
+  },
+});
+
+const theme = extendTheme({
+  colors: {
+    brand: {
+      main: "#D90f19",
+      100: "#C30E17",
+      200: "#AE0C14",
+      300: "#980B12",
+      400: "#82090F",
+      500: "#6D080D",
+      600: "#57060A",
+      700: "#410407",
+      800: "#2B0305",
+      900: "#160102",
+    }
+  },
+  components: {
+    Button,
+  },
+});
+
 export default function App() {
-  return <RouterProvider router={router} />;
-}
-
-function Layout() {
-  function signOut() {
-    localStorage.removeItem('user');
-
-    window.location.href = "/";
-  }
-
   return (
-    <div>
-      <header>
-        <a href="/">home</a> | 
-        <a href="/about">about</a> | 
-        <a href="/contact">contact</a>
-
-        <div style={{float: 'right'}}>
-          {
-            localStorage.getItem('user') ?
-              <>
-                <a href="/profile">profile</a> | 
-                <button onClick={signOut}>sign-out</button>
-              </>
-              :
-              <a href="/sign-in">sign-in</a>
-          } 
-        </div>
-      </header>
-
-      <Outlet />
-    </div>
+    <ChakraProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ChakraProvider>
   );
 }
 
@@ -96,6 +108,6 @@ async function protectedLoader() {
   if (!localStorage.getItem('user')) {
     return redirect("/");
   }
-  
+
   return null;
 }
