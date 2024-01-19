@@ -14,16 +14,16 @@ import { MdSearch, MdDarkMode } from 'react-icons/md'
 import { Outlet } from "react-router-dom";
 
 export function Layout() {
-  function signOut() {
-    localStorage.removeItem('user');
+  // function signOut() {
+  //   localStorage.removeItem('user');
 
-    window.location.href = "/";
-  }
+  //   window.location.href = "/";
+  // }
 
   return (
     <div>
-      <header>
-        <Flex minWidth='max-content' alignItems='center' gap='2' px='2' pt='1' border='1px' borderColor='gray.200'>
+      <header> 
+        <Flex minWidth='max-content' alignItems='center' gap='2' px={2} py={1} border='1px' borderColor='gray.200'>
           <Box>
             <div className='logo'>
               D<span className='red-dot'></span>TS
