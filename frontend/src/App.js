@@ -9,6 +9,9 @@ import { ChakraProvider, extendTheme, defineStyleConfig } from '@chakra-ui/react
 import { Home } from "./pages/Home";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
+import { FAQ } from "./pages/FAQ";
+import { Terms } from "./pages/Terms";
+import { Privacy } from "./pages/Privacy";
 import { SignIn } from "./pages/auth/SignIn";
 import { PageNotFound } from "./pages/errors/PageNotFound";
 import { Profile } from "./pages/users/Profile";
@@ -23,6 +26,18 @@ const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "FAQ",
+        Component: FAQ,
+      },
+      {
+        path: "terms-of-usage",
+        Component: Terms,
+      },
+      {
+        path: "privacy-policy",
+        Component: Privacy,
       },
       {
         path: "about",

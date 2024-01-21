@@ -19,6 +19,8 @@ import {
   MdRemoveRedEye,
 } from 'react-icons/md';
 
+import { Link as ReactRouterLink } from 'react-router-dom'
+
 export function NavigationMenu() {
   const rightTags = [
     'Travel', 'Tech', 'Science', 'Politics', 'Programming', 'Music', 'Movies',
@@ -34,32 +36,32 @@ export function NavigationMenu() {
     <>
       <List spacing={3} fontSize='xl' color='brand.main'>
         <ListItem>
-          <Link p='5' my='2'>
+          <Link p='5' my='2' as={ReactRouterLink} to='/'> 
             <ListIcon as={MdHome} boxSize={6} /> Home
           </Link>
         </ListItem>
         <ListItem>
-          <Link p='5' my='2'>
+          <Link p='5' my='2' as={ReactRouterLink} to='/FAQ'>
             <ListIcon as={MdQuestionMark} boxSize={6} /> FAQ
           </Link>
         </ListItem>
         <ListItem>
-          <Link p='5' my='2'>
+          <Link p='5' my='2' as={ReactRouterLink} to='/terms-of-usage'>
             <ListIcon as={MdDoneOutline} boxSize={6} /> Terms of usage
           </Link>
         </ListItem>
         <ListItem>
-          <Link p='5' my='2'>
+          <Link p='5' my='2' as={ReactRouterLink} to='/privacy-policy'>
             <ListIcon as={MdRemoveRedEye} boxSize={6} /> Privacy Policy
           </Link>
         </ListItem>
         <ListItem>
-          <Link p='5' my='2'>
+          <Link p='5' my='2' as={ReactRouterLink} to='/contact'>
             <ListIcon as={MdCall} boxSize={6} /> Contact
           </Link>
         </ListItem>
         <ListItem>
-          <Link p='5' my='2'>
+          <Link p='5' my='2' as={ReactRouterLink} to='/about'>
             <ListIcon as={MdInfo} boxSize={6} /> About
           </Link>
         </ListItem>
@@ -102,7 +104,7 @@ export function NavigationMenu() {
 
         <Divider mt={5} mb={2} />
 
-        <small>Dots &copy; 2024, All Rights Reserved</small>
+        <small>Dots &copy; {(new Date().getFullYear())}, All Rights Reserved</small>
       </Box>
     </>
   );

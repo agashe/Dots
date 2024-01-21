@@ -29,18 +29,24 @@ export function PostCard({ post }) {
     <Card w='90%' mx='auto' mb={5}>
       <Image
         src={post.image}
-        alt='Green double couch with wooden legs'
+        alt={post.title}
+        maxHeight='400px'
         borderTopRadius='lg'
         fallbackSrc='images/placeholder-image.png'
+        style={{ cursor: 'pointer' }}
       />
 
       <CardHeader py={0} pt={3}>
         <Flex spacing='4'>
           <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-            <Avatar name={post.user.name} src={post.user.avatar} bg='brand.main' color='white' />
+            <Link>
+              <Avatar name={post.user.name} src={post.user.avatar} bg='brand.main' color='white' />
+            </Link>
 
             <Box>
-              <Heading size='sm'>{post.user.name}</Heading>
+              <Link>
+                <Heading size='sm'>{post.user.name}</Heading>
+              </Link>
               <Text fontSize='xs'>{post.date} @ <Link>{post.community}</Link> </Text>
             </Box>
           </Flex>
@@ -48,7 +54,9 @@ export function PostCard({ post }) {
       </CardHeader>
 
       <CardBody py={0} my={5}>
-        <Heading size='md'>{post.title}</Heading>
+        <Link style={{ textAlign: 'left' }}>
+          <Heading size='md'>{post.title}</Heading>
+        </Link>
 
         <HStack mt={5} spacing='24px' color='brand.main'>
           {
@@ -63,19 +71,23 @@ export function PostCard({ post }) {
 
       <CardFooter py={2}>
         <Flex w='100%'>
-          <Tooltip label='Rate'>
-            <Button variant='ghost' leftIcon={<Icon as={MdThumbsUpDown} />}>
-              {post.counters.rate}
-            </Button>
-          </Tooltip>
+          <Link>
+            <Tooltip label='Rate'>
+              <Button variant='ghost' leftIcon={<Icon as={MdThumbsUpDown} />}>
+                {post.counters.rate}
+              </Button>
+            </Tooltip>
+          </Link>
 
           <Spacer />
 
-          <Tooltip label='Comments'>
-            <Button variant='ghost' leftIcon={<Icon as={MdChat} />}>
-            {post.counters.comments}
-            </Button>
-          </Tooltip>
+          <Link>
+            <Tooltip label='Comments'>
+              <Button variant='ghost' leftIcon={<Icon as={MdChat} />}>
+                {post.counters.comments}
+              </Button>
+            </Tooltip>
+          </Link>
 
           <Spacer />
 

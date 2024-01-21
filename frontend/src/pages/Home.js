@@ -22,6 +22,36 @@ export function Home() {
       },
     },
     {
+      'title': `Aqua `,
+      'image': 'https://w0.peakpx.com/wallpaper/671/487/HD-wallpaper-aqua-anime-azul-kawaii-konosuba.jpg',
+      'community': 'Anime World',
+      'date': '12 Dec 2023',
+      'tags': ['Anime'],
+      'counters': {
+        rate: 300,
+        comments: 30
+      },
+      'user': {
+        name: 'Ali Shadi',
+        avatar: ''
+      },
+    },
+    {
+      'title': `Megumin ...`,
+      'image': 'https://thicc-af.mywaifulist.moe/waifus/megumin-konosuba-god-s-blessing-on-this-wonderful-world/Ts2151UN1dnhE1gYDCjLdMg0gBZ8SADzIcgLWgV2_thumbnail.jpg',
+      'community': 'Anime World',
+      'date': '12 Dec 2023',
+      'tags': ['Anime'],
+      'counters': {
+        rate: 300,
+        comments: 30
+      },
+      'user': {
+        name: 'Hessan Al Said',
+        avatar: 'https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg'
+      },
+    },
+    {
       'title': `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis. 
         Duis euismod neque ac convallis molestie`,

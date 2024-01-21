@@ -6,12 +6,13 @@ import {
   Button,
   Input,
   IconButton,
-  Icon
+  Icon,
+  Link
 } from '@chakra-ui/react';
 
 import { MdSearch, MdDarkMode } from 'react-icons/md'
 
-import { Outlet } from "react-router-dom";
+import { Outlet, Link as ReactRouterLink } from "react-router-dom";
 
 export function Layout() {
   // function signOut() {
@@ -22,14 +23,14 @@ export function Layout() {
 
   return (
     <div>
-      <header> 
+      <header style={{ position: 'fixed', top: '0', left: '0', width: '100%', backgroundColor: '#ffffff', zIndex: '10' }}>
         <Flex minWidth='max-content' alignItems='center' gap='2' px={2} py={1} border='1px' borderColor='gray.200'>
-          <Box>
+          <Link _hover={{ textDecoration: "none" }} as={ReactRouterLink} to='/'>
             <div className='logo'>
               D<span className='red-dot'></span>TS
             </div>
-          </Box>
-          
+          </Link>
+
           <Spacer />
 
           <Flex width='30%'>
@@ -50,12 +51,14 @@ export function Layout() {
                 </>
                 :
                 <Button colorScheme='brand'>Sign In</Button>
-            }          
+            }
           </ButtonGroup>
         </Flex>
       </header>
 
-      <Outlet />
+      <Box mt='64px'>
+        <Outlet />
+      </Box>
     </div>
   );
 }
