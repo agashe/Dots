@@ -10,6 +10,8 @@ import {
 
 import parse from 'html-react-parser';
 
+import { Footer } from './Footer';
+
 export function ContentLayout({ title, content }) {
   return (
     <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column' >
@@ -25,7 +27,7 @@ export function ContentLayout({ title, content }) {
 
       <Spacer />
       
-      <small style={{ padding: '10px 0', textAlign:'center' }}>Dots &copy; {(new Date().getFullYear())}, All Rights Reserved</small>
+      <Footer />
     </Flex>
   );
 }

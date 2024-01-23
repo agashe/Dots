@@ -1,13 +1,29 @@
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  FormControl,
+  FormLabel,
+  Input,
+  Button,
+  Link,
+} from '@chakra-ui/react'
+
 import { useState } from "react";
 
-export function SignIn() {
+export function SignIn({ isOpen, onClose, onOpenSignUp }) {
   const [inputs, setInputs] = useState([]);
 
   function submitSignIn(event) {
     event.preventDefault();
 
     const user = {
-      name: 'ahmed',
+      name: 'Ahmed Omar',
+      avatar: 'https://avatarfiles.alphacoders.com/372/372516.jpg',
       email: inputs['email'],
       password: inputs['password'],
       token: '123',
@@ -23,12 +39,31 @@ export function SignIn() {
   }
 
   return (
-    <div>
-      <form>
-        <input type="email" name="email" placeholder="Enter your email" onChange={handleInput}/>
-        <input type="password" name="password" placeholder="Enter your password" onChange={handleInput}/>
-        <button type="submit" onClick={submitSignIn}>Sign In</button>
-      </form>
-    </div>
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent textAlign='center'>
+        <ModalHeader>Sign in to your account</ModalHeader>
+        <ModalCloseButton />
+        <ModalBody pb={6}>
+          <FormControl>
+            <FormLabel>Email</FormLabel>
+            <Input type='email' placeholder='Email' onChange={handleInput} />
+          </FormControl>
+
+          <FormControl mt={4}>
+            <FormLabel>Password</FormLabel>
+            <Input type='password' placeholder='Password' onChange={handleInput} />
+          </FormControl>
+        </ModalBody>
+
+        <ModalFooter flexDirection='column'>
+          <Button colorScheme='blue' width='100%' mb={2} onClick={submitSignIn}>
+            Sign In
+          </Button>
+
+          <Link onClick={() => { onClose(); onOpenSignUp(); }}>Don't have account yet , register now !</Link>
+        </ModalFooter>
+      </ModalContent>
+    </Modal>
   );
 }
