@@ -25,6 +25,8 @@ import {
 import { Footer } from '../../components/Footer';
 import { MdCake, MdMap, MdCardMembership } from 'react-icons/md';
 import { ProfilePostCard } from '../../components/ProfilePostCard';
+import { ProfileCommunityCard } from '../../components/ProfileCommunityCard';
+import { ProfileCommentCard } from '../../components/ProfileCommentCard';
 
 export function Profile() {
   const user = JSON.parse(localStorage.getItem('user'));
@@ -196,13 +198,7 @@ export function Profile() {
                         {
                           comments.map((comment) => {
                             return (
-                              <Link _hover={{ textDecoration: "none" }}>
-                                <Box p={5} shadow='md' borderWidth='1px'>
-                                  <Heading fontSize='xl'>{comment.title}</Heading>
-                                  <Text fontSize='md' my={1}>{comment.comment}</Text>
-                                  <Text fontSize='sm' my={1}>{comment.date}</Text>
-                                </Box>
-                              </Link>
+                              <ProfileCommentCard comment={comment} />
                             );
                           })
                         }
@@ -227,18 +223,7 @@ export function Profile() {
                         {
                           communities.map((community) => {
                             return (
-                              <Card p={5}>
-                                <Link _hover={{ textDecoration: "none" }}>
-                                  <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                    <Image boxSize={8} src={community.logo} fallbackSrc='images/group-placeholder.png' />
-
-                                    <Box>
-                                      <Heading size='sm'>{community.name}</Heading>
-                                      <Text fontSize='xs'>{community.members} members </Text>
-                                    </Box>
-                                  </Flex>
-                                </Link>
-                              </Card>
+                              <ProfileCommunityCard community={community} />
                             );
                           })
                         }

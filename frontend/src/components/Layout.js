@@ -30,8 +30,8 @@ import {
 } from 'react-icons/md'
 
 import { Outlet, Link as ReactRouterLink } from "react-router-dom";
-import { SignIn } from '../pages/auth/SignIn';
-import { SignUp } from '../pages/auth/SignUp';
+import { SignIn } from './auth/SignIn';
+import { SignUp } from './auth/SignUp';
 
 export function Layout() {
   const { isOpen: isOpenSignIn, onOpen: onOpenSignIn, onClose: onCloseSignIn } = useDisclosure();
@@ -73,11 +73,11 @@ export function Layout() {
               user ?
                 <>
                   <Tooltip label='Notifications'>
-                    <IconButton colorScheme='brand' position='relative' icon={
+                    <IconButton as='a' href='/notifications' colorScheme='brand' position='relative' icon={
                       <>
                         <Icon as={MdNotifications} boxSize={6} />
                         <Box as={'span'} color={'black'} position={'absolute'} top={'-3px'} left={'25px'} fontSize={'0.8rem'}
-                          bgColor={'orange'} borderRadius='20px' zIndex={9999} p={'3px'} width='20px' height='20px'>
+                          bgColor={'orange'} borderRadius='20px' zIndex={9999} p={'3px'} width='20px' height='20px' textAlign='center'>
                           0
                         </Box>
                       </>
@@ -100,7 +100,7 @@ export function Layout() {
                     />
                     <MenuList>
                       <MenuItem as='a' href='/profile' icon={<Icon as={MdPerson} boxSize={5} />} iconSpacing={2}>Profile</MenuItem>
-                      <MenuItem as='a' href='' icon={<Icon as={MdEdit} boxSize={5} />} iconSpacing={2}>Edit Profile</MenuItem>
+                      <MenuItem as='a' href='/edit-profile' icon={<Icon as={MdEdit} boxSize={5} />} iconSpacing={2}>Edit Profile</MenuItem>
                       <MenuDivider />
                       <MenuItem as='a' href='' icon={<Icon as={MdAdd} boxSize={5} />} iconSpacing={2}>Create Post</MenuItem>
                       <MenuItem as='a' href='' icon={<Icon as={MdAddCircle} boxSize={5} />} iconSpacing={2}>Create Community</MenuItem>

@@ -73,7 +73,7 @@ export function PostCard({ post }) {
         <Flex w='100%'>
           <Link>
             <Tooltip label='Rate'>
-              <Button variant='ghost' leftIcon={<Icon as={MdThumbsUpDown} />}>
+              <Button variant='ghost' leftIcon={<Icon as={MdThumbsUpDown} />} _hover={{ textDecoration: "none" }}>
                 {post.counters.rate}
               </Button>
             </Tooltip>
@@ -83,7 +83,7 @@ export function PostCard({ post }) {
 
           <Link>
             <Tooltip label='Comments'>
-              <Button variant='ghost' leftIcon={<Icon as={MdChat} />}>
+              <Button variant='ghost' leftIcon={<Icon as={MdChat} />} _hover={{ textDecoration: "none" }}>
                 {post.counters.comments}
               </Button>
             </Tooltip>
@@ -91,7 +91,7 @@ export function PostCard({ post }) {
 
           <Spacer />
 
-          <Button variant='ghost' leftIcon={<Icon as={MdOutlineShare} />}>
+          <Button variant='ghost' leftIcon={<Icon as={MdOutlineShare} />} _hover={{ textDecoration: "none" }}>
             Share
           </Button>
         </Flex>

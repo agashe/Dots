@@ -1,69 +1,6 @@
-import {
-  redirect,
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
-
 import { ChakraProvider, extendTheme, defineStyleConfig } from '@chakra-ui/react';
-
-import { Home } from "./pages/Home";
-import { About } from "./pages/About";
-import { Contact } from "./pages/Contact";
-import { FAQ } from "./pages/FAQ";
-import { Terms } from "./pages/Terms";
-import { Privacy } from "./pages/Privacy";
-import { SignIn } from "./pages/auth/SignIn";
-import { PageNotFound } from "./pages/errors/PageNotFound";
-import { Profile } from "./pages/users/Profile";
-import { Layout } from "./components/Layout";
-
-const router = createBrowserRouter([
-  {
-    id: "root",
-    path: "/",
-    Component: Layout,
-    children: [
-      {
-        index: true,
-        Component: Home,
-      },
-      {
-        path: "FAQ",
-        Component: FAQ,
-      },
-      {
-        path: "terms-of-usage",
-        Component: Terms,
-      },
-      {
-        path: "privacy-policy",
-        Component: Privacy,
-      },
-      {
-        path: "about",
-        Component: About,
-      },
-      {
-        path: "contact",
-        Component: Contact,
-      },
-      {
-        path: "sign-in",
-        loader: signInLoader,
-        Component: SignIn,
-      },
-      {
-        path: "profile",
-        loader: protectedLoader,
-        Component: Profile,
-      },
-      {
-        path: "*",
-        Component: PageNotFound,
-      },
-    ],
-  }
-]);
+import { RouterProvider } from "react-router-dom";
+import { router } from './router';
 
 const Button = defineStyleConfig({
   variants: {
@@ -109,20 +46,4 @@ export default function App() {
       <RouterProvider router={router} />
     </ChakraProvider>
   );
-}
-
-async function signInLoader() {
-  if (!localStorage.getItem('user')) {
-    return null;
-  }
-
-  return redirect("/");
-}
-
-async function protectedLoader() {
-  if (!localStorage.getItem('user')) {
-    return redirect("/");
-  }
-
-  return null;
 }
