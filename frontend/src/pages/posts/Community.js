@@ -1,11 +1,12 @@
 import { Flex, Box } from '@chakra-ui/react';
-import { NavigationMenu } from '../components/NavigationMenu';
-import { LatestPosts } from '../components/LatestPosts';
-import { PopularCommunities } from '../components/PopularCommunities';
-import { PostCard } from '../components/PostCard';
-import { NoResults } from '../components/NoResults';
+import { NavigationMenu } from '../../components/NavigationMenu';
+import { LatestPosts } from '../../components/LatestPosts';
+import { PopularCommunities } from '../../components/PopularCommunities';
+import { PostCard } from '../../components/PostCard';
+import { NoResults } from '../../components/NoResults';
+import { CommunityCard } from '../../components/CommunityCard';
 
-export function Home() {
+export function Community() {
   const posts = [
     {
       'title': 'Lorem ipsum dolor sit amet',
@@ -87,6 +88,7 @@ export function Home() {
         }
       </Box>
       <Box w='30%'>
+        <CommunityCard />
         <LatestPosts />
         <PopularCommunities />
       </Box>

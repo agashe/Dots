@@ -18,6 +18,8 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 
+import { Link as ReactRouterLink } from 'react-router-dom'
+
 import {
   MdThumbsUpDown,
   MdChat,
@@ -32,22 +34,22 @@ export function PostCard({ post }) {
         alt={post.title}
         maxHeight='400px'
         borderTopRadius='lg'
-        fallbackSrc='images/placeholder-image.png'
+        fallbackSrc='/images/placeholder-image.png'
         style={{ cursor: 'pointer' }}
       />
 
       <CardHeader py={0} pt={3}>
         <Flex spacing='4'>
           <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-            <Link>
+            <Link as={ReactRouterLink} to={'/u/1/ahmed'}>
               <Avatar name={post.user.name} src={post.user.avatar} bg='brand.main' color='white' />
             </Link>
 
             <Box>
-              <Link>
+              <Link as={ReactRouterLink} to={'/u/1/ahmed'}>
                 <Heading size='sm'>{post.user.name}</Heading>
               </Link>
-              <Text fontSize='xs'>{post.date} @ <Link>{post.community}</Link> </Text>
+              <Text fontSize='xs'>{post.date} @ <Link as={ReactRouterLink} to={'/c/' + post.community}>{post.community}</Link> </Text>
             </Box>
           </Flex>
         </Flex>

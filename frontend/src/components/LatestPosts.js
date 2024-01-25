@@ -24,7 +24,7 @@ import {
 export function LatestPosts() {
   return (
     <Card mb={5} mr={5}>
-      <CardHeader>
+      <CardHeader pb={0}>
         <Heading size='md'>Top Now</Heading>
       </CardHeader>
 

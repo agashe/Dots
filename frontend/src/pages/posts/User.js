@@ -1,11 +1,12 @@
 import { Flex, Box } from '@chakra-ui/react';
-import { NavigationMenu } from '../components/NavigationMenu';
-import { LatestPosts } from '../components/LatestPosts';
-import { PopularCommunities } from '../components/PopularCommunities';
-import { PostCard } from '../components/PostCard';
-import { NoResults } from '../components/NoResults';
+import { NavigationMenu } from '../../components/NavigationMenu';
+import { LatestPosts } from '../../components/LatestPosts';
+import { PopularCommunities } from '../../components/PopularCommunities';
+import { PostCard } from '../../components/PostCard';
+import { NoResults } from '../../components/NoResults';
+import { UserCard } from '../../components/UserCard';
 
-export function Home() {
+export function User() {
   const posts = [
     {
       'title': 'Lorem ipsum dolor sit amet',
@@ -83,10 +84,11 @@ export function Home() {
               return <PostCard post={post} />
             })
             :
-            <NoResults message='It seems that no posts have been published yet' />
+            <NoResults message='It seems this user has not published anything yet' />
         }
       </Box>
       <Box w='30%'>
+        <UserCard />
         <LatestPosts />
         <PopularCommunities />
       </Box>

@@ -79,7 +79,7 @@ export function NavigationMenu() {
                 leftTags.map((tag) => {
                   return (
                     <ListItem>
-                      <Link ml={1} color='brand.main'>#{tag}</Link>
+                      <Link ml={1} color='brand.main' as={ReactRouterLink} to={'/t/' + tag}>#{tag}</Link>
                     </ListItem>
                   );
                 })
@@ -93,7 +93,7 @@ export function NavigationMenu() {
                 rightTags.map((tag) => {
                   return (
                     <ListItem>
-                      <Link ml={1} color='brand.main'>#{tag}</Link>
+                      <Link ml={1} color='brand.main' as={ReactRouterLink} to={'/t/' + tag}>#{tag}</Link>
                     </ListItem>
                   );
                 })

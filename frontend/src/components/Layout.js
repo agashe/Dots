@@ -5,6 +5,8 @@ import {
   ButtonGroup,
   Button,
   Input,
+  InputGroup,
+  InputRightAddon,
   IconButton,
   Icon,
   Link,
@@ -33,11 +35,23 @@ import { Outlet, Link as ReactRouterLink } from "react-router-dom";
 import { SignIn } from './auth/SignIn';
 import { SignUp } from './auth/SignUp';
 
+import { useState } from 'react';
+
 export function Layout() {
   const { isOpen: isOpenSignIn, onOpen: onOpenSignIn, onClose: onCloseSignIn } = useDisclosure();
   const { isOpen: isOpenSignUp, onOpen: onOpenSignUp, onClose: onCloseSignUp } = useDisclosure();
 
   const user = JSON.parse(localStorage.getItem('user'));
+
+  const [ searchKeyword, setSearchKeyword ] = useState('');
+
+  function handleSearchInput(event) {
+    setSearchKeyword(event.target.value);
+  }
+
+  function submitSearch(event) {
+    window.location.href = "/s/" + searchKeyword;
+  }
 
   function signOut() {
     localStorage.removeItem('user');
@@ -58,8 +72,8 @@ export function Layout() {
           <Spacer />
 
           <Flex width='40%'>
-            <Input placeholder='Search ...' />
-            <IconButton colorScheme='brand' icon={<Icon as={MdSearch} boxSize={6} />} ml='2' />
+            <Input placeholder='Search ...' onChange={handleSearchInput}/>
+            <IconButton colorScheme='brand' icon={<Icon as={MdSearch} boxSize={6} />} ml='2' onClick={submitSearch} />
           </Flex>
 
           <Spacer />
@@ -103,7 +117,7 @@ export function Layout() {
                       <MenuItem as='a' href='/edit-profile' icon={<Icon as={MdEdit} boxSize={5} />} iconSpacing={2}>Edit Profile</MenuItem>
                       <MenuDivider />
                       <MenuItem as='a' href='' icon={<Icon as={MdAdd} boxSize={5} />} iconSpacing={2}>Create Post</MenuItem>
-                      <MenuItem as='a' href='' icon={<Icon as={MdAddCircle} boxSize={5} />} iconSpacing={2}>Create Community</MenuItem>
+                      <MenuItem as='a' href='/create-community' icon={<Icon as={MdAddCircle} boxSize={5} />} iconSpacing={2}>Create Community</MenuItem>
                       <MenuDivider />
                       <MenuItem as='button' icon={<Icon as={MdLogout} boxSize={5} />} iconSpacing={2} onClick={signOut}>Sign Out</MenuItem>
                     </MenuList>

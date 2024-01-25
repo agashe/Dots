@@ -18,7 +18,7 @@ export function ProfileCommunityCard({ community }) {
     <Card p={5} position='relative'>
       <Link _hover={{ textDecoration: "none" }}>
         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-          <Image boxSize={8} src={community.logo} fallbackSrc='images/group-placeholder.png' />
+          <Image boxSize={8} src={community.logo} fallbackSrc='/images/group-placeholder.png' />
 
           <Box>
             <Heading size='sm'>{community.name}</Heading>
@@ -29,6 +29,8 @@ export function ProfileCommunityCard({ community }) {
 
       <Tooltip label='Edit'>
         <IconButton
+          as='a'
+          href='/edit-community'
           icon={<Icon as={MdEditSquare} />}
           position='absolute'
           top='7px'

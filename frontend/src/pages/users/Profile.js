@@ -1,7 +1,5 @@
 import {
   Flex,
-  Box,
-  Link,
   Button,
   Card,
   CardBody,
@@ -19,7 +17,6 @@ import {
   TabPanel,
   Badge,
   SimpleGrid,
-  Image,
 } from '@chakra-ui/react';
 
 import { Footer } from '../../components/Footer';

@@ -11,6 +11,12 @@ import { Profile } from "./pages/users/Profile";
 import { Layout } from "./components/Layout";
 import { NotificationCenter } from "./pages/users/NotificationsCenter";
 import { EditProfile } from "./pages/users/EditProfile";
+import { Create as CreateCommunity } from "./pages/communities/Create";
+import { Edit as EditCommunity } from "./pages/communities/Edit";
+import { Community } from "./pages/posts/Community";
+import { User as UserPosts} from "./pages/posts/User";
+import { Tag as TagPosts} from "./pages/posts/Tag";
+import { Search } from "./pages/Search";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +27,26 @@ export const router = createBrowserRouter([
       {
         index: true,
         Component: Home,
+      },
+      {
+        path: "/p/:id/:title",
+        Component: Home,
+      },
+      {
+        path: "/s/:keyword",
+        Component: Search,
+      },
+      {
+        path: "/c/:name",
+        Component: Community,
+      },
+      {
+        path: "/u/:id/:name",
+        Component: UserPosts,
+      },
+      {
+        path: "/t/:name",
+        Component: TagPosts,
       },
       {
         path: "FAQ",
@@ -44,12 +70,23 @@ export const router = createBrowserRouter([
       },
       {
         path: "profile",
+        loader: protectedLoader,
         Component: Profile,
       },
       {
         path: "edit-profile",
         loader: protectedLoader,
         Component: EditProfile,
+      },
+      {
+        path: "create-community",
+        loader: protectedLoader,
+        Component: CreateCommunity,
+      },
+      {
+        path: "edit-community",
+        loader: protectedLoader,
+        Component: EditCommunity,
       },
       {
         path: "notifications",

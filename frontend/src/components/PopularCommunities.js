@@ -12,20 +12,22 @@ import {
   Flex,
 } from '@chakra-ui/react';
 
+import { Link as ReactRouterLink } from 'react-router-dom'
+
 export function PopularCommunities() {
   return (
     <Card mr={5} >
-      <CardHeader>
+      <CardHeader pb={0}>
         <Heading size='md'>Popular Communities</Heading>
       </CardHeader>
 
       <CardBody>
         <Stack divider={<StackDivider />} spacing='4'>
-          <Link _hover={{ textDecoration: "none" }}>
+          <Link _hover={{ textDecoration: "none" }} as={ReactRouterLink} to={'/c/Night owls'}>
             <Box>
               <Link _hover={{ textDecoration: "none" }}>
                 <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                  <Image boxSize={8} src='images/moon-icon.jpeg' fallbackSrc='images/group-placeholder.png' />
+                  <Image boxSize={8} src='/images/moon-icon.jpeg' fallbackSrc='/images/group-placeholder.png' />
 
                   <Box>
                     <Heading size='sm'>Night owls</Heading>
@@ -38,7 +40,7 @@ export function PopularCommunities() {
           <Box>
             <Link _hover={{ textDecoration: "none" }}>
               <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                <Image boxSize={8} src='images/star-icon.png' fallbackSrc='images/group-placeholder.png' />
+                <Image boxSize={8} src='/images/star-icon.png' fallbackSrc='/images/group-placeholder.png' />
 
                 <Box>
                   <Heading size='sm'>All stars</Heading>
@@ -50,7 +52,7 @@ export function PopularCommunities() {
           <Box>
             <Link _hover={{ textDecoration: "none" }}>
               <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                <Image boxSize={8} src='images/sun-icon.png' fallbackSrc='images/group-placeholder.png' />
+                <Image boxSize={8} src='/images/sun-icon.png' fallbackSrc='/images/group-placeholder.png' />
 
                 <Box>
                   <Heading size='sm'>Cool_people</Heading>
@@ -62,7 +64,7 @@ export function PopularCommunities() {
           <Box>
             <Link _hover={{ textDecoration: "none" }}>
               <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                <Image boxSize={8} src='unknown.png' fallbackSrc='images/group-placeholder.png' />
+                <Image boxSize={8} src='unknown.png' fallbackSrc='/images/group-placeholder.png' />
 
                 <Box>
                   <Heading size='sm'>The Unknown</Heading>
