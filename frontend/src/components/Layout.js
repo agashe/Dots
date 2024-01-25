@@ -100,7 +100,7 @@ export function Layout() {
                   </Tooltip>
 
                   <Tooltip label='Create Post'>
-                    <IconButton colorScheme='brand' icon={<Icon as={MdAdd} boxSize={6} />} />
+                    <IconButton as='a' href='/create-post' colorScheme='brand' icon={<Icon as={MdAdd} boxSize={6} />} />
                   </Tooltip>
 
                   <Menu>
@@ -116,7 +116,7 @@ export function Layout() {
                       <MenuItem as='a' href='/profile' icon={<Icon as={MdPerson} boxSize={5} />} iconSpacing={2}>Profile</MenuItem>
                       <MenuItem as='a' href='/edit-profile' icon={<Icon as={MdEdit} boxSize={5} />} iconSpacing={2}>Edit Profile</MenuItem>
                       <MenuDivider />
-                      <MenuItem as='a' href='' icon={<Icon as={MdAdd} boxSize={5} />} iconSpacing={2}>Create Post</MenuItem>
+                      <MenuItem as='a' href='/create-post' icon={<Icon as={MdAdd} boxSize={5} />} iconSpacing={2}>Create Post</MenuItem>
                       <MenuItem as='a' href='/create-community' icon={<Icon as={MdAddCircle} boxSize={5} />} iconSpacing={2}>Create Community</MenuItem>
                       <MenuDivider />
                       <MenuItem as='button' icon={<Icon as={MdLogout} boxSize={5} />} iconSpacing={2} onClick={signOut}>Sign Out</MenuItem>

@@ -17,6 +17,8 @@ import { Community } from "./pages/posts/Community";
 import { User as UserPosts} from "./pages/posts/User";
 import { Tag as TagPosts} from "./pages/posts/Tag";
 import { Search } from "./pages/Search";
+import { Create as CreatePost } from "./pages/posts/Create";
+import { Edit as EditPost } from "./pages/posts/Edit";
 
 export const router = createBrowserRouter([
   {
@@ -87,6 +89,16 @@ export const router = createBrowserRouter([
         path: "edit-community",
         loader: protectedLoader,
         Component: EditCommunity,
+      },
+      {
+        path: "create-post",
+        loader: protectedLoader,
+        Component: CreatePost,
+      },
+      {
+        path: "edit-post",
+        loader: protectedLoader,
+        Component: EditPost,
       },
       {
         path: "notifications",

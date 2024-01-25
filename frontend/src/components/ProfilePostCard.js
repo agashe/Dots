@@ -104,6 +104,8 @@ export function ProfilePostCard({ post }) {
           width='10px'
           height='10px'
           padding='0'
+          as='a'
+          href='/edit-post'
         />
       </Tooltip>
     </Card>
