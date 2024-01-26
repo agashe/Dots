@@ -56,7 +56,7 @@ export function PostCard({ post }) {
       </CardHeader>
 
       <CardBody py={0} my={5}>
-        <Link style={{ textAlign: 'left' }}>
+        <Link style={{ textAlign: 'left' }} as={ReactRouterLink} to={'/p/1/ahmed'}>
           <Heading size='md'>{post.title}</Heading>
         </Link>
 

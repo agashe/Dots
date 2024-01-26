@@ -19,6 +19,7 @@ import { Tag as TagPosts} from "./pages/posts/Tag";
 import { Search } from "./pages/Search";
 import { Create as CreatePost } from "./pages/posts/Create";
 import { Edit as EditPost } from "./pages/posts/Edit";
+import { Show as ShowPost } from "./pages/posts/Show";
 
 export const router = createBrowserRouter([
   {
@@ -32,7 +33,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/p/:id/:title",
-        Component: Home,
+        Component: ShowPost,
       },
       {
         path: "/s/:keyword",

@@ -21,6 +21,8 @@ import {
   MdOutlineShare,
 } from 'react-icons/md';
 
+import { Link as ReactRouterLink } from 'react-router-dom'
+
 export function LatestPosts() {
   return (
     <Card mb={5} mr={5}>
@@ -30,7 +32,7 @@ export function LatestPosts() {
 
       <CardBody>
         <Stack divider={<StackDivider />} spacing='4'>
-          <Link _hover={{ textDecoration: "none" }}>
+          <Link _hover={{ textDecoration: "none" }} as={ReactRouterLink} to={'/p/1/ahmed'}>
             <Box>
               <Heading size='xs' textTransform='uppercase'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et neque lectus.

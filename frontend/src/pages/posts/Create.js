@@ -43,8 +43,8 @@ export function Create() {
 
           <FormControl my={5}>
             <FormLabel>Community</FormLabel>
-            <Menu w='full'>
-              <MenuButton as={Button} rightIcon={<Icon as={MdArrowDownward} />}
+            <Menu maxW={2000} w='full'>
+              <MenuButton as={Button} rightIcon={<Icon as={MdArrowDownward} /> }
                 w='100%'
                 bg='white'
                 borderColor='black'
@@ -54,8 +54,8 @@ export function Create() {
               >
                 Select a community to publish your post
               </MenuButton>
-              <MenuList>
-                <MenuItem minH='48px'>
+              <MenuList maxW={2000} minW={0} width='90%'>
+                <MenuItem minH='48px'  maxW={2000} w='100%'>
                   <Image
                     boxSize='2rem'
                     borderRadius='full'
@@ -65,7 +65,7 @@ export function Create() {
                   />
                   <span>Fluffybuns the Destroyer</span>
                 </MenuItem>
-                <MenuItem minH='40px'>
+                <MenuItem minH='40px'  maxW={2000} w='full'>
                   <Image
                     boxSize='2rem'
                     borderRadius='full'
