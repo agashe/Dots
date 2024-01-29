@@ -1,7 +1,10 @@
 import { Flex, Box } from '@chakra-ui/react';
 import { LatestPosts } from '../../components/LatestPosts';
 import { PopularCommunities } from '../../components/PopularCommunities';
-import { PostCard } from '../../components/PostCard';
+import { ShowPostCard } from '../../components/ShowPostCard';
+import { AddComment } from '../../components/AddComment';
+import { Comments } from '../../components/Comments';
+import { Footer } from '../../components/Footer';
 
 export function Show() {
   const post = {
@@ -10,6 +13,50 @@ export function Show() {
     'community': 'All stars',
     'date': '15 Mar 2021',
     'tags': ['Place', 'Music'],
+    'body': `
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.
+      <br />
+      <br />
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.
+      <br />
+      <br />
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.
+      <br />
+      <br />
+      <br />
+
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.
+      <br />
+      <br />
+      <br />
+      <br />
+
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
+      Duis euismod neque ac convallis molestie.
+    `,
     'counters': {
       rate: 777,
       comments: 200
@@ -18,16 +65,47 @@ export function Show() {
       name: 'Ahmed Omar',
       avatar: ''
     },
+    'comments': [
+      {
+        'title': 'Lorem ipsum dolor sit amet',
+        'comment': 'Lorem ipsum ...',
+        'user': {
+          name: 'Hessan Al Said',
+          avatar: 'https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg'
+        },
+        'rate': '40',
+        'date': '7 Feb 2022',
+      },
+      {
+        'title': `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+          Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis. 
+          Duis euismod neque ac convallis molestie`,
+        'comment': 'Suspendisse venenatis imperdiet lobortis ...',
+        'user': {
+          name: 'Hessan Al Said',
+          avatar: 'https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg'
+        },
+        'rate': '-1',
+        'date': '24 May 2020',
+      },
+    ]
   };
 
   return (
-    <Flex pt={5} px={10} bg='gray.50'>
-      <Box w='80%'>
-        <PostCard post={post} />
+    <Flex spacing={5} pt={5} px={10} mb={5} bg='gray.50'>
+      <Box w='70%' mr={5}>
+        <ShowPostCard post={post} />
+        <AddComment postId={post.id} />
+        <Comments comments={post.comments} />
       </Box>
+
       <Box w='30%'>
         <LatestPosts />
         <PopularCommunities />
+
+        <Box w='100%' textAlign='center' mt={5}>
+          <Footer />
+        </Box>
       </Box>
     </Flex>
   );

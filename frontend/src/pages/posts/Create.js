@@ -10,7 +10,6 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea,
   Image,
   IconButton,
   Icon,
@@ -25,7 +24,12 @@ import {
 import { Footer } from '../../components/Footer';
 import { MdRemoveCircle, MdArrowDownward } from 'react-icons/md';
 
+import { useState } from 'react';
+import { Editor } from '../../components/Editor';
+
 export function Create() {
+  const [body, setBody] = useState('');
+
   return (
     <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column' >
       <Card w='70%' mx='auto' mb={5} justifyContent='center' alignItems='center' textAlign='center'>
@@ -95,10 +99,10 @@ export function Create() {
 
           <FormControl my={5}>
             <FormLabel>Text</FormLabel>
-            <Textarea placeholder='What are you gonna tell us ?' resize='none' />
+            <Editor value={body} handler={setBody} height={'300px'} />
           </FormControl>
         </CardBody>
-      </Card >
+      </Card>
 
       <Card w='70%' mx='auto' mb={5} justifyContent='center' alignItems='center' textAlign='center'>
         <CardHeader w='100%'>
