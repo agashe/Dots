@@ -19,6 +19,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  Text,
 } from '@chakra-ui/react';
 
 import { Footer } from '../../components/Footer';
@@ -30,6 +31,17 @@ import { Editor } from '../../components/Editor';
 export function Create() {
   const [body, setBody] = useState('');
 
+  const communities = [
+    {
+      'name': 'The Unknown',
+      'logo': 'unknown.png',
+    },
+    {
+      'name': 'Cool_people',
+      'logo': 'images/sun-icon.png',
+    },
+  ];
+
   return (
     <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column' >
       <Card w='70%' mx='auto' mb={5} justifyContent='center' alignItems='center' textAlign='center'>
@@ -38,8 +50,8 @@ export function Create() {
         </CardHeader>
       </Card>
 
-      <Card w='70%' mx='auto' mb={5}>
-        <CardBody>
+      <Card w='70%' mx='auto' mb={5} pb={8}>
+        <CardBody >
           <FormControl>
             <FormLabel>Title</FormLabel>
             <Input type='text' placeholder='Solar system' />
@@ -47,38 +59,34 @@ export function Create() {
 
           <FormControl my={5}>
             <FormLabel>Community</FormLabel>
-            <Menu maxW={2000} w='full'>
-              <MenuButton as={Button} rightIcon={<Icon as={MdArrowDownward} /> }
-                w='100%'
+            <Menu matchWidth={true}>
+              <MenuButton as={Button} rightIcon={<Icon as={MdArrowDownward} />}
+                matchWidth={true}
                 bg='white'
                 borderColor='black'
-                color='black'
+                color='gray.500'
                 variant='outline'
-                textAlign='center'
+                textAlign='left'
+                w='100%'
+                fontSize='md'
+                fontWeight='normal'
+                borderColor='gray.300'
+                borderWidth='1px'
               >
                 Select a community to publish your post
               </MenuButton>
-              <MenuList maxW={2000} minW={0} width='90%'>
-                <MenuItem minH='48px'  maxW={2000} w='100%'>
-                  <Image
-                    boxSize='2rem'
-                    borderRadius='full'
-                    src='https://placekitten.com/100/100'
-                    alt='Fluffybuns the destroyer'
-                    mr='12px'
-                  />
-                  <span>Fluffybuns the Destroyer</span>
-                </MenuItem>
-                <MenuItem minH='40px'  maxW={2000} w='full'>
-                  <Image
-                    boxSize='2rem'
-                    borderRadius='full'
-                    src='https://placekitten.com/120/120'
-                    alt='Simon the pensive'
-                    mr='12px'
-                  />
-                  <span>Simon the pensive</span>
-                </MenuItem>
+              
+              <MenuList matchWidth={true}>
+                {
+                  communities.map(function (community) {
+                    return (
+                      <MenuItem matchWidth={true}>
+                        <Image boxSize={7} src='/unknown.png' fallbackSrc='/images/group-placeholder.png' mr={5} />
+                        <Text>{community.name}</Text>
+                      </MenuItem>
+                    );
+                  })
+                }
               </MenuList>
             </Menu>
           </FormControl>
@@ -99,7 +107,7 @@ export function Create() {
 
           <FormControl my={5}>
             <FormLabel>Text</FormLabel>
-            <Editor value={body} handler={setBody} height={'300px'} />
+            <Editor value={body} handler={setBody} height={'300px'} placeholder={'Add your post content'} />
           </FormControl>
         </CardBody>
       </Card>

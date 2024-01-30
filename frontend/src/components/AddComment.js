@@ -18,7 +18,7 @@ export function AddComment({ postId }) {
     <Card ml={5} mb={5} height='225px'>
       <CardBody py={1}>
         <FormControl my={3}>
-          <Editor value={text} handler={setText} height={'100px'} />
+          <Editor value={text} handler={setText} height={'100px'} placeholder={'Thank you ...'} />
         </FormControl>
       </CardBody>
 

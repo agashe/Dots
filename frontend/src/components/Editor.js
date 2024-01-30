@@ -1,7 +1,7 @@
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-export function Editor({ value, handler, height }) {
+export function Editor({ value, handler, height, placeholder }) {
   let modules = {
     toolbar: [
       [{ 'header': [1, 2, false] }],
@@ -25,7 +25,9 @@ export function Editor({ value, handler, height }) {
       value={value}
       onChange={handler}
       modules={modules}
-      formats={formats} style={{ height: height }}
+      formats={formats} 
+      style={{ height: height }}
+      placeholder={placeholder ?? ''}
     />
   );
 }

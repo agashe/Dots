@@ -26,9 +26,17 @@ import {
   MdOutlineShare,
   MdOutlineErrorOutline,
 } from 'react-icons/md';
+import { AddComment } from './AddComment';
+
+import { useState } from 'react';
 
 export function Comment({ comment }) {
   const user = JSON.parse(localStorage.getItem('user'));
+  const [ addComment, setAddComment] = useState(false);
+
+  function showAddComment(event) {
+    setAddComment(!addComment);
+  }
 
   return (
     <Card mb={5}>
@@ -69,7 +77,7 @@ export function Comment({ comment }) {
           </HStack>
 
           <Tooltip label='Comment'>
-            <IconButton variant='ghost' boxSize={4} icon={<Icon as={MdChat} />} _hover={{ textDecoration: "none" }} />
+            <IconButton variant='ghost' boxSize={4} icon={<Icon as={MdChat} />} _hover={{ textDecoration: "none" }} onClick={showAddComment}/>
           </Tooltip>
 
           <Tooltip label='Share'>
@@ -81,6 +89,24 @@ export function Comment({ comment }) {
           </Tooltip>
         </HStack>
       </CardFooter>
+
+      {
+        addComment &&
+        <Box mr={5}>
+          <AddComment postId={1} />
+        </Box>
+      }
+
+      <Box ml={5} mr={5}>
+        {
+          comment.sub_comments.length ?
+            comment.sub_comments.map((comment) => {
+              return <Comment comment={comment} />;
+            })
+            :
+            ''
+        }
+      </Box>
     </Card>
   );
 }

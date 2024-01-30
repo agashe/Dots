@@ -75,6 +75,46 @@ export function Show() {
         },
         'rate': '40',
         'date': '7 Feb 2022',
+        'sub_comments': [
+          {
+            'title': 'Lorem ipsum dolor sit amet',
+            'comment': 'Lorem ipsum ...',
+            'user': {
+              name: 'Hessan Al Said',
+              avatar: 'https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg'
+            },
+            'rate': '40',
+            'date': '7 Feb 2022',
+            'sub_comments': [
+              {
+                'title': `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis. 
+                  Duis euismod neque ac convallis molestie`,
+                'comment': 'Suspendisse venenatis imperdiet lobortis ...',
+                'user': {
+                  name: 'Hessan Al Said',
+                  avatar: 'https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg'
+                },
+                'rate': '-1',
+                'date': '24 May 2020',
+                'sub_comments': [],
+              },
+            ],
+          },
+          {
+            'title': `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis. 
+              Duis euismod neque ac convallis molestie`,
+            'comment': 'Suspendisse venenatis imperdiet lobortis ...',
+            'user': {
+              name: 'Hessan Al Said',
+              avatar: 'https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg'
+            },
+            'rate': '-1',
+            'date': '24 May 2020',
+            'sub_comments': [],
+          },
+        ],
       },
       {
         'title': `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -87,6 +127,7 @@ export function Show() {
         },
         'rate': '-1',
         'date': '24 May 2020',
+        'sub_comments': [],
       },
     ]
   };

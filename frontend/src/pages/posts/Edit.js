@@ -39,7 +39,7 @@ export function Edit() {
         </CardHeader>
       </Card>
 
-      <Card w='70%' mx='auto' mb={5}>
+      <Card w='70%' mx='auto' mb={5} pb={8}>
         <CardBody>
           <FormControl>
             <FormLabel>Title</FormLabel>
@@ -62,7 +62,7 @@ export function Edit() {
 
           <FormControl my={5}>
             <FormLabel>Text</FormLabel>
-            <Editor value={body} handler={setBody} height={'300px'} />
+            <Editor value={body} handler={setBody} height={'300px'} placeholder={'Update your post content'} />
           </FormControl>
         </CardBody>
       </Card >
