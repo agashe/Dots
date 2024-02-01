@@ -13,16 +13,17 @@ import {
   Button,
   Icon,
 } from "@chakra-ui/react";
-
 import { MdThumbsUpDown, MdChat, MdOutlineShare } from "react-icons/md";
-
 import { Link as ReactRouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function LatestPosts() {
+  const { t } = useTranslation();
+
   return (
     <Card mb={5} mr={5}>
       <CardHeader pb={0}>
-        <Heading size='md'>Top Now</Heading>
+        <Heading size='md'>{t('top_now')}</Heading>
       </CardHeader>
 
       <CardBody>
@@ -40,7 +41,7 @@ export function LatestPosts() {
               </Heading>
 
               <Flex w='100%'>
-                <Tooltip label='Rate'>
+                <Tooltip label={t('actions.rate')}>
                   <Button
                     variant='ghost'
                     leftIcon={<Icon as={MdThumbsUpDown} />}
@@ -51,7 +52,7 @@ export function LatestPosts() {
 
                 <Spacer />
 
-                <Tooltip label='Comments'>
+                <Tooltip label={t('comments')}>
                   <Button variant='ghost' leftIcon={<Icon as={MdChat} />}>
                     5000
                   </Button>
@@ -60,7 +61,7 @@ export function LatestPosts() {
                 <Spacer />
 
                 <Button variant='ghost' leftIcon={<Icon as={MdOutlineShare} />}>
-                  Share
+                  {t('actions.share')}
                 </Button>
               </Flex>
             </Box>
@@ -75,7 +76,7 @@ export function LatestPosts() {
               </Heading>
 
               <Flex w='100%'>
-                <Tooltip label='Rate'>
+                <Tooltip label={t('actions.rate')}>
                   <Button
                     variant='ghost'
                     leftIcon={<Icon as={MdThumbsUpDown} />}
@@ -86,7 +87,7 @@ export function LatestPosts() {
 
                 <Spacer />
 
-                <Tooltip label='Comments'>
+                <Tooltip label={t('comments')}>
                   <Button variant='ghost' leftIcon={<Icon as={MdChat} />}>
                     5000
                   </Button>
@@ -95,7 +96,7 @@ export function LatestPosts() {
                 <Spacer />
 
                 <Button variant='ghost' leftIcon={<Icon as={MdOutlineShare} />}>
-                  Share
+                  {t('actions.share')}
                 </Button>
               </Flex>
             </Box>
@@ -110,7 +111,7 @@ export function LatestPosts() {
               </Heading>
 
               <Flex w='100%'>
-                <Tooltip label='Rate'>
+                <Tooltip label={t('actions.rate')}>
                   <Button
                     variant='ghost'
                     leftIcon={<Icon as={MdThumbsUpDown} />}
@@ -121,7 +122,7 @@ export function LatestPosts() {
 
                 <Spacer />
 
-                <Tooltip label='Comments'>
+                <Tooltip label={t('comments')}>
                   <Button variant='ghost' leftIcon={<Icon as={MdChat} />}>
                     5000
                   </Button>
@@ -130,7 +131,7 @@ export function LatestPosts() {
                 <Spacer />
 
                 <Button variant='ghost' leftIcon={<Icon as={MdOutlineShare} />}>
-                  Share
+                  {t('actions.share')}
                 </Button>
               </Flex>
             </Box>

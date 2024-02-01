@@ -17,9 +17,6 @@ import {
   HStack,
   Tooltip,
 } from "@chakra-ui/react";
-
-import { Link as ReactRouterLink } from "react-router-dom";
-
 import {
   // MdThumbUp,
   // MdThumbDown,
@@ -29,10 +26,13 @@ import {
   MdOutlineShare,
   MdOutlineErrorOutline,
 } from "react-icons/md";
-
+import { Link as ReactRouterLink } from "react-router-dom";
 import parse from "html-react-parser";
+import { useTranslation } from "react-i18next";
 
 export function ShowPostCard({ post }) {
+  const { t } = useTranslation();
+
   return (
     <>
       <Card ml={5} mb={5}>
@@ -91,7 +91,7 @@ export function ShowPostCard({ post }) {
         <CardFooter py={2} pl={3}>
           <HStack spacing={5}>
             <HStack spacing={2}>
-              <Tooltip label='Rate Up'>
+              <Tooltip label={t('actions.rate_up')}>
                 <IconButton
                   variant='ghost'
                   icon={<Icon as={MdOutlineThumbUp} boxSize={5} />}
@@ -102,7 +102,7 @@ export function ShowPostCard({ post }) {
 
               <Text>{post.counters.rate}</Text>
 
-              <Tooltip label='Rate Down'>
+              <Tooltip label={t('actions.rate_down')}>
                 <IconButton
                   variant='ghost'
                   icon={<Icon as={MdOutlineThumbDown} boxSize={5} />}
@@ -112,7 +112,7 @@ export function ShowPostCard({ post }) {
               </Tooltip>
             </HStack>
 
-            <Tooltip label='Comments'>
+            <Tooltip label={t('comments')}>
               <Button
                 variant='ghost'
                 leftIcon={<Icon boxSize={5} as={MdChat} />}
@@ -127,7 +127,7 @@ export function ShowPostCard({ post }) {
               leftIcon={<Icon boxSize={5} as={MdOutlineShare} />}
               _hover={{ textDecoration: "none" }}
             >
-              Share
+              {t('actions.share')}
             </Button>
 
             <Button
@@ -135,7 +135,7 @@ export function ShowPostCard({ post }) {
               leftIcon={<Icon boxSize={5} as={MdOutlineErrorOutline} />}
               _hover={{ textDecoration: "none" }}
             >
-              Report
+              {t('actions.report')}
             </Button>
           </HStack>
         </CardFooter>

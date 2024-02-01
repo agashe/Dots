@@ -12,11 +12,12 @@ import {
   Button,
   Link,
 } from "@chakra-ui/react";
-
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function SignUp({ isOpen, onClose }) {
   const [inputs] = useState([]); //setInputs
+  const { t } = useTranslation();
 
   function submitSignUp(event) {
     event.preventDefault();
@@ -41,38 +42,38 @@ export function SignUp({ isOpen, onClose }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent textAlign='center'>
-        <ModalHeader>Sign up account</ModalHeader>
+        <ModalHeader>{t('user.sign_up_hint')}</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl>
-            <FormLabel>Name</FormLabel>
-            <Input type='text' placeholder='Name' onChange={handleInput} />
+            <FormLabel>{t('user.name')}</FormLabel>
+            <Input type='text' placeholder={t('user.name')} onChange={handleInput} />
           </FormControl>
 
           <FormControl>
-            <FormLabel>Email</FormLabel>
-            <Input type='email' placeholder='Email' />
+            <FormLabel>{t('user.email')}</FormLabel>
+            <Input type='email' placeholder={t('user.email')} />
           </FormControl>
 
           <FormControl mt={4}>
-            <FormLabel>Password</FormLabel>
-            <Input type='password' placeholder='Password' />
+            <FormLabel>{t('user.password')}</FormLabel>
+            <Input type='password' placeholder={t('user.password')} />
           </FormControl>
 
           <FormControl mt={4}>
-            <FormLabel>Confirm</FormLabel>
-            <Input type='password' placeholder='Confirm' />
+            <FormLabel>{t('user.confirm')}</FormLabel>
+            <Input type='password' placeholder={t('user.confirm')} />
           </FormControl>
         </ModalBody>
 
         <ModalFooter flexDirection='column'>
           <small>
-            By click on the button bellow , you agreed to our :{" "}
-            <Link color='brand.main'>Terms of usage</Link>
+            {t('user.accept_terms')}
+            <Link color='brand.main'>{t('terms')}</Link>
           </small>
 
           <Button colorScheme='blue' width='100%' my={2} onClick={submitSignUp}>
-            Create
+            {t('actions.create')}
           </Button>
         </ModalFooter>
       </ModalContent>

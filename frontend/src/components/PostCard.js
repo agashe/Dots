@@ -17,12 +17,13 @@ import {
   HStack,
   Tooltip,
 } from "@chakra-ui/react";
-
 import { Link as ReactRouterLink } from "react-router-dom";
-
 import { MdThumbsUpDown, MdChat, MdOutlineShare } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export function PostCard({ post }) {
+  const { t } = useTranslation();
+
   return (
     <Card w='90%' mx='auto' mb={5}>
       <Image
@@ -86,7 +87,7 @@ export function PostCard({ post }) {
       <CardFooter py={2}>
         <Flex w='100%'>
           <Link>
-            <Tooltip label='Rate'>
+            <Tooltip label={t('actions.rate')}>
               <Button
                 variant='ghost'
                 leftIcon={<Icon as={MdThumbsUpDown} />}
@@ -100,7 +101,7 @@ export function PostCard({ post }) {
           <Spacer />
 
           <Link>
-            <Tooltip label='Comments'>
+            <Tooltip label={t('comments')}>
               <Button
                 variant='ghost'
                 leftIcon={<Icon as={MdChat} />}
@@ -118,7 +119,7 @@ export function PostCard({ post }) {
             leftIcon={<Icon as={MdOutlineShare} />}
             _hover={{ textDecoration: "none" }}
           >
-            Share
+            {t('actions.share')}
           </Button>
         </Flex>
       </CardFooter>

@@ -7,10 +7,12 @@ import {
 } from "@chakra-ui/react";
 import { Editor } from "./Editor";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function AddComment({ postId }) {
   const user = JSON.parse(localStorage.getItem("user"));
   const [text, setText] = useState("");
+  const { t } = useTranslation();
 
   console.log(user, postId);
 
@@ -22,13 +24,13 @@ export function AddComment({ postId }) {
             value={text}
             handler={setText}
             height={"100px"}
-            placeholder={"Thank you ..."}
+            placeholder={t('thank_you')}
           />
         </FormControl>
       </CardBody>
 
       <CardFooter pt={0} pb={3}>
-        <Button>Comment</Button>
+        <Button>{t('actions.comment')}</Button>
       </CardFooter>
     </Card>
   );

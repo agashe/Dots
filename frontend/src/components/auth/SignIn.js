@@ -12,11 +12,12 @@ import {
   Button,
   Link,
 } from "@chakra-ui/react";
-
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function SignIn({ isOpen, onClose, onOpenSignUp }) {
   const [inputs] = useState([]); //setInputs
+  const { t } = useTranslation();
 
   function submitSignIn(event) {
     event.preventDefault();
@@ -42,19 +43,19 @@ export function SignIn({ isOpen, onClose, onOpenSignUp }) {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent textAlign='center'>
-        <ModalHeader>Sign in to your account</ModalHeader>
+        <ModalHeader>{t('user.sign_in_hint')}</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
           <FormControl>
-            <FormLabel>Email</FormLabel>
-            <Input type='email' placeholder='Email' onChange={handleInput} />
+            <FormLabel>{t('user.email')}</FormLabel>
+            <Input type='email' placeholder={t('user.email')} onChange={handleInput} />
           </FormControl>
 
           <FormControl mt={4}>
-            <FormLabel>Password</FormLabel>
+            <FormLabel>{t('user.password')}</FormLabel>
             <Input
               type='password'
-              placeholder='Password'
+              placeholder={t('user.password')}
               onChange={handleInput}
             />
           </FormControl>
@@ -71,7 +72,7 @@ export function SignIn({ isOpen, onClose, onOpenSignUp }) {
               onOpenSignUp();
             }}
           >
-            {`Don't have account yet , register now !`}
+            {t('user.register_now')}
           </Link>
         </ModalFooter>
       </ModalContent>

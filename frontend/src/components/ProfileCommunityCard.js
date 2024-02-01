@@ -10,10 +10,12 @@ import {
   IconButton,
   Tooltip,
 } from "@chakra-ui/react";
-
 import { MdEditSquare } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export function ProfileCommunityCard({ community }) {
+  const { t } = useTranslation();
+
   return (
     <Card p={5} position='relative'>
       <Link _hover={{ textDecoration: "none" }}>
@@ -26,12 +28,12 @@ export function ProfileCommunityCard({ community }) {
 
           <Box>
             <Heading size='sm'>{community.name}</Heading>
-            <Text fontSize='xs'>{community.members} members </Text>
+            <Text fontSize='xs'>{community.members} {t('members')} </Text>
           </Box>
         </Flex>
       </Link>
 
-      <Tooltip label='Edit'>
+      <Tooltip label={t('actions.edit')}>
         <IconButton
           as='a'
           href='/edit-community'

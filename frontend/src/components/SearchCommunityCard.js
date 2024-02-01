@@ -1,8 +1,10 @@
 import { Flex, Box, Card, Heading, Text, Image, Link } from "@chakra-ui/react";
-
 import { Link as ReactRouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function SearchCommunityCard({ community }) {
+  const { t } = useTranslation();
+
   return (
     <Card p={5} position='relative'>
       <Link
@@ -19,7 +21,7 @@ export function SearchCommunityCard({ community }) {
 
           <Box>
             <Heading size='sm'>{community.name}</Heading>
-            <Text fontSize='xs'>{community.members} members </Text>
+            <Text fontSize='xs'>{community.members} {t('members')} </Text>
           </Box>
         </Flex>
       </Link>

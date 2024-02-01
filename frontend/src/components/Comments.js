@@ -11,9 +11,11 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import { Comment } from "./Comment";
+import { useTranslation } from "react-i18next";
 
 export function Comments({ comments }) {
   const user = JSON.parse(localStorage.getItem("user"));
+  const { t } = useTranslation();
 
   console.log(user);
 
@@ -21,16 +23,16 @@ export function Comments({ comments }) {
     <Card ml={5} mb={5}>
       <CardHeader py={3}>
         <Flex alignItems='center'>
-          <Heading size='md'>Comments</Heading>
+          <Heading size='md'>{t('comments')}</Heading>
 
           <Spacer />
 
           {comments.length ? (
             <Select width='20%'>
-              <option value='popular'>Popular</option>
-              <option value='latest'>Latest</option>
-              <option value='oldest'>Oldest</option>
-              <option value='unpopular'>Unpopular</option>
+              <option value='popular'>{t('comments_sort.popular')}</option>
+              <option value='latest'>{t('comments_sort.latest')}</option>
+              <option value='oldest'>{t('comments_sort.oldest')}</option>
+              <option value='unpopular'>{t('comments_sort.unpopular')}</option>
             </Select>
           ) : (
             ""
@@ -46,14 +48,14 @@ export function Comments({ comments }) {
             return <Comment comment={comment} key={i} />;
           })
         ) : (
-          <Heading>Be fist to comment !</Heading>
+          <Heading>{t('comment_hint')}</Heading>
         )}
       </CardBody>
 
       {comments.length ? (
         <CardFooter pt={0} pb={5}>
           <Button mx='auto' variant='outline'>
-            Load More
+            {t('actions.load_more')}
           </Button>
         </CardFooter>
       ) : (

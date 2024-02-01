@@ -16,15 +16,17 @@ import {
   Stack,
   Tooltip,
 } from "@chakra-ui/react";
-
 import {
   MdThumbsUpDown,
   MdChat,
   MdOutlineShare,
   MdEditSquare,
 } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export function ProfilePostCard({ post }) {
+  const { t } = useTranslation();
+  
   return (
     <Card
       direction={{ base: "column", sm: "row" }}
@@ -69,7 +71,7 @@ export function ProfilePostCard({ post }) {
         <CardFooter py={0} pb={2}>
           <Flex w='100%'>
             <Link>
-              <Tooltip label='Rate'>
+              <Tooltip label={t('actions.rate')}>
                 <Button
                   variant='ghost'
                   leftIcon={<Icon as={MdThumbsUpDown} />}
@@ -83,7 +85,7 @@ export function ProfilePostCard({ post }) {
             <Spacer />
 
             <Link>
-              <Tooltip label='Comments'>
+              <Tooltip label={t('comments')}>
                 <Button
                   variant='ghost'
                   leftIcon={<Icon as={MdChat} />}
@@ -101,13 +103,13 @@ export function ProfilePostCard({ post }) {
               leftIcon={<Icon as={MdOutlineShare} />}
               _hover={{ textDecoration: "none" }}
             >
-              Share
+              {t('actions.share')}
             </Button>
           </Flex>
         </CardFooter>
       </Stack>
 
-      <Tooltip label='Edit'>
+      <Tooltip label={t('actions.edit')}>
         <IconButton
           icon={<Icon as={MdEditSquare} />}
           position='absolute'

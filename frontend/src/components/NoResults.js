@@ -1,7 +1,10 @@
 import { Card, Heading, Text, Icon } from "@chakra-ui/react";
 import { MdErrorOutline } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export function NoResults({ message }) {
+  const { t } = useTranslation();
+
   return (
     <Card
       boxSize='lg'
@@ -16,7 +19,7 @@ export function NoResults({ message }) {
     >
       <Icon as={MdErrorOutline} boxSize={48} color='brand.main' />
 
-      <Heading>No Results Found</Heading>
+      <Heading>{t('no_results')}</Heading>
 
       <Text mt={5}>{message}</Text>
     </Card>

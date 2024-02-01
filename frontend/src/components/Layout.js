@@ -17,7 +17,6 @@ import {
   Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
-
 import {
   MdSearch,
   MdDarkMode,
@@ -28,19 +27,21 @@ import {
   MdAddCircle,
   MdLogout,
 } from "react-icons/md";
-
 import { Outlet, Link as ReactRouterLink } from "react-router-dom";
 import { SignIn } from "./auth/SignIn";
 import { SignUp } from "./auth/SignUp";
-
+import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
 export function Layout() {
+  const { t } = useTranslation();
+
   const {
     isOpen: isOpenSignIn,
     onOpen: onOpenSignIn,
     onClose: onCloseSignIn,
   } = useDisclosure();
+
   const {
     isOpen: isOpenSignUp,
     onOpen: onOpenSignUp,
@@ -100,7 +101,7 @@ export function Layout() {
           <Spacer />
 
           <Flex width='40%'>
-            <Input placeholder='Search ...' onChange={handleSearchInput} />
+            <Input placeholder={t('search')} onChange={handleSearchInput} />
             <IconButton
               colorScheme='brand'
               icon={<Icon as={MdSearch} boxSize={6} />}
@@ -117,7 +118,7 @@ export function Layout() {
             justifyContent='right'
             paddingRight='2px'
           >
-            <Tooltip label='Dark Mode'>
+            <Tooltip label={t('dark_mode')}>
               <IconButton
                 colorScheme='brand'
                 icon={<Icon as={MdDarkMode} boxSize={6} />}
@@ -126,7 +127,7 @@ export function Layout() {
 
             {user ? (
               <>
-                <Tooltip label='Notifications'>
+                <Tooltip label={t('notifications')}>
                   <IconButton
                     as='a'
                     href='/notifications'
@@ -157,7 +158,7 @@ export function Layout() {
                   />
                 </Tooltip>
 
-                <Tooltip label='Create Post'>
+                <Tooltip label={t('actions.create_post')}>
                   <IconButton
                     as='a'
                     href='/create-post'
@@ -169,7 +170,7 @@ export function Layout() {
                 <Menu>
                   <MenuButton
                     as={IconButton}
-                    aria-label='Options'
+                    aria-label={t('options')}
                     icon={
                       <Avatar
                         name={user.name}
@@ -190,7 +191,7 @@ export function Layout() {
                       icon={<Icon as={MdPerson} boxSize={5} />}
                       iconSpacing={2}
                     >
-                      Profile
+                      {t('profile')}
                     </MenuItem>
                     <MenuItem
                       as='a'
@@ -198,7 +199,7 @@ export function Layout() {
                       icon={<Icon as={MdEdit} boxSize={5} />}
                       iconSpacing={2}
                     >
-                      Edit Profile
+                      {t('actions.edit_profile')}
                     </MenuItem>
                     <MenuDivider />
                     <MenuItem
@@ -207,7 +208,7 @@ export function Layout() {
                       icon={<Icon as={MdAdd} boxSize={5} />}
                       iconSpacing={2}
                     >
-                      Create Post
+                      {t('actions.create_post')}
                     </MenuItem>
                     <MenuItem
                       as='a'
@@ -215,7 +216,7 @@ export function Layout() {
                       icon={<Icon as={MdAddCircle} boxSize={5} />}
                       iconSpacing={2}
                     >
-                      Create Community
+                      {t('actions.create_community')}
                     </MenuItem>
                     <MenuDivider />
                     <MenuItem
@@ -224,7 +225,7 @@ export function Layout() {
                       iconSpacing={2}
                       onClick={signOut}
                     >
-                      Sign Out
+                      {t('user.sign_out')}
                     </MenuItem>
                   </MenuList>
                 </Menu>
@@ -232,7 +233,7 @@ export function Layout() {
             ) : (
               <>
                 <Button colorScheme='brand' onClick={onOpenSignIn}>
-                  Sign In
+                  {t('user.sign_in')}
                 </Button>
                 <SignIn
                   isOpen={isOpenSignIn}

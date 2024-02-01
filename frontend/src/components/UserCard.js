@@ -10,10 +10,12 @@ import {
   Icon,
   Divider,
 } from "@chakra-ui/react";
-
 import { MdCake, MdMap, MdCardMembership } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export function UserCard() {
+  const { t } = useTranslation();
+
   return (
     <Card mr={5} mb={5}>
       <CardBody>
@@ -27,7 +29,7 @@ export function UserCard() {
 
           <Box>
             <Heading size='sm'>Ahmed Omar</Heading>
-            <Text fontSize='xs'>200 posts </Text>
+            <Text fontSize='xs'>200 {t('posts')} </Text>
           </Box>
 
           <Box>

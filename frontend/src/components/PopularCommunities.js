@@ -11,14 +11,16 @@ import {
   Link,
   Flex,
 } from "@chakra-ui/react";
-
 import { Link as ReactRouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function PopularCommunities() {
+  const { t } = useTranslation();
+
   return (
     <Card mr={5}>
       <CardHeader pb={0}>
-        <Heading size='md'>Popular Communities</Heading>
+        <Heading size='md'>{t('popular_communities')}</Heading>
       </CardHeader>
 
       <CardBody>
@@ -39,7 +41,7 @@ export function PopularCommunities() {
 
                   <Box>
                     <Heading size='sm'>Night owls</Heading>
-                    <Text fontSize='xs'>1.1k members </Text>
+                    <Text fontSize='xs'>1.1k {t('members')} </Text>
                   </Box>
                 </Flex>
               </Link>

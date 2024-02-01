@@ -18,8 +18,11 @@ import {
   MdRemoveRedEye,
 } from "react-icons/md";
 import { Link as ReactRouterLink } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export function NavigationMenu() {
+  const { t } = useTranslation();
+
   const rightTags = [
     "Travel",
     "Tech",
@@ -55,32 +58,32 @@ export function NavigationMenu() {
       <List spacing={3} fontSize='xl' color='brand.main'>
         <ListItem>
           <Link p='5' my='2' as={ReactRouterLink} to='/'>
-            <ListIcon as={MdHome} boxSize={6} /> Home
+            <ListIcon as={MdHome} boxSize={6} /> {t('home')}
           </Link>
         </ListItem>
         <ListItem>
           <Link p='5' my='2' as={ReactRouterLink} to='/FAQ'>
-            <ListIcon as={MdQuestionMark} boxSize={6} /> FAQ
+            <ListIcon as={MdQuestionMark} boxSize={6} /> {t('faq')}
           </Link>
         </ListItem>
         <ListItem>
           <Link p='5' my='2' as={ReactRouterLink} to='/terms-of-usage'>
-            <ListIcon as={MdDoneOutline} boxSize={6} /> Terms of usage
+            <ListIcon as={MdDoneOutline} boxSize={6} /> {t('terms')}
           </Link>
         </ListItem>
         <ListItem>
           <Link p='5' my='2' as={ReactRouterLink} to='/privacy-policy'>
-            <ListIcon as={MdRemoveRedEye} boxSize={6} /> Privacy Policy
+            <ListIcon as={MdRemoveRedEye} boxSize={6} /> {t('privacy')}
           </Link>
         </ListItem>
         <ListItem>
           <Link p='5' my='2' as={ReactRouterLink} to='/contact'>
-            <ListIcon as={MdCall} boxSize={6} /> Contact
+            <ListIcon as={MdCall} boxSize={6} /> {t('contact')}
           </Link>
         </ListItem>
         <ListItem>
           <Link p='5' my='2' as={ReactRouterLink} to='/about'>
-            <ListIcon as={MdInfo} boxSize={6} /> About
+            <ListIcon as={MdInfo} boxSize={6} /> {t('about')}
           </Link>
         </ListItem>
       </List>
@@ -90,7 +93,7 @@ export function NavigationMenu() {
 
         <Box>
           <Heading as='h6' size='sm' mb={5}>
-            Explore
+            {t('explore')}
           </Heading>
 
           <Flex>

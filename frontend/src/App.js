@@ -45,8 +45,6 @@ const theme = extendTheme({
 });
 
 export default function App() {
-  console.log(process.env.REACT_APP_BACKEND_URL);
-
   return (
     <ChakraProvider theme={theme}>
       <RouterProvider router={router} />

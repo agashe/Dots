@@ -8,8 +8,11 @@ import {
   Flex,
   Button,
 } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 
 export function CommunityCard() {
+  const { t } = useTranslation();
+
   return (
     <Card mr={5} mb={5}>
       <CardBody>
@@ -22,7 +25,7 @@ export function CommunityCard() {
 
           <Box>
             <Heading size='sm'>The Unknown</Heading>
-            <Text fontSize='xs'>2 members </Text>
+            <Text fontSize='xs'>2 {t('members')} </Text>
           </Box>
           <Box>
             <Text fontSize='sm'>
@@ -33,7 +36,7 @@ export function CommunityCard() {
           </Box>
 
           <Box w='100%'>
-            <Button w='100%'>Join</Button>
+            <Button w='100%'>{t('actions.join')}</Button>
           </Box>
         </Flex>
       </CardBody>
