@@ -14,8 +14,8 @@ import { EditProfile } from "./pages/users/EditProfile";
 import { Create as CreateCommunity } from "./pages/communities/Create";
 import { Edit as EditCommunity } from "./pages/communities/Edit";
 import { Community } from "./pages/posts/Community";
-import { User as UserPosts} from "./pages/posts/User";
-import { Tag as TagPosts} from "./pages/posts/Tag";
+import { User as UserPosts } from "./pages/posts/User";
+import { Tag as TagPosts } from "./pages/posts/Tag";
 import { Search } from "./pages/Search";
 import { Create as CreatePost } from "./pages/posts/Create";
 import { Edit as EditPost } from "./pages/posts/Edit";
@@ -111,11 +111,11 @@ export const router = createBrowserRouter([
         Component: PageNotFound,
       },
     ],
-  }
+  },
 ]);
 
 async function protectedLoader() {
-  if (!localStorage.getItem('user')) {
+  if (!localStorage.getItem("user")) {
     return redirect("/");
   }
 

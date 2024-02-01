@@ -11,25 +11,25 @@ import {
   Input,
   Button,
   Link,
-} from '@chakra-ui/react'
+} from "@chakra-ui/react";
 
 import { useState } from "react";
 
 export function SignIn({ isOpen, onClose, onOpenSignUp }) {
-  const [inputs, setInputs] = useState([]);
+  const [inputs] = useState([]); //setInputs
 
   function submitSignIn(event) {
     event.preventDefault();
 
     const user = {
-      name: 'Ahmed Omar',
-      avatar: 'https://avatarfiles.alphacoders.com/372/372516.jpg',
-      email: inputs['email'],
-      password: inputs['password'],
-      token: '123',
+      name: "Ahmed Omar",
+      avatar: "https://avatarfiles.alphacoders.com/372/372516.jpg",
+      email: inputs["email"],
+      password: inputs["password"],
+      token: "123",
     };
 
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(user));
 
     window.location.href = "/";
   }
@@ -52,7 +52,11 @@ export function SignIn({ isOpen, onClose, onOpenSignUp }) {
 
           <FormControl mt={4}>
             <FormLabel>Password</FormLabel>
-            <Input type='password' placeholder='Password' onChange={handleInput} />
+            <Input
+              type='password'
+              placeholder='Password'
+              onChange={handleInput}
+            />
           </FormControl>
         </ModalBody>
 
@@ -61,7 +65,14 @@ export function SignIn({ isOpen, onClose, onOpenSignUp }) {
             Sign In
           </Button>
 
-          <Link onClick={() => { onClose(); onOpenSignUp(); }}>Don't have account yet , register now !</Link>
+          <Link
+            onClick={() => {
+              onClose();
+              onOpenSignUp();
+            }}
+          >
+            {`Don't have account yet , register now !`}
+          </Link>
         </ModalFooter>
       </ModalContent>
     </Modal>

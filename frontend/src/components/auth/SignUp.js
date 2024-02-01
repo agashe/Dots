@@ -11,24 +11,24 @@ import {
   Input,
   Button,
   Link,
-} from '@chakra-ui/react'
+} from "@chakra-ui/react";
 
 import { useState } from "react";
 
 export function SignUp({ isOpen, onClose }) {
-  const [inputs, setInputs] = useState([]);
+  const [inputs] = useState([]); //setInputs
 
   function submitSignUp(event) {
     event.preventDefault();
 
     const user = {
-      name: 'ahmed',
-      email: inputs['email'],
-      password: inputs['password'],
-      token: '123',
+      name: "ahmed",
+      email: inputs["email"],
+      password: inputs["password"],
+      token: "123",
     };
 
-    localStorage.setItem('user', JSON.stringify(user));
+    localStorage.setItem("user", JSON.stringify(user));
 
     window.location.href = "/";
   }
@@ -46,7 +46,7 @@ export function SignUp({ isOpen, onClose }) {
         <ModalBody pb={6}>
           <FormControl>
             <FormLabel>Name</FormLabel>
-            <Input type='text' placeholder='Name' />
+            <Input type='text' placeholder='Name' onChange={handleInput} />
           </FormControl>
 
           <FormControl>
@@ -58,7 +58,7 @@ export function SignUp({ isOpen, onClose }) {
             <FormLabel>Password</FormLabel>
             <Input type='password' placeholder='Password' />
           </FormControl>
-          
+
           <FormControl mt={4}>
             <FormLabel>Confirm</FormLabel>
             <Input type='password' placeholder='Confirm' />
@@ -67,10 +67,11 @@ export function SignUp({ isOpen, onClose }) {
 
         <ModalFooter flexDirection='column'>
           <small>
-            By click on the button bellow , you agreed to our : <Link color='brand.main'>Terms of usage</Link>
+            By click on the button bellow , you agreed to our :{" "}
+            <Link color='brand.main'>Terms of usage</Link>
           </small>
- 
-          <Button colorScheme='blue' width='100%' my={2}>
+
+          <Button colorScheme='blue' width='100%' my={2} onClick={submitSignUp}>
             Create
           </Button>
         </ModalFooter>

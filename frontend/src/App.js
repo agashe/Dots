@@ -1,20 +1,24 @@
-import { ChakraProvider, extendTheme, defineStyleConfig } from '@chakra-ui/react';
+import {
+  ChakraProvider,
+  extendTheme,
+  defineStyleConfig,
+} from "@chakra-ui/react";
 import { RouterProvider } from "react-router-dom";
-import { router } from './router';
+import { router } from "./router";
 
 const Button = defineStyleConfig({
   variants: {
     outline: {
-      border: '2px solid',
-      borderColor: 'brand.main',
-      color: 'brand.main',
+      border: "2px solid",
+      borderColor: "brand.main",
+      color: "brand.main",
     },
     solid: {
-      bg: 'brand.main',
-      color: 'white',
+      bg: "brand.main",
+      color: "white",
       _hover: {
-        bg: 'brand.200',
-        color: 'white',
+        bg: "brand.200",
+        color: "white",
       },
     },
   },
@@ -33,7 +37,7 @@ const theme = extendTheme({
       700: "#410407",
       800: "#2B0305",
       900: "#160102",
-    }
+    },
   },
   components: {
     Button,
@@ -41,6 +45,8 @@ const theme = extendTheme({
 });
 
 export default function App() {
+  console.log(process.env.REACT_APP_BACKEND_URL);
+
   return (
     <ChakraProvider theme={theme}>
       <RouterProvider router={router} />

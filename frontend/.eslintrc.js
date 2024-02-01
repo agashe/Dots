@@ -29,7 +29,13 @@ module.exports = {
     "react/jsx-uses-react": "off",
     'prettier/prettier': ['error', {}, { usePrettierrc: true }],
     "semi-style": ["error", "last"],
-    "comma-dangle": ["error", "always-multiline"],
+    "comma-dangle": ["error", {
+      "arrays": "always",
+      "objects": "always",
+      "imports": "always",
+      "exports": "always",
+      "functions": "never"
+    }],
     "react/prop-types": "off"
   }
 }
