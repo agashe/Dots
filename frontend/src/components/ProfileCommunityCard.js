@@ -9,16 +9,20 @@ import {
   Icon,
   IconButton,
   Tooltip,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-import { MdEditSquare } from 'react-icons/md';
+import { MdEditSquare } from "react-icons/md";
 
 export function ProfileCommunityCard({ community }) {
   return (
     <Card p={5} position='relative'>
       <Link _hover={{ textDecoration: "none" }}>
         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-          <Image boxSize={8} src={community.logo} fallbackSrc='/images/group-placeholder.png' />
+          <Image
+            boxSize={8}
+            src={community.logo}
+            fallbackSrc='/images/group-placeholder.png'
+          />
 
           <Box>
             <Heading size='sm'>{community.name}</Heading>

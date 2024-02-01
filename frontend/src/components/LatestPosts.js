@@ -12,16 +12,11 @@ import {
   Tooltip,
   Button,
   Icon,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
+import { MdThumbsUpDown, MdChat, MdOutlineShare } from "react-icons/md";
 
-import {
-  MdThumbsUpDown,
-  MdChat,
-  MdOutlineShare,
-} from 'react-icons/md';
-
-import { Link as ReactRouterLink } from 'react-router-dom'
+import { Link as ReactRouterLink } from "react-router-dom";
 
 export function LatestPosts() {
   return (
@@ -32,17 +27,24 @@ export function LatestPosts() {
 
       <CardBody>
         <Stack divider={<StackDivider />} spacing='4'>
-          <Link _hover={{ textDecoration: "none" }} as={ReactRouterLink} to={'/p/1/ahmed'}>
+          <Link
+            _hover={{ textDecoration: "none" }}
+            as={ReactRouterLink}
+            to={"/p/1/ahmed"}
+          >
             <Box>
               <Heading size='xs' textTransform='uppercase'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et neque lectus.
-                Suspendisse venenatis imperdiet lobortis.
-                Duis euismod neque ac convallis molestie
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Praesent et neque lectus. Suspendisse venenatis imperdiet
+                lobortis. Duis euismod neque ac convallis molestie
               </Heading>
 
               <Flex w='100%'>
                 <Tooltip label='Rate'>
-                  <Button variant='ghost' leftIcon={<Icon as={MdThumbsUpDown} />}>
+                  <Button
+                    variant='ghost'
+                    leftIcon={<Icon as={MdThumbsUpDown} />}
+                  >
                     5000
                   </Button>
                 </Tooltip>
@@ -67,14 +69,17 @@ export function LatestPosts() {
           <Link _hover={{ textDecoration: "none" }}>
             <Box>
               <Heading size='xs' textTransform='uppercase'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et neque lectus.
-                Suspendisse venenatis imperdiet lobortis.
-                Duis euismod neque ac convallis molestie
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Praesent et neque lectus. Suspendisse venenatis imperdiet
+                lobortis. Duis euismod neque ac convallis molestie
               </Heading>
 
               <Flex w='100%'>
                 <Tooltip label='Rate'>
-                  <Button variant='ghost' leftIcon={<Icon as={MdThumbsUpDown} />}>
+                  <Button
+                    variant='ghost'
+                    leftIcon={<Icon as={MdThumbsUpDown} />}
+                  >
                     5000
                   </Button>
                 </Tooltip>
@@ -99,14 +104,17 @@ export function LatestPosts() {
           <Link _hover={{ textDecoration: "none" }}>
             <Box>
               <Heading size='xs' textTransform='uppercase'>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et neque lectus.
-                Suspendisse venenatis imperdiet lobortis.
-                Duis euismod neque ac convallis molestie
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                Praesent et neque lectus. Suspendisse venenatis imperdiet
+                lobortis. Duis euismod neque ac convallis molestie
               </Heading>
 
               <Flex w='100%'>
                 <Tooltip label='Rate'>
-                  <Button variant='ghost' leftIcon={<Icon as={MdThumbsUpDown} />}>
+                  <Button
+                    variant='ghost'
+                    leftIcon={<Icon as={MdThumbsUpDown} />}
+                  >
                     5000
                   </Button>
                 </Tooltip>
@@ -129,6 +137,6 @@ export function LatestPosts() {
           </Link>
         </Stack>
       </CardBody>
-    </Card >
+    </Card>
   );
 }

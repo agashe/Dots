@@ -7,14 +7,18 @@ import {
   Image,
   Flex,
   Button,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 export function CommunityCard() {
   return (
     <Card mr={5} mb={5}>
       <CardBody>
         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-          <Image boxSize={10} src='unknown.png' fallbackSrc='/images/group-placeholder.png' />
+          <Image
+            boxSize={10}
+            src='unknown.png'
+            fallbackSrc='/images/group-placeholder.png'
+          />
 
           <Box>
             <Heading size='sm'>The Unknown</Heading>
@@ -22,9 +26,9 @@ export function CommunityCard() {
           </Box>
           <Box>
             <Text fontSize='sm'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-              Duis euismod neque ac convallis molestie
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
+              et neque lectus. Suspendisse venenatis imperdiet lobortis. Duis
+              euismod neque ac convallis molestie
             </Text>
           </Box>
 

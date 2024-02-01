@@ -15,19 +15,19 @@ import {
   HStack,
   Stack,
   Tooltip,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
 import {
   MdThumbsUpDown,
   MdChat,
   MdOutlineShare,
   MdEditSquare,
-} from 'react-icons/md';
+} from "react-icons/md";
 
 export function ProfilePostCard({ post }) {
   return (
     <Card
-      direction={{ base: 'column', sm: 'row' }}
+      direction={{ base: "column", sm: "row" }}
       position='relative'
       overflow='hidden'
       variant='outline'
@@ -38,12 +38,12 @@ export function ProfilePostCard({ post }) {
         w='200px'
         h='auto'
         minW='200px'
-        maxW={{ base: '100%', sm: '200px' }}
-        maxH={{ base: '100%', sm: '200px' }}
+        maxW={{ base: "100%", sm: "200px" }}
+        maxH={{ base: "100%", sm: "200px" }}
         src={post.image}
         alt={post.title}
         fallbackSrc='images/placeholder-image.png'
-        style={{ cursor: 'pointer' }}
+        style={{ cursor: "pointer" }}
       />
 
       <Stack w='100%'>
@@ -51,15 +51,18 @@ export function ProfilePostCard({ post }) {
           <Heading size='md'>{post.title}</Heading>
         </CardHeader>
         <CardBody py={0}>
-
-          <Text fontSize='sm' my={1}>{post.date} @ <Link>{post.community}</Link> </Text>
+          <Text fontSize='sm' my={1}>
+            {post.date} @ <Link>{post.community}</Link>{" "}
+          </Text>
 
           <HStack spacing='24px' color='brand.main'>
-            {
-              post.tags.map((tag) => {
-                return <Text fontSize='md'><Link>#{tag}</Link></Text>;
-              })
-            }
+            {post.tags.map((tag, i) => {
+              return (
+                <Text fontSize='md' key={i}>
+                  <Link>#{tag}</Link>
+                </Text>
+              );
+            })}
           </HStack>
         </CardBody>
 
@@ -67,7 +70,11 @@ export function ProfilePostCard({ post }) {
           <Flex w='100%'>
             <Link>
               <Tooltip label='Rate'>
-                <Button variant='ghost' leftIcon={<Icon as={MdThumbsUpDown} />} _hover={{ textDecoration: "none" }}>
+                <Button
+                  variant='ghost'
+                  leftIcon={<Icon as={MdThumbsUpDown} />}
+                  _hover={{ textDecoration: "none" }}
+                >
                   {post.counters.rate}
                 </Button>
               </Tooltip>
@@ -77,7 +84,11 @@ export function ProfilePostCard({ post }) {
 
             <Link>
               <Tooltip label='Comments'>
-                <Button variant='ghost' leftIcon={<Icon as={MdChat} />} _hover={{ textDecoration: "none" }}>
+                <Button
+                  variant='ghost'
+                  leftIcon={<Icon as={MdChat} />}
+                  _hover={{ textDecoration: "none" }}
+                >
                   {post.counters.comments}
                 </Button>
               </Tooltip>
@@ -85,7 +96,11 @@ export function ProfilePostCard({ post }) {
 
             <Spacer />
 
-            <Button variant='ghost' leftIcon={<Icon as={MdOutlineShare} />} _hover={{ textDecoration: "none" }}>
+            <Button
+              variant='ghost'
+              leftIcon={<Icon as={MdOutlineShare} />}
+              _hover={{ textDecoration: "none" }}
+            >
               Share
             </Button>
           </Flex>

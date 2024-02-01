@@ -125,7 +125,7 @@ export function Profile() {
     <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column' >
       <Card w='70%' mx='auto' mb={5} justifyContent='center' alignItems='center' textAlign='center'>
         <CardHeader py={0} pt={3}>
-          <Avatar name={user.name} src={user.avatar} bg='brand.main' color='white' boxSize={24} />
+          <Avatar name={user.name} src={user.avatar} bg='brand.main' color='white' boxSize={24} fontSize={24}/>
           <Heading my={3}>{user.name}</Heading>
           <Text>
             I am a cool guy , who likes build stuff with assembly :)

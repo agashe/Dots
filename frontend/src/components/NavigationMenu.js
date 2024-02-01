@@ -8,8 +8,7 @@ import {
   Heading,
   Flex,
   Spacer,
-} from '@chakra-ui/react';
-
+} from "@chakra-ui/react";
 import {
   MdCall,
   MdDoneOutline,
@@ -17,26 +16,45 @@ import {
   MdInfo,
   MdQuestionMark,
   MdRemoveRedEye,
-} from 'react-icons/md';
-
-import { Link as ReactRouterLink } from 'react-router-dom'
+} from "react-icons/md";
+import { Link as ReactRouterLink } from "react-router-dom";
 
 export function NavigationMenu() {
   const rightTags = [
-    'Travel', 'Tech', 'Science', 'Politics', 'Programming', 'Music', 'Movies',
-    'History', 'Fashion', 'Art', 'Anime', 'Business',
+    "Travel",
+    "Tech",
+    "Science",
+    "Politics",
+    "Programming",
+    "Music",
+    "Movies",
+    "History",
+    "Fashion",
+    "Art",
+    "Anime",
+    "Business",
   ];
 
   const leftTags = [
-    'Cars', 'DIY', 'Food', 'Law', 'Military', 'Place', 'Podcast',
-    'Reading', 'Religion', 'Pets', 'Sports', 'Gaming',
+    "Cars",
+    "DIY",
+    "Food",
+    "Law",
+    "Military",
+    "Place",
+    "Podcast",
+    "Reading",
+    "Religion",
+    "Pets",
+    "Sports",
+    "Gaming",
   ];
 
   return (
     <>
       <List spacing={3} fontSize='xl' color='brand.main'>
         <ListItem>
-          <Link p='5' my='2' as={ReactRouterLink} to='/'> 
+          <Link p='5' my='2' as={ReactRouterLink} to='/'>
             <ListIcon as={MdHome} boxSize={6} /> Home
           </Link>
         </ListItem>
@@ -71,40 +89,54 @@ export function NavigationMenu() {
         <Divider my={5} />
 
         <Box>
-          <Heading as='h6' size='sm' mb={5}>Explore</Heading>
+          <Heading as='h6' size='sm' mb={5}>
+            Explore
+          </Heading>
 
           <Flex>
             <List spacing={3} color='brand.main'>
-              {
-                leftTags.map((tag) => {
-                  return (
-                    <ListItem>
-                      <Link ml={1} color='brand.main' as={ReactRouterLink} to={'/t/' + tag}>#{tag}</Link>
-                    </ListItem>
-                  );
-                })
-              }
+              {leftTags.map((tag, i) => {
+                return (
+                  <ListItem key={i}>
+                    <Link
+                      ml={1}
+                      color='brand.main'
+                      as={ReactRouterLink}
+                      to={"/t/" + tag}
+                    >
+                      #{tag}
+                    </Link>
+                  </ListItem>
+                );
+              })}
             </List>
 
             <Spacer />
 
             <List spacing={3} color='brand.main'>
-              {
-                rightTags.map((tag) => {
-                  return (
-                    <ListItem>
-                      <Link ml={1} color='brand.main' as={ReactRouterLink} to={'/t/' + tag}>#{tag}</Link>
-                    </ListItem>
-                  );
-                })
-              }
+              {rightTags.map((tag, i) => {
+                return (
+                  <ListItem key={i}>
+                    <Link
+                      ml={1}
+                      color='brand.main'
+                      as={ReactRouterLink}
+                      to={"/t/" + tag}
+                    >
+                      #{tag}
+                    </Link>
+                  </ListItem>
+                );
+              })}
             </List>
           </Flex>
         </Box>
 
         <Divider mt={5} mb={2} />
 
-        <small>Dots &copy; {(new Date().getFullYear())}, All Rights Reserved</small>
+        <small>
+          Dots &copy; {new Date().getFullYear()}, All Rights Reserved
+        </small>
       </Box>
     </>
   );

@@ -1,17 +1,4 @@
-import {
-  Box,
-  Card,
-  CardBody,
-  Heading,
-  Text,
-  Avatar,
-  Flex,
-  Stack,
-  Icon,
-  Divider,
-} from '@chakra-ui/react';
-
-import { MdCake, MdMap, MdCardMembership } from 'react-icons/md';
+import { Card, CardBody, Heading } from "@chakra-ui/react";
 
 export function TagCard() {
   return (
