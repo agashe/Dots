@@ -21,15 +21,15 @@ import {
   MenuItem,
   Text,
 } from "@chakra-ui/react";
-
 import { Footer } from "../../components/Footer";
 import { MdRemoveCircle, MdArrowDownward } from "react-icons/md";
-
 import { useState } from "react";
 import { Editor } from "../../components/Editor";
+import { useTranslation } from "react-i18next";
 
 export function Create() {
   const [body, setBody] = useState("");
+  const { t } = useTranslation();
 
   const communities = [
     {
@@ -53,19 +53,19 @@ export function Create() {
         textAlign='center'
       >
         <CardHeader>
-          <Heading textAlign='center'>Create Post</Heading>
+          <Heading textAlign='center'>{t('actions.create_post')}</Heading>
         </CardHeader>
       </Card>
 
       <Card w='70%' mx='auto' mb={5} pb={8}>
         <CardBody>
           <FormControl>
-            <FormLabel>Title</FormLabel>
-            <Input type='text' placeholder='Solar system' />
+            <FormLabel>{t('post.title')}</FormLabel>
+            <Input type='text' placeholder={t('placeholders.post_title')} />
           </FormControl>
 
           <FormControl my={5}>
-            <FormLabel>Community</FormLabel>
+            <FormLabel>{t('community._')}</FormLabel>
             <Menu matchWidth={true}>
               <MenuButton
                 as={Button}
@@ -81,7 +81,7 @@ export function Create() {
                 borderColor='gray.300'
                 borderWidth='1px'
               >
-                Select a community to publish your post
+                {t('placeholders.post_community')}
               </MenuButton>
 
               <MenuList matchWidth={true}>
@@ -103,13 +103,13 @@ export function Create() {
           </FormControl>
 
           <FormControl my={5}>
-            <FormLabel>Banner</FormLabel>
+            <FormLabel>{t('post.banner')}</FormLabel>
             <HStack spacing={2}>
               <Box mr={3} w='full'>
                 <Input type='file' pt={1} />
               </Box>
               <Box>
-                <Tooltip label='Remove'>
+                <Tooltip label={t('actions.remove')}>
                   <IconButton
                     colorScheme='brand'
                     icon={<Icon as={MdRemoveCircle} boxSize={6} />}
@@ -120,12 +120,12 @@ export function Create() {
           </FormControl>
 
           <FormControl my={5}>
-            <FormLabel>Text</FormLabel>
+            <FormLabel>{t('post.text')}</FormLabel>
             <Editor
               value={body}
               handler={setBody}
               height={"300px"}
-              placeholder={"Add your post content"}
+              placeholder={t('placeholders.post_text')}
             />
           </FormControl>
         </CardBody>
@@ -140,7 +140,7 @@ export function Create() {
         textAlign='center'
       >
         <CardHeader w='100%'>
-          <Button w='100%'>Create</Button>
+          <Button w='100%'>{t('actions.create')}</Button>
         </CardHeader>
       </Card>
 

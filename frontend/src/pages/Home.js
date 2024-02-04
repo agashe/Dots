@@ -4,8 +4,11 @@ import { LatestPosts } from "../components/LatestPosts";
 import { PopularCommunities } from "../components/PopularCommunities";
 import { PostCard } from "../components/PostCard";
 import { NoResults } from "../components/NoResults";
+import { useTranslation } from "react-i18next";
 
 export function Home() {
+  const { t } = useTranslation();
+
   const posts = [
     {
       title: "Lorem ipsum dolor sit amet",
@@ -85,7 +88,7 @@ export function Home() {
             return <PostCard post={post} key={i} />;
           })
         ) : (
-          <NoResults message='It seems that no posts have been published yet' />
+          <NoResults message={t('no_published_posts')} />
         )}
       </Box>
       <Box w='30%'>

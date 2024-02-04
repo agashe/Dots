@@ -8,12 +8,13 @@ import {
   Spacer,
   Stack,
 } from "@chakra-ui/react";
-
 import { Footer } from "../../components/Footer";
 import { NotificationCard } from "../../components/NotificationCard";
+import { useTranslation } from "react-i18next";
 
 export function NotificationCenter() {
   // const user = JSON.parse(localStorage.getItem("user"));
+  const { t } = useTranslation();
 
   const notifications = [
     {
@@ -49,7 +50,7 @@ export function NotificationCenter() {
     <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
       <Card w='70%' mx='auto' mb={5}>
         <CardHeader py={0} pt={3}>
-          <Heading textAlign='center'>Notifications</Heading>
+          <Heading textAlign='center'>{t('notifications')}</Heading>
         </CardHeader>
 
         <CardBody py={5}>
@@ -71,7 +72,7 @@ export function NotificationCenter() {
             </>
           ) : (
             <Heading textAlign='center' size='md' p={5} pb={0}>
-              {`This Account hasn't commented on anything yet !`}
+              {t('errors.no_notifications')}
             </Heading>
           )}
         </CardBody>

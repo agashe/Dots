@@ -18,15 +18,16 @@ import {
   Badge,
   SimpleGrid,
 } from "@chakra-ui/react";
-
 import { Footer } from "../../components/Footer";
 import { MdCake, MdMap, MdCardMembership } from "react-icons/md";
 import { ProfilePostCard } from "../../components/ProfilePostCard";
 import { ProfileCommunityCard } from "../../components/ProfileCommunityCard";
 import { ProfileCommentCard } from "../../components/ProfileCommentCard";
+import { useTranslation } from "react-i18next";
 
 export function Profile() {
   const user = JSON.parse(localStorage.getItem("user"));
+  const { t } = useTranslation();
 
   const posts = [
     {
@@ -172,19 +173,19 @@ export function Profile() {
           <Tabs colorScheme='brand'>
             <TabList>
               <Tab>
-                Posts{" "}
+                {t('posts')}
                 <Badge ml={2} borderRadius='lg' bg='gray' color='white'>
                   {posts.length}
                 </Badge>
               </Tab>
               <Tab>
-                Comments{" "}
+                {t('comments')}
                 <Badge ml={2} borderRadius='lg' bg='gray' color='white'>
                   {comments.length}
                 </Badge>
               </Tab>
               <Tab>
-                Communities{" "}
+                {t('communities')}
                 <Badge ml={2} borderRadius='lg' bg='gray' color='white'>
                   {communities.length}
                 </Badge>
@@ -209,7 +210,7 @@ export function Profile() {
                   </>
                 ) : (
                   <Heading textAlign='center' size='md' p={5} pb={0}>
-                    {`This Account hasn't published anything yet !`}
+                    {t('account_has_no_items', { items: 'posts' })}
                   </Heading>
                 )}
               </TabPanel>
@@ -231,7 +232,7 @@ export function Profile() {
                   </>
                 ) : (
                   <Heading textAlign='center' size='md' p={5} pb={0}>
-                    {`This Account hasn't commented on anything yet !`}
+                    {t('account_has_no_items', { items: 'comments' })}
                   </Heading>
                 )}
               </TabPanel>
@@ -255,7 +256,7 @@ export function Profile() {
                   </>
                 ) : (
                   <Heading textAlign='center' size='md' p={5} pb={0}>
-                    {`This Account didn't create any communities !`}
+                    {t('account_has_no_items', { items: 'communities' })}
                   </Heading>
                 )}
               </TabPanel>

@@ -15,15 +15,15 @@ import {
   Tooltip,
   Button,
 } from "@chakra-ui/react";
-
 import { Footer } from "../../components/Footer";
 import { MdRemoveCircle } from "react-icons/md";
-
 import { useState } from "react";
 import { Editor } from "../../components/Editor";
+import { useTranslation } from "react-i18next";
 
 export function Edit() {
   const [body, setBody] = useState("");
+  const { t } = useTranslation();
 
   return (
     <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
@@ -36,25 +36,25 @@ export function Edit() {
         textAlign='center'
       >
         <CardHeader>
-          <Heading textAlign='center'>Edit Post</Heading>
+          <Heading textAlign='center'>{t('actions.edit_post')}</Heading>
         </CardHeader>
       </Card>
 
       <Card w='70%' mx='auto' mb={5} pb={8}>
         <CardBody>
           <FormControl>
-            <FormLabel>Title</FormLabel>
-            <Input type='text' placeholder='Solar system' />
+            <FormLabel>{t('post.title')}</FormLabel>
+            <Input type='text' placeholder={t('placeholders.post_title')} />
           </FormControl>
 
           <FormControl my={5}>
-            <FormLabel>Banner</FormLabel>
+            <FormLabel>{t('post.banner')}</FormLabel>
             <HStack spacing={2}>
               <Box mr={3} w='full'>
                 <Input type='file' pt={1} />
               </Box>
               <Box>
-                <Tooltip label='Remove'>
+                <Tooltip label={t('actions.remove')}>
                   <IconButton
                     colorScheme='brand'
                     icon={<Icon as={MdRemoveCircle} boxSize={6} />}
@@ -65,12 +65,12 @@ export function Edit() {
           </FormControl>
 
           <FormControl my={5}>
-            <FormLabel>Text</FormLabel>
+            <FormLabel>{t('post.text')}</FormLabel>
             <Editor
               value={body}
               handler={setBody}
               height={"300px"}
-              placeholder={"Update your post content"}
+              placeholder={t('placeholders.post_text')}
             />
           </FormControl>
         </CardBody>
@@ -85,7 +85,7 @@ export function Edit() {
         textAlign='center'
       >
         <CardHeader w='100%'>
-          <Button w='100%'>Update</Button>
+          <Button w='100%'>{t('actions.update')}</Button>
         </CardHeader>
       </Card>
 

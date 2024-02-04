@@ -1,10 +1,11 @@
 import { Flex, Card, Heading, Text, Spacer, Icon } from "@chakra-ui/react";
-
 import { MdQuestionMark } from "react-icons/md";
-
 import { Footer } from "../../components/Footer";
+import { useTranslation } from "react-i18next";
 
 export function PageNotFound() {
+  const { t } = useTranslation();
+
   return (
     <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
       <Card
@@ -20,10 +21,10 @@ export function PageNotFound() {
       >
         <Icon as={MdQuestionMark} boxSize={48} color='brand.main' />
 
-        <Heading>404, Page Not Found</Heading>
+        <Heading>{t('page_not_found')}</Heading>
 
         <Text mt={5}>
-          {`Oops ! It seems that the page you are looking for , doesn't exists`}
+          {t('page_not_found_message')}
         </Text>
       </Card>
 

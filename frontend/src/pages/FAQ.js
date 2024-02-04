@@ -1,6 +1,9 @@
 import { ContentLayout } from "../components/ContentLayout";
+import { useTranslation } from "react-i18next";
 
 export function FAQ() {
+  const { t } = useTranslation();
+
   let content = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
@@ -46,5 +49,5 @@ export function FAQ() {
     Duis euismod neque ac convallis molestie.
   `;
 
-  return <ContentLayout title='FAQ' content={content} />;
+  return <ContentLayout title={t('faq')} content={content} />;
 }

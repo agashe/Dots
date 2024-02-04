@@ -15,8 +15,11 @@ import { PostCard } from "../components/PostCard";
 import { NoResults } from "../components/NoResults";
 import { SearchCommunityCard } from "../components/SearchCommunityCard";
 import { SearchUserCard } from "../components/SearchUserCard";
+import { useTranslation } from "react-i18next";
 
 export function Search() {
+  const { t } = useTranslation();
+
   const posts = [
     {
       title: "Lorem ipsum dolor sit amet",
@@ -120,9 +123,9 @@ export function Search() {
       <Box w='60%'>
         <Tabs colorScheme='brand'>
           <TabList w='90%' mx='auto'>
-            <Tab>Posts</Tab>
-            <Tab>Users</Tab>
-            <Tab>Communities</Tab>
+            <Tab>{t('posts')}</Tab>
+            <Tab>{t('users')}</Tab>
+            <Tab>{t('communities')}</Tab>
           </TabList>
 
           <TabPanels>
@@ -132,7 +135,7 @@ export function Search() {
                   return <PostCard post={post} key={i} />;
                 })
               ) : (
-                <NoResults message='No posts were found for your search' />
+                <NoResults message={t('no_items_were_found', {items: 'posts'})} />
               )}
             </TabPanel>
 
@@ -146,7 +149,7 @@ export function Search() {
                   </SimpleGrid>
                 </>
               ) : (
-                <NoResults message='No users were found for your search' />
+                <NoResults message={t('no_items_were_found', {items: 'users'})} />
               )}
             </TabPanel>
 
@@ -162,7 +165,7 @@ export function Search() {
                   </SimpleGrid>
                 </>
               ) : (
-                <NoResults message='No communities were found for your search' />
+                <NoResults message={t('no_items_were_found', {items: 'communities'})} />
               )}
             </TabPanel>
           </TabPanels>

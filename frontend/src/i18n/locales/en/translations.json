@@ -9,12 +9,10 @@
     "popular_communities": "Popular Communities",
     "explore": "Explore",
     "thank_you": "Thank you ...",
-    "no_results": "No Results Found",
     "search": "Search ...",
     "dark_mode": "Dark Mode",
     "light_mode": "Light Mode",
     "notifications": "Notifications",
-    "profile": "Profile",
     "comments": "Comments",
     "comments_sort": {
         "popular": "Popular",
@@ -22,12 +20,12 @@
         "oldest": "Oldest",
         "unpopular": "Unpopular"
     },
-    "comment_hint": "Be first to comment !",
-    "posts": "Posts",
+    "comment_hint": "Be first to comment !",    
     "members": "Members",
     "options": "Options",
     "copyrights_text": "All Rights Reserved",
     "user": {
+        "_": "User",
         "sign_in_hint": "Sign in to your account",
         "sign_up_hint": "Sign up account",
         "register_now": "Don't have account yet , register now !",
@@ -36,9 +34,32 @@
         "name": "Name",
         "email": "Email",
         "password": "Password",
+        "new_password": "New Password",
         "confirm": "Confirm",
-        "accept_terms": "By click on the button bellow , you agreed to our : "
+        "avatar": "Avatar",
+        "location": "Location",
+        "work": "Work",
+        "birth_date": "Birth Date",
+        "bio": "Bio",
+        "accept_terms": "By click on the button bellow , you agreed to our : ",
+        "update_password_hint": "Update your password"
     },
+    "users": "Users",
+    "profile": "Profile",
+    "community": {
+        "_": "Community",
+        "name": "Name",
+        "logo": "Logo",
+        "description": "Description"
+    },
+    "communities": "Communities",
+    "post": {
+        "_": "Post",
+        "title": "Title",
+        "banner": "Banner",
+        "text": "Text"
+    },
+    "posts": "Posts",
     "actions": {
         "create": "Create",
         "create_post": "Create Post",
@@ -53,6 +74,35 @@
         "share": "Share",
         "report": "Report",
         "edit": "Edit",
-        "edit_profile": "Edit Profile"
+        "edit_profile": "Edit Profile",
+        "edit_community": "Edit Community",
+        "edit_post": "Edit Post",
+        "remove": "Remove",
+        "update": "Update",
+        "prev": "Prev",
+        "next": "Next",
+        "save": "Save"
+    },
+    "errors": {
+        "no_results": "No Results Found",
+        "no_items_were_found": "No {{items}} were found for your search",
+        "no_published_posts": "It seems that no posts have been published yet",
+        "page_not_found": "404, Page Not Found",
+        "page_not_found_message": "Oops ! It seems that the page you are looking for , doesn't exists",
+        "account_has_no_items": "This Account didn't create any {{items}} yet",
+        "no_notifications": "You haven't received any notifications yet"
+    },
+    "placeholders": {
+        "community_name": "The Avengers",
+        "community_description": "Write something nice about the community",
+        "post_title": "Solar system",
+        "post_community": "Select a community to publish your post",
+        "post_text": "Your post content",
+        "user_name": "John Doe",
+        "user_password": "Pick a strong Password",
+        "user_confirm": "Re-Enter the strong Password",
+        "user_location": "South Pole, The Antarctica",
+        "user_work": "Rocket Scientist",
+        "user_bio": "Tell the people about yourself",
     }
 }

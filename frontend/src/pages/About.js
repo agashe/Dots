@@ -1,6 +1,9 @@
 import { ContentLayout } from "../components/ContentLayout";
+import { useTranslation } from "react-i18next";
 
 export function About() {
+  const { t } = useTranslation();
+  
   let content = `
     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
     Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
@@ -46,5 +49,5 @@ export function About() {
     Duis euismod neque ac convallis molestie.
   `;
 
-  return <ContentLayout title='About' content={content} />;
+  return <ContentLayout title={t('about')} content={content} />;
 }

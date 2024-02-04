@@ -17,11 +17,13 @@ import {
   Tooltip,
   Button,
 } from "@chakra-ui/react";
-
 import { Footer } from "../../components/Footer";
 import { MdRemoveCircle } from "react-icons/md";
+import { useTranslation } from "react-i18next";
 
 export function Create() {
+  const { t } = useTranslation();
+
   return (
     <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
       <Card
@@ -33,19 +35,19 @@ export function Create() {
         textAlign='center'
       >
         <CardHeader>
-          <Heading textAlign='center'>Create Community</Heading>
+          <Heading textAlign='center'>{t('create_community')}</Heading>
         </CardHeader>
       </Card>
 
       <Card w='70%' mx='auto' mb={5}>
         <CardBody>
           <FormControl>
-            <FormLabel>Name</FormLabel>
-            <Input type='text' placeholder='The Avengers' />
+            <FormLabel>{t('community.name')}</FormLabel>
+            <Input type='text' placeholder={t('placeholders.community_name')} />
           </FormControl>
 
           <FormControl my={5}>
-            <FormLabel>Logo</FormLabel>
+            <FormLabel>{t('community.logo')}</FormLabel>
             <HStack spacing={2}>
               <Box boxSize={12} mr={3}>
                 <Image
@@ -57,7 +59,7 @@ export function Create() {
                 <Input type='file' pt={1} />
               </Box>
               <Box>
-                <Tooltip label='Remove'>
+                <Tooltip label={t('actions.remove')}>
                   <IconButton
                     colorScheme='brand'
                     icon={<Icon as={MdRemoveCircle} boxSize={6} />}
@@ -68,9 +70,9 @@ export function Create() {
           </FormControl>
 
           <FormControl my={5}>
-            <FormLabel>Description</FormLabel>
+            <FormLabel>{t('community.description')}</FormLabel>
             <Textarea
-              placeholder='Write something nice about the community'
+              placeholder={t('placeholders.community_description')}
               resize='none'
             />
           </FormControl>
@@ -86,7 +88,7 @@ export function Create() {
         textAlign='center'
       >
         <CardHeader w='100%'>
-          <Button w='100%'>Create</Button>
+          <Button w='100%'>{t('actions.create')}</Button>
         </CardHeader>
       </Card>
 
