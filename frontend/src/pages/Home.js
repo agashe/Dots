@@ -1,13 +1,37 @@
 import { Flex, Box } from "@chakra-ui/react";
+import { useParams, useLocation } from "react-router-dom";
 import { NavigationMenu } from "../components/NavigationMenu";
 import { LatestPosts } from "../components/LatestPosts";
 import { PopularCommunities } from "../components/PopularCommunities";
 import { PostCard } from "../components/PostCard";
 import { NoResults } from "../components/NoResults";
 import { useTranslation } from "react-i18next";
+import { TagCard } from "../components/TagCard";
+import { CommunityCard } from "../components/CommunityCard";
+import { UserCard } from "../components/UserCard";
 
 export function Home() {
   const { t } = useTranslation();
+
+  // check current route , to load the posts data 
+  // this could be for : user, tag, community or homepage
+  let { id, name } = useParams();
+  const location = useLocation();
+  let type = 'all';
+  let card = '';
+
+  if (location.pathname.includes('/t/')) {
+    type = 'tag';
+    card = <TagCard />;          
+  }
+  else if (location.pathname.includes('/c/')) {
+    type = 'community';
+    card = <CommunityCard />;
+  }
+  else if (location.pathname.includes('/u/')) {
+    type = 'user';
+    card = <UserCard />;
+  }
 
   const posts = [
     {
@@ -92,6 +116,7 @@ export function Home() {
         )}
       </Box>
       <Box w='30%'>
+        {card}
         <LatestPosts />
         <PopularCommunities />
       </Box>

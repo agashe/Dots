@@ -13,9 +13,6 @@ import { NotificationCenter } from "./pages/users/NotificationsCenter";
 import { EditProfile } from "./pages/users/EditProfile";
 import { Create as CreateCommunity } from "./pages/communities/Create";
 import { Edit as EditCommunity } from "./pages/communities/Edit";
-import { Community } from "./pages/posts/Community";
-import { User as UserPosts } from "./pages/posts/User";
-import { Tag as TagPosts } from "./pages/posts/Tag";
 import { Search } from "./pages/Search";
 import { Create as CreatePost } from "./pages/posts/Create";
 import { Edit as EditPost } from "./pages/posts/Edit";
@@ -41,15 +38,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "/c/:name",
-        Component: Community,
+        Component: Home,
       },
       {
         path: "/u/:id/:name",
-        Component: UserPosts,
+        Component: Home,
       },
       {
         path: "/t/:name",
-        Component: TagPosts,
+        Component: Home,
       },
       {
         path: "FAQ",

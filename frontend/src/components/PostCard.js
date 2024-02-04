@@ -24,6 +24,10 @@ import { useTranslation } from "react-i18next";
 export function PostCard({ post }) {
   const { t } = useTranslation();
 
+  function goToPost() {
+    window.location.href = '/p/1/ahmed';
+  }
+
   return (
     <Card w='90%' mx='auto' mb={5}>
       <Image
@@ -33,6 +37,7 @@ export function PostCard({ post }) {
         borderTopRadius='lg'
         fallbackSrc='/images/placeholder-image.png'
         style={{ cursor: "pointer" }}
+        onClick={goToPost}
       />
 
       <CardHeader py={0} pt={3}>
@@ -75,7 +80,7 @@ export function PostCard({ post }) {
           {post.tags.map((tag, i) => {
             return (
               <Text fontSize='md' key={i}>
-                <Link>#{tag}</Link>
+                <Link as={ReactRouterLink} to={"/t/" + tag}>#{tag}</Link>
               </Text>
             );
           })}

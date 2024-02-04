@@ -141,8 +141,7 @@ export function Profile() {
             src={user.avatar}
             bg='brand.main'
             color='white'
-            boxSize={24}
-            fontSize={24}
+            size='xl'
           />
           <Heading my={3}>{user.name}</Heading>
           <Text>I am a cool guy , who likes build stuff with assembly :)</Text>

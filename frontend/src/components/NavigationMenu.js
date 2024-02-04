@@ -19,6 +19,7 @@ import {
 } from "react-icons/md";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Footer } from "./Footer";
 
 export function NavigationMenu() {
   const { t } = useTranslation();
@@ -137,9 +138,7 @@ export function NavigationMenu() {
 
         <Divider mt={5} mb={2} />
 
-        <small>
-          Dots &copy; {new Date().getFullYear()}, All Rights Reserved
-        </small>
+        <Footer />
       </Box>
     </>
   );

@@ -12,9 +12,14 @@ import {
 } from "@chakra-ui/react";
 import { MdEditSquare } from "react-icons/md";
 import { useTranslation } from "react-i18next";
+import { Link as ReactRouterLink } from "react-router-dom";
 
 export function ProfileCommunityCard({ community }) {
   const { t } = useTranslation();
+
+  function goToCommunity() {
+    window.location.href = '/c/ahmed'; // `c/${community.name}`
+  }
 
   return (
     <Card p={5} position='relative'>
@@ -24,11 +29,14 @@ export function ProfileCommunityCard({ community }) {
             boxSize={8}
             src={community.logo}
             fallbackSrc='/images/group-placeholder.png'
+            onClick={goToCommunity}
           />
 
           <Box>
-            <Heading size='sm'>{community.name}</Heading>
-            <Text fontSize='xs'>{community.members} {t('members')} </Text>
+            <Link as={ReactRouterLink} to={"/c/" + community.name}>
+              <Heading size='sm'>{community.name}</Heading>
+              <Text fontSize='xs'>{community.members} {t('members')} </Text>
+            </Link>
           </Box>
         </Flex>
       </Link>

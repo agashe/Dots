@@ -22,11 +22,16 @@ import {
   MdOutlineShare,
   MdEditSquare,
 } from "react-icons/md";
+import { Link as ReactRouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export function ProfilePostCard({ post }) {
   const { t } = useTranslation();
-  
+
+  function goToPost() {
+    window.location.href = '/p/1/ahmed'; // `p/${post.id}/${post.title}`
+  }
+
   return (
     <Card
       direction={{ base: "column", sm: "row" }}
@@ -46,22 +51,29 @@ export function ProfilePostCard({ post }) {
         alt={post.title}
         fallbackSrc='images/placeholder-image.png'
         style={{ cursor: "pointer" }}
+        onClick={goToPost}
       />
 
       <Stack w='100%'>
         <CardHeader py={0} pt={3}>
-          <Heading size='md'>{post.title}</Heading>
+          <Link
+            style={{ textAlign: "left" }}
+            as={ReactRouterLink}
+            to={"/p/1/ahmed"}
+          >
+            <Heading size='md'>{post.title}</Heading>
+          </Link>
         </CardHeader>
         <CardBody py={0}>
           <Text fontSize='sm' my={1}>
-            {post.date} @ <Link>{post.community}</Link>{" "}
+            {post.date} @ <Link as={ReactRouterLink} to={"/c/" + post.community}>{post.community}</Link>{" "}
           </Text>
 
           <HStack spacing='24px' color='brand.main'>
             {post.tags.map((tag, i) => {
               return (
                 <Text fontSize='md' key={i}>
-                  <Link>#{tag}</Link>
+                  <Link as={ReactRouterLink} to={"/t/" + tag}>#{tag}</Link>
                 </Text>
               );
             })}
