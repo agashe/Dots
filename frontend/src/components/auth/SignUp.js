@@ -69,7 +69,7 @@ export function SignUp({ isOpen, onClose }) {
         <ModalFooter flexDirection='column'>
           <small>
             {t('user.accept_terms')}
-            <Link color='brand.main'>{t('terms')}</Link>
+            <Link reloadDocument color='brand.main'>{t('terms')}</Link>
           </small>
 
           <Button colorScheme='blue' width='100%' my={2} onClick={submitSignUp}>

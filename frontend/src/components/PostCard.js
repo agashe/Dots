@@ -43,7 +43,7 @@ export function PostCard({ post }) {
       <CardHeader py={0} pt={3}>
         <Flex spacing='4'>
           <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-            <Link as={ReactRouterLink} to={"/u/1/ahmed"}>
+            <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
               <Avatar
                 name={post.user.name}
                 src={post.user.avatar}
@@ -53,12 +53,12 @@ export function PostCard({ post }) {
             </Link>
 
             <Box>
-              <Link as={ReactRouterLink} to={"/u/1/ahmed"}>
+              <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
                 <Heading size='sm'>{post.user.name}</Heading>
               </Link>
               <Text fontSize='xs'>
                 {post.date} @{" "}
-                <Link as={ReactRouterLink} to={"/c/" + post.community}>
+                <Link reloadDocument as={ReactRouterLink} to={"/c/" + post.community}>
                   {post.community}
                 </Link>{" "}
               </Text>
@@ -68,7 +68,7 @@ export function PostCard({ post }) {
       </CardHeader>
 
       <CardBody py={0} my={5}>
-        <Link
+        <Link reloadDocument
           style={{ textAlign: "left" }}
           as={ReactRouterLink}
           to={"/p/1/ahmed"}
@@ -80,7 +80,7 @@ export function PostCard({ post }) {
           {post.tags.map((tag, i) => {
             return (
               <Text fontSize='md' key={i}>
-                <Link as={ReactRouterLink} to={"/t/" + tag}>#{tag}</Link>
+                <Link reloadDocument as={ReactRouterLink} to={"/t/" + tag}>#{tag}</Link>
               </Text>
             );
           })}
@@ -91,7 +91,7 @@ export function PostCard({ post }) {
 
       <CardFooter py={2}>
         <Flex w='100%'>
-          <Link>
+          <Link reloadDocument>
             <Tooltip label={t('actions.rate')}>
               <Button
                 variant='ghost'
@@ -105,7 +105,7 @@ export function PostCard({ post }) {
 
           <Spacer />
 
-          <Link>
+          <Link reloadDocument>
             <Tooltip label={t('comments')}>
               <Button
                 variant='ghost'

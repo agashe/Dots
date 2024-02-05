@@ -23,17 +23,18 @@ export function ProfileCommunityCard({ community }) {
 
   return (
     <Card p={5} position='relative'>
-      <Link _hover={{ textDecoration: "none" }}>
+      <Link reloadDocument _hover={{ textDecoration: "none" }}>
         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
           <Image
             boxSize={8}
             src={community.logo}
             fallbackSrc='/images/group-placeholder.png'
             onClick={goToCommunity}
+            alt='Community Logo'
           />
 
           <Box>
-            <Link as={ReactRouterLink} to={"/c/" + community.name}>
+            <Link reloadDocument as={ReactRouterLink} to={"/c/" + community.name}>
               <Heading size='sm'>{community.name}</Heading>
               <Text fontSize='xs'>{community.members} {t('members')} </Text>
             </Link>

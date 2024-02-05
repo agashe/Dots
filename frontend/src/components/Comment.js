@@ -44,7 +44,7 @@ export function Comment({ comment }) {
       <CardHeader py={0} pt={3}>
         <Flex spacing='4'>
           <HStack>
-            <Link as={ReactRouterLink} to={"/u/1/ahmed"}>
+            <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
               <Avatar
                 name={comment.user.name}
                 src={comment.user.avatar}
@@ -55,7 +55,7 @@ export function Comment({ comment }) {
             </Link>
 
             <Box>
-              <Link as={ReactRouterLink} to={"/u/1/ahmed"}>
+              <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
                 <Heading size='sm'>{comment.user.name}</Heading>
               </Link>
             </Box>

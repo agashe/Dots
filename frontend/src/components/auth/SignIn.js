@@ -66,7 +66,7 @@ export function SignIn({ isOpen, onClose, onOpenSignUp }) {
             Sign In
           </Button>
 
-          <Link
+          <Link reloadDocument
             onClick={() => {
               onClose();
               onOpenSignUp();

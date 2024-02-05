@@ -7,7 +7,7 @@ export function SearchUserCard({ user }) {
 
   return (
     <Card p={5} position='relative'>
-      <Link
+      <Link reloadDocument
         _hover={{ textDecoration: "none" }}
         as={ReactRouterLink}
         to={"/u/1/ahmed"}

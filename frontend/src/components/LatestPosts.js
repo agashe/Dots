@@ -28,7 +28,7 @@ export function LatestPosts() {
 
       <CardBody>
         <Stack divider={<StackDivider />} spacing='4'>
-          <Link
+          <Link reloadDocument
             _hover={{ textDecoration: "none" }}
             as={ReactRouterLink}
             to={"/p/1/ahmed"}
@@ -67,7 +67,7 @@ export function LatestPosts() {
             </Box>
           </Link>
 
-          <Link _hover={{ textDecoration: "none" }}>
+          <Link reloadDocument _hover={{ textDecoration: "none" }}>
             <Box>
               <Heading size='xs' textTransform='uppercase'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -102,7 +102,7 @@ export function LatestPosts() {
             </Box>
           </Link>
 
-          <Link _hover={{ textDecoration: "none" }}>
+          <Link reloadDocument _hover={{ textDecoration: "none" }}>
             <Box>
               <Heading size='xs' textTransform='uppercase'>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.

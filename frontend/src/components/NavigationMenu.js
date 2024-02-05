@@ -58,32 +58,32 @@ export function NavigationMenu() {
     <>
       <List spacing={3} fontSize='xl' color='brand.main'>
         <ListItem>
-          <Link p='5' my='2' as={ReactRouterLink} to='/'>
+          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/'>
             <ListIcon as={MdHome} boxSize={6} /> {t('home')}
           </Link>
         </ListItem>
         <ListItem>
-          <Link p='5' my='2' as={ReactRouterLink} to='/FAQ'>
+          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/FAQ'>
             <ListIcon as={MdQuestionMark} boxSize={6} /> {t('faq')}
           </Link>
         </ListItem>
         <ListItem>
-          <Link p='5' my='2' as={ReactRouterLink} to='/terms-of-usage'>
+          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/terms-of-usage'>
             <ListIcon as={MdDoneOutline} boxSize={6} /> {t('terms')}
           </Link>
         </ListItem>
         <ListItem>
-          <Link p='5' my='2' as={ReactRouterLink} to='/privacy-policy'>
+          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/privacy-policy'>
             <ListIcon as={MdRemoveRedEye} boxSize={6} /> {t('privacy')}
           </Link>
         </ListItem>
         <ListItem>
-          <Link p='5' my='2' as={ReactRouterLink} to='/contact'>
+          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/contact'>
             <ListIcon as={MdCall} boxSize={6} /> {t('contact')}
           </Link>
         </ListItem>
         <ListItem>
-          <Link p='5' my='2' as={ReactRouterLink} to='/about'>
+          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/about'>
             <ListIcon as={MdInfo} boxSize={6} /> {t('about')}
           </Link>
         </ListItem>
@@ -102,7 +102,7 @@ export function NavigationMenu() {
               {leftTags.map((tag, i) => {
                 return (
                   <ListItem key={i}>
-                    <Link
+                    <Link reloadDocument
                       ml={1}
                       color='brand.main'
                       as={ReactRouterLink}
@@ -121,7 +121,7 @@ export function NavigationMenu() {
               {rightTags.map((tag, i) => {
                 return (
                   <ListItem key={i}>
-                    <Link
+                    <Link reloadDocument
                       ml={1}
                       color='brand.main'
                       as={ReactRouterLink}

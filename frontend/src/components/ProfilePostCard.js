@@ -56,7 +56,7 @@ export function ProfilePostCard({ post }) {
 
       <Stack w='100%'>
         <CardHeader py={0} pt={3}>
-          <Link
+          <Link reloadDocument
             style={{ textAlign: "left" }}
             as={ReactRouterLink}
             to={"/p/1/ahmed"}
@@ -66,14 +66,14 @@ export function ProfilePostCard({ post }) {
         </CardHeader>
         <CardBody py={0}>
           <Text fontSize='sm' my={1}>
-            {post.date} @ <Link as={ReactRouterLink} to={"/c/" + post.community}>{post.community}</Link>{" "}
+            {post.date} @ <Link reloadDocument as={ReactRouterLink} to={"/c/" + post.community}>{post.community}</Link>{" "}
           </Text>
 
           <HStack spacing='24px' color='brand.main'>
             {post.tags.map((tag, i) => {
               return (
                 <Text fontSize='md' key={i}>
-                  <Link as={ReactRouterLink} to={"/t/" + tag}>#{tag}</Link>
+                  <Link reloadDocument as={ReactRouterLink} to={"/t/" + tag}>#{tag}</Link>
                 </Text>
               );
             })}
@@ -82,7 +82,7 @@ export function ProfilePostCard({ post }) {
 
         <CardFooter py={0} pb={2}>
           <Flex w='100%'>
-            <Link>
+            <Link reloadDocument>
               <Tooltip label={t('actions.rate')}>
                 <Button
                   variant='ghost'
@@ -96,7 +96,7 @@ export function ProfilePostCard({ post }) {
 
             <Spacer />
 
-            <Link>
+            <Link reloadDocument>
               <Tooltip label={t('comments')}>
                 <Button
                   variant='ghost'

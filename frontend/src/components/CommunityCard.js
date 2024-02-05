@@ -21,6 +21,7 @@ export function CommunityCard() {
             boxSize={10}
             src='unknown.png'
             fallbackSrc='/images/group-placeholder.png'
+            alt='Community logo'
           />
 
           <Box>

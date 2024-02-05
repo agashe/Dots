@@ -7,7 +7,7 @@ export function SearchCommunityCard({ community }) {
 
   return (
     <Card p={5} position='relative'>
-      <Link
+      <Link reloadDocument
         _hover={{ textDecoration: "none" }}
         as={ReactRouterLink}
         to={"/c/Cool_people"}
@@ -17,6 +17,7 @@ export function SearchCommunityCard({ community }) {
             boxSize={8}
             src={community.logo}
             fallbackSrc='/images/group-placeholder.png'
+            alt='Community Logo'
           />
 
           <Box>

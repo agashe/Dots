@@ -105,6 +105,12 @@ export function Create() {
           <FormControl my={5}>
             <FormLabel>{t('post.banner')}</FormLabel>
             <HStack spacing={2}>
+              <Box w='200px' h='100px' mr={3}>
+                <Image
+                  src='images/placeholder-image.png'
+                  fallbackSrc='images/placeholder-image.png'
+                />
+              </Box>
               <Box mr={3} w='full'>
                 <Input type='file' pt={1} />
               </Box>

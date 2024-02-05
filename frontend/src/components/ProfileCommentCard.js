@@ -2,7 +2,7 @@ import { Box, Heading, Text, Link } from "@chakra-ui/react";
 
 export function ProfileCommentCard({ comment }) {
   return (
-    <Link _hover={{ textDecoration: "none" }}>
+    <Link reloadDocument _hover={{ textDecoration: "none" }}>
       <Box p={3} shadow='md' borderWidth='1px'>
         <Heading fontSize='xl'>{comment.title}</Heading>
         <Text fontSize='md' my={1}>

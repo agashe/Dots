@@ -5,6 +5,7 @@ import { ShowPostCard } from "../../components/ShowPostCard";
 import { AddComment } from "../../components/AddComment";
 import { Comments } from "../../components/Comments";
 import { Footer } from "../../components/Footer";
+import { useEffect } from "react";
 
 export function Show() {
   const post = {
@@ -136,6 +137,10 @@ export function Show() {
       },
     ],
   };
+
+  useEffect(function () {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <Flex spacing={5} pt={5} px={10} mb={5} bg='gray.50'>

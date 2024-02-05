@@ -87,7 +87,7 @@ export function Layout() {
           border='1px'
           borderColor='gray.200'
         >
-          <Link
+          <Link reloadDocument
             _hover={{ textDecoration: "none" }}
             as={ReactRouterLink}
             to='/'

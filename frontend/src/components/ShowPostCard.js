@@ -48,7 +48,7 @@ export function ShowPostCard({ post }) {
         <CardHeader py={0} pt={3}>
           <Flex spacing='4'>
             <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Link as={ReactRouterLink} to={"/u/1/ahmed"}>
+              <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
                 <Avatar
                   name={post.user.name}
                   src={post.user.avatar}
@@ -58,12 +58,12 @@ export function ShowPostCard({ post }) {
               </Link>
 
               <Box>
-                <Link as={ReactRouterLink} to={"/u/1/ahmed"}>
+                <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
                   <Heading size='sm'>{post.user.name}</Heading>
                 </Link>
                 <Text fontSize='xs'>
                   {post.date} @{" "}
-                  <Link as={ReactRouterLink} to={"/c/" + post.community}>
+                  <Link reloadDocument as={ReactRouterLink} to={"/c/" + post.community}>
                     {post.community}
                   </Link>{" "}
                 </Text>
@@ -79,7 +79,7 @@ export function ShowPostCard({ post }) {
             {post.tags.map((tag, i) => {
               return (
                 <Text fontSize='md' key={i}>
-                  <Link>#{tag}</Link>
+                  <Link reloadDocument>#{tag}</Link>
                 </Text>
               );
             })}

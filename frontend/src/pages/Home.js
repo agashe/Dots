@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { TagCard } from "../components/TagCard";
 import { CommunityCard } from "../components/CommunityCard";
 import { UserCard } from "../components/UserCard";
+import { useEffect } from "react";
 
 export function Home() {
   const { t } = useTranslation();
@@ -33,6 +34,10 @@ export function Home() {
     card = <UserCard />;
   }
 
+  useEffect(function () {
+    window.scrollTo(0, 0);
+  }, []);
+  
   const posts = [
     {
       title: "Lorem ipsum dolor sit amet",

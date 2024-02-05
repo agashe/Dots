@@ -25,18 +25,19 @@ export function PopularCommunities() {
 
       <CardBody>
         <Stack divider={<StackDivider />} spacing='4'>
-          <Link
+          <Link reloadDocument
             _hover={{ textDecoration: "none" }}
             as={ReactRouterLink}
             to={"/c/Night owls"}
           >
             <Box>
-              <Link _hover={{ textDecoration: "none" }}>
+              <Link reloadDocument _hover={{ textDecoration: "none" }}>
                 <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
                   <Image
                     boxSize={8}
                     src='/images/moon-icon.jpeg'
                     fallbackSrc='/images/group-placeholder.png'
+                    alt='Community Logo'
                   />
 
                   <Box>
@@ -48,7 +49,7 @@ export function PopularCommunities() {
             </Box>
           </Link>
           <Box>
-            <Link _hover={{ textDecoration: "none" }}>
+            <Link reloadDocument _hover={{ textDecoration: "none" }}>
               <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
                 <Image
                   boxSize={8}
@@ -64,7 +65,7 @@ export function PopularCommunities() {
             </Link>
           </Box>
           <Box>
-            <Link _hover={{ textDecoration: "none" }}>
+            <Link reloadDocument _hover={{ textDecoration: "none" }}>
               <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
                 <Image
                   boxSize={8}
@@ -80,7 +81,7 @@ export function PopularCommunities() {
             </Link>
           </Box>
           <Box>
-            <Link _hover={{ textDecoration: "none" }}>
+            <Link reloadDocument _hover={{ textDecoration: "none" }}>
               <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
                 <Image
                   boxSize={8}

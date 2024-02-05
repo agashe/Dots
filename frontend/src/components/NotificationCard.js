@@ -12,7 +12,7 @@ import { MdNotifications } from "react-icons/md";
 
 export function NotificationCard({ notification }) {
   return (
-    <Link _hover={{ textDecoration: "none" }}>
+    <Link reloadDocument _hover={{ textDecoration: "none" }}>
       <Box p={3} shadow='md' borderWidth='1px'>
         <HStack>
           <Box mr={5}>
