@@ -13,6 +13,7 @@ import { NotificationCard } from "../../components/NotificationCard";
 import { useTranslation } from "react-i18next";
 import { Pagination } from "../../components/Pagination";
 import { useState } from "react";
+import { SEO } from "../../components/SEO";
 
 export function NotificationCenter() {
   // const user = JSON.parse(localStorage.getItem("user"));
@@ -53,43 +54,46 @@ export function NotificationCenter() {
   const [currentPage, setCurrentPage] = useState(1);
 
   return (
-    <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
-      <Card w='70%' mx='auto' mb={5}>
-        <CardHeader py={0} pt={3}>
-          <Heading textAlign='center'>{t('notifications')}</Heading>
-        </CardHeader>
+    <>
+      <SEO info={{ title: t('notifications') }} />
+      <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
+        <Card w='70%' mx='auto' mb={5}>
+          <CardHeader py={0} pt={3}>
+            <Heading textAlign='center'>{t('notifications')}</Heading>
+          </CardHeader>
 
-        <CardBody py={5}>
-          {notifications.length ? (
-            <>
-              <Stack spacing={5}>
-                {notifications.map((notification, i) => {
-                  return (
-                    <NotificationCard notification={notification} key={i} />
-                  );
-                })}
-              </Stack>
-              {
-                (pages != 1) &&
-                <Pagination
-                  prevDisabled={(currentPage === 1)}
-                  nextDisabled={(currentPage === pages)}
-                  handlePrev={() => { setCurrentPage(currentPage - 1) }}
-                  handleNext={() => { setCurrentPage(currentPage + 1) }}
-                />
-              }
-            </>
-          ) : (
-            <Heading textAlign='center' size='md' p={5} pb={0}>
-              {t('errors.no_notifications')}
-            </Heading>
-          )}
-        </CardBody>
-      </Card>
+          <CardBody py={5}>
+            {notifications.length ? (
+              <>
+                <Stack spacing={5}>
+                  {notifications.map((notification, i) => {
+                    return (
+                      <NotificationCard notification={notification} key={i} />
+                    );
+                  })}
+                </Stack>
+                {
+                  (pages != 1) &&
+                  <Pagination
+                    prevDisabled={(currentPage === 1)}
+                    nextDisabled={(currentPage === pages)}
+                    handlePrev={() => { setCurrentPage(currentPage - 1) }}
+                    handleNext={() => { setCurrentPage(currentPage + 1) }}
+                  />
+                }
+              </>
+            ) : (
+              <Heading textAlign='center' size='md' p={5} pb={0}>
+                {t('errors.no_notifications')}
+              </Heading>
+            )}
+          </CardBody>
+        </Card>
 
-      <Spacer />
+        <Spacer />
 
-      <Footer />
-    </Flex>
+        <Footer />
+      </Flex>
+    </>
   );
 }

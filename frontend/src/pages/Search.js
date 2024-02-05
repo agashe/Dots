@@ -16,6 +16,8 @@ import { NoResults } from "../components/NoResults";
 import { SearchCommunityCard } from "../components/SearchCommunityCard";
 import { SearchUserCard } from "../components/SearchUserCard";
 import { useTranslation } from "react-i18next";
+import { SEO } from "../components/SEO";
+import { useParams } from "react-router-dom";
 
 export function Search() {
   const { t } = useTranslation();
@@ -115,66 +117,71 @@ export function Search() {
     },
   ];
 
+  let { keyword } = useParams();
+
   return (
-    <Flex pt={5} px={10} bg='gray.50'>
-      <Box w='30%'>
-        <NavigationMenu />
-      </Box>
-      <Box w='60%'>
-        <Tabs colorScheme='brand'>
-          <TabList w='90%' mx='auto'>
-            <Tab>{t('posts')}</Tab>
-            <Tab>{t('users')}</Tab>
-            <Tab>{t('communities')}</Tab>
-          </TabList>
+    <>
+      <SEO info={{ title: t('search_results') + keyword }} />
+      <Flex pt={5} px={10} bg='gray.50'>
+        <Box w='30%'>
+          <NavigationMenu />
+        </Box>
+        <Box w='60%'>
+          <Tabs colorScheme='brand'>
+            <TabList w='90%' mx='auto'>
+              <Tab>{t('posts')}</Tab>
+              <Tab>{t('users')}</Tab>
+              <Tab>{t('communities')}</Tab>
+            </TabList>
 
-          <TabPanels>
-            <TabPanel>
-              {posts.length ? (
-                posts.map((post, i) => {
-                  return <PostCard post={post} key={i} />;
-                })
-              ) : (
-                <NoResults message={t('no_items_were_found', {items: 'posts'})} />
-              )}
-            </TabPanel>
+            <TabPanels>
+              <TabPanel>
+                {posts.length ? (
+                  posts.map((post, i) => {
+                    return <PostCard post={post} key={i} />;
+                  })
+                ) : (
+                  <NoResults message={t('no_items_were_found', { items: 'posts' })} />
+                )}
+              </TabPanel>
 
-            <TabPanel>
-              {users.length ? (
-                <>
-                  <SimpleGrid columns={2} spacing={5}>
-                    {users.map((user, i) => {
-                      return <SearchUserCard user={user} key={i} />;
-                    })}
-                  </SimpleGrid>
-                </>
-              ) : (
-                <NoResults message={t('no_items_were_found', {items: 'users'})} />
-              )}
-            </TabPanel>
+              <TabPanel>
+                {users.length ? (
+                  <>
+                    <SimpleGrid columns={2} spacing={5}>
+                      {users.map((user, i) => {
+                        return <SearchUserCard user={user} key={i} />;
+                      })}
+                    </SimpleGrid>
+                  </>
+                ) : (
+                  <NoResults message={t('no_items_were_found', { items: 'users' })} />
+                )}
+              </TabPanel>
 
-            <TabPanel>
-              {communities.length ? (
-                <>
-                  <SimpleGrid columns={2} spacing={5}>
-                    {communities.map((community, i) => {
-                      return (
-                        <SearchCommunityCard community={community} key={i} />
-                      );
-                    })}
-                  </SimpleGrid>
-                </>
-              ) : (
-                <NoResults message={t('no_items_were_found', {items: 'communities'})} />
-              )}
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-      </Box>
-      <Box w='30%'>
-        <LatestPosts />
-        <PopularCommunities />
-      </Box>
-    </Flex>
+              <TabPanel>
+                {communities.length ? (
+                  <>
+                    <SimpleGrid columns={2} spacing={5}>
+                      {communities.map((community, i) => {
+                        return (
+                          <SearchCommunityCard community={community} key={i} />
+                        );
+                      })}
+                    </SimpleGrid>
+                  </>
+                ) : (
+                  <NoResults message={t('no_items_were_found', { items: 'communities' })} />
+                )}
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
+        </Box>
+        <Box w='30%'>
+          <LatestPosts />
+          <PopularCommunities />
+        </Box>
+      </Flex>
+    </>
   );
 }

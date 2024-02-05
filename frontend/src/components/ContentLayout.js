@@ -11,23 +11,27 @@ import {
 import parse from "html-react-parser";
 
 import { Footer } from "./Footer";
+import { SEO } from "./SEO";
 
 export function ContentLayout({ title, content }) {
   return (
-    <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
-      <Card w='70%' mx='auto' mb={5}>
-        <CardHeader py={0} pt={3}>
-          <Heading textAlign='center'>{title}</Heading>
-        </CardHeader>
+    <>
+      <SEO info={{ title: title }} />
+      <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
+        <Card w='70%' mx='auto' mb={5}>
+          <CardHeader py={0} pt={3}>
+            <Heading textAlign='center'>{title}</Heading>
+          </CardHeader>
 
-        <CardBody py={0} my={5}>
-          <Text>{parse(content)}</Text>
-        </CardBody>
-      </Card>
+          <CardBody py={0} my={5}>
+            <Text>{parse(content)}</Text>
+          </CardBody>
+        </Card>
 
-      <Spacer />
+        <Spacer />
 
-      <Footer />
-    </Flex>
+        <Footer />
+      </Flex>
+    </>
   );
 }

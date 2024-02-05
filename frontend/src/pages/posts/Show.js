@@ -6,6 +6,7 @@ import { AddComment } from "../../components/AddComment";
 import { Comments } from "../../components/Comments";
 import { Footer } from "../../components/Footer";
 import { useEffect } from "react";
+import { SEO } from "../../components/SEO";
 
 export function Show() {
   const post = {
@@ -142,22 +143,32 @@ export function Show() {
     window.scrollTo(0, 0);
   }, []);
 
+  const seoInfo = {
+    title: post.title,
+    description: post.body.slice(0, 100),
+    keywords: post.tags.join(' , '),
+    image: post.image,
+  };
+
   return (
-    <Flex spacing={5} pt={5} px={10} mb={5} bg='gray.50'>
-      <Box w='70%' mr={5}>
-        <ShowPostCard post={post} />
-        <AddComment postId={post.id} />
-        <Comments comments={post.comments} />
-      </Box>
-
-      <Box w='30%'>
-        <LatestPosts />
-        <PopularCommunities />
-
-        <Box w='100%' textAlign='center' mt={5}>
-          <Footer />
+    <>
+      <SEO info={seoInfo} />
+      <Flex spacing={5} pt={5} px={10} mb={5} bg='gray.50'>
+        <Box w='70%' mr={5}>
+          <ShowPostCard post={post} />
+          <AddComment postId={post.id} />
+          <Comments comments={post.comments} />
         </Box>
-      </Box>
-    </Flex>
+
+        <Box w='30%'>
+          <LatestPosts />
+          <PopularCommunities />
+
+          <Box w='100%' textAlign='center' mt={5}>
+            <Footer />
+          </Box>
+        </Box>
+      </Flex>
+    </>
   );
 }

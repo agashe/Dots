@@ -10,6 +10,7 @@ import { TagCard } from "../components/TagCard";
 import { CommunityCard } from "../components/CommunityCard";
 import { UserCard } from "../components/UserCard";
 import { useEffect } from "react";
+import { SEO } from "../components/SEO";
 
 export function Home() {
   const { t } = useTranslation();
@@ -23,7 +24,7 @@ export function Home() {
 
   if (location.pathname.includes('/t/')) {
     type = 'tag';
-    card = <TagCard />;          
+    card = <TagCard />;
   }
   else if (location.pathname.includes('/c/')) {
     type = 'community';
@@ -37,7 +38,7 @@ export function Home() {
   useEffect(function () {
     window.scrollTo(0, 0);
   }, []);
-  
+
   const posts = [
     {
       title: "Lorem ipsum dolor sit amet",
@@ -107,24 +108,27 @@ export function Home() {
   ];
 
   return (
-    <Flex pt={5} px={10} bg='gray.50'>
-      <Box w='30%'>
-        <NavigationMenu />
-      </Box>
-      <Box w='60%'>
-        {posts.length ? (
-          posts.map((post, i) => {
-            return <PostCard post={post} key={i} />;
-          })
-        ) : (
-          <NoResults message={t('no_published_posts')} />
-        )}
-      </Box>
-      <Box w='30%'>
-        {card}
-        <LatestPosts />
-        <PopularCommunities />
-      </Box>
-    </Flex>
+    <>
+      <SEO info={{title: name}} />
+      <Flex pt={5} px={10} bg='gray.50'>
+        <Box w='30%'>
+          <NavigationMenu />
+        </Box>
+        <Box w='60%'>
+          {posts.length ? (
+            posts.map((post, i) => {
+              return <PostCard post={post} key={i} />;
+            })
+          ) : (
+            <NoResults message={t('no_published_posts')} />
+          )}
+        </Box>
+        <Box w='30%'>
+          {card}
+          <LatestPosts />
+          <PopularCommunities />
+        </Box>
+      </Flex>
+    </>
   );
 }

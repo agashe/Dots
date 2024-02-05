@@ -5,6 +5,7 @@ import {
 } from "@chakra-ui/react";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
+import { SEO } from "./components/SEO";
 
 const Button = defineStyleConfig({
   variants: {
@@ -47,6 +48,7 @@ const theme = extendTheme({
 export default function App() {
   return (
     <ChakraProvider theme={theme}>
+      <SEO info={{}} />
       <RouterProvider router={router} />
     </ChakraProvider>
   );
