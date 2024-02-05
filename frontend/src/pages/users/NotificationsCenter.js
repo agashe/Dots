@@ -11,6 +11,8 @@ import {
 import { Footer } from "../../components/Footer";
 import { NotificationCard } from "../../components/NotificationCard";
 import { useTranslation } from "react-i18next";
+import { Pagination } from "../../components/Pagination";
+import { useState } from "react";
 
 export function NotificationCenter() {
   // const user = JSON.parse(localStorage.getItem("user"));
@@ -46,6 +48,10 @@ export function NotificationCenter() {
     },
   ];
 
+  // pagination
+  const [pages, setPages] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
+
   return (
     <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
       <Card w='70%' mx='auto' mb={5}>
@@ -63,12 +69,15 @@ export function NotificationCenter() {
                   );
                 })}
               </Stack>
-              <Flex w='100%' py={0} mt={5} justifyContent='center'>
-                <Button mr={2} isDisabled={true}>
-                  Prev
-                </Button>
-                <Button ml={2}>Next</Button>
-              </Flex>
+              {
+                (pages != 1) &&
+                <Pagination
+                  prevDisabled={(currentPage === 1)}
+                  nextDisabled={(currentPage === pages)}
+                  handlePrev={() => { setCurrentPage(currentPage - 1) }}
+                  handleNext={() => { setCurrentPage(currentPage + 1) }}
+                />
+              }
             </>
           ) : (
             <Heading textAlign='center' size='md' p={5} pb={0}>

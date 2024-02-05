@@ -24,6 +24,8 @@ import { ProfilePostCard } from "../../components/ProfilePostCard";
 import { ProfileCommunityCard } from "../../components/ProfileCommunityCard";
 import { ProfileCommentCard } from "../../components/ProfileCommentCard";
 import { useTranslation } from "react-i18next";
+import { Pagination } from "../../components/Pagination";
+import { useState } from "react";
 
 export function Profile() {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -125,6 +127,14 @@ export function Profile() {
     },
   ];
 
+  // pagination
+  const [postsPages, setPostsPages] = useState(1);
+  const [currentPostsPage, setCurrentPostsPage] = useState(1);
+  const [commentsPages, setCommentsPages] = useState(1);
+  const [currentCommentsPage, setCurrentCommentsPage] = useState(1);
+  const [communitiesPages, setCommunitiesPages] = useState(1);
+  const [currentCommunitiesPage, setCurrentCommunitiesPage] = useState(1);
+
   return (
     <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
       <Card
@@ -200,12 +210,15 @@ export function Profile() {
                         return <ProfilePostCard post={post} key={i} />;
                       })}
                     </SimpleGrid>
-                    <Flex w='100%' py={0} mt={5} justifyContent='center'>
-                      <Button mr={2} isDisabled={true}>
-                        Prev
-                      </Button>
-                      <Button ml={2}>Next</Button>
-                    </Flex>
+                    {
+                      (postsPages != 1) &&
+                      <Pagination
+                        prevDisabled={(currentPostsPage === 1)}
+                        nextDisabled={(currentPostsPage === postsPages)}
+                        handlePrev={() => { setCurrentPostsPage(currentPostsPage - 1) }}
+                        handleNext={() => { setCurrentPostsPage(currentPostsPage + 1) }}
+                      />
+                    }
                   </>
                 ) : (
                   <Heading textAlign='center' size='md' p={5} pb={0}>
@@ -222,12 +235,15 @@ export function Profile() {
                         return <ProfileCommentCard comment={comment} key={i} />;
                       })}
                     </Stack>
-                    <Flex w='100%' py={0} mt={5} justifyContent='center'>
-                      <Button mr={2} isDisabled={true}>
-                        Prev
-                      </Button>
-                      <Button ml={2}>Next</Button>
-                    </Flex>
+                    {
+                      (commentsPages != 1) &&
+                      <Pagination
+                        prevDisabled={(currentCommentsPage === 1)}
+                        nextDisabled={(currentCommentsPage === commentsPages)}
+                        handlePrev={() => { setCurrentCommentsPage(currentCommentsPage - 1) }}
+                        handleNext={() => { setCurrentCommentsPage(currentCommentsPage + 1) }}
+                      />
+                    }
                   </>
                 ) : (
                   <Heading textAlign='center' size='md' p={5} pb={0}>
@@ -246,12 +262,15 @@ export function Profile() {
                         );
                       })}
                     </SimpleGrid>
-                    <Flex w='100%' py={0} mt={5} justifyContent='center'>
-                      <Button mr={2} isDisabled={true}>
-                        Prev
-                      </Button>
-                      <Button ml={2}>Next</Button>
-                    </Flex>
+                    {
+                      (communitiesPages != 1) &&
+                      <Pagination
+                        prevDisabled={(currentCommunitiesPage === 1)}
+                        nextDisabled={(currentCommunitiesPage === communitiesPages)}
+                        handlePrev={() => { setCurrentCommunitiesPage(currentCommunitiesPage - 1) }}
+                        handleNext={() => { setCurrentCommunitiesPage(currentCommunitiesPage + 1) }}
+                      />
+                    }
                   </>
                 ) : (
                   <Heading textAlign='center' size='md' p={5} pb={0}>
