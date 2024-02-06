@@ -16,7 +16,7 @@ export function NotificationCard({ notification }) {
       <Box p={3} shadow='md' borderWidth='1px'>
         <HStack>
           <Box mr={5}>
-            {notification.type == "comment" ? (
+            {notification.type === "comment" ? (
               <Avatar
                 name={notification.user.name}
                 src={notification.user.avatar}

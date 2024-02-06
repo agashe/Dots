@@ -57,6 +57,7 @@
     "post": {
         "_": "Post",
         "title": "Title",
+        "tags": "Tags",
         "banner": "Banner",
         "text": "Text"
     },
@@ -97,6 +98,7 @@
         "community_name": "The Avengers",
         "community_description": "Write something nice about the community",
         "post_title": "Solar system",
+        "post_tags": "Add or create tags for your post",
         "post_community": "Select a community to publish your post",
         "post_text": "Your post content",
         "user_name": "John Doe",

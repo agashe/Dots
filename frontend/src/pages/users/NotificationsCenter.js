@@ -1,6 +1,5 @@
 import {
   Flex,
-  Button,
   Card,
   CardBody,
   Heading,
@@ -73,7 +72,7 @@ export function NotificationCenter() {
                   })}
                 </Stack>
                 {
-                  (pages != 1) &&
+                  (pages !== 1) &&
                   <Pagination
                     prevDisabled={(currentPage === 1)}
                     nextDisabled={(currentPage === pages)}

@@ -22,10 +22,16 @@ import { useState } from "react";
 import { Editor } from "../../components/Editor";
 import { useTranslation } from "react-i18next";
 import { SEO } from "../../components/SEO";
+import { MultiSelect, useMultiSelect } from 'chakra-multiselect'
 
 export function Edit() {
   const [body, setBody] = useState("");
   const { t } = useTranslation();
+
+  const { value, options, onChange } = useMultiSelect({
+    value: [],
+    options: []
+  });
 
   return (
     <>
@@ -49,6 +55,17 @@ export function Edit() {
             <FormControl>
               <FormLabel>{t('post.title')}</FormLabel>
               <Input type='text' placeholder={t('placeholders.post_title')} />
+            </FormControl>
+
+            <FormControl my={5}>
+              <FormLabel>{t('post.tags')}</FormLabel>
+              <MultiSelect
+                options={options}
+                value={value}
+                placeholder={t('placeholders.post_tags')}
+                onChange={onChange}
+                create
+              />
             </FormControl>
 
             <FormControl my={5}>

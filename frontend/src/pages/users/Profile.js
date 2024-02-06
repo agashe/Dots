@@ -1,6 +1,5 @@
 import {
   Flex,
-  Button,
   Card,
   CardBody,
   Heading,
@@ -214,7 +213,7 @@ export function Profile() {
                         })}
                       </SimpleGrid>
                       {
-                        (postsPages != 1) &&
+                        (postsPages !== 1) &&
                         <Pagination
                           prevDisabled={(currentPostsPage === 1)}
                           nextDisabled={(currentPostsPage === postsPages)}
@@ -239,7 +238,7 @@ export function Profile() {
                         })}
                       </Stack>
                       {
-                        (commentsPages != 1) &&
+                        (commentsPages !== 1) &&
                         <Pagination
                           prevDisabled={(currentCommentsPage === 1)}
                           nextDisabled={(currentCommentsPage === commentsPages)}
@@ -266,7 +265,7 @@ export function Profile() {
                         })}
                       </SimpleGrid>
                       {
-                        (communitiesPages != 1) &&
+                        (communitiesPages !== 1) &&
                         <Pagination
                           prevDisabled={(currentCommunitiesPage === 1)}
                           nextDisabled={(currentCommunitiesPage === communitiesPages)}

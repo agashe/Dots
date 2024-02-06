@@ -23,25 +23,35 @@ import {
 } from "@chakra-ui/react";
 import { Footer } from "../../components/Footer";
 import { MdRemoveCircle, MdArrowDownward } from "react-icons/md";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { Editor } from "../../components/Editor";
 import { useTranslation } from "react-i18next";
 import { SEO } from "../../components/SEO";
+import { MultiSelect, useMultiSelect } from 'chakra-multiselect'
 
 export function Create() {
   const [body, setBody] = useState("");
+  const [selectedCommunity, setSelectedCommunity] = useState({});
   const { t } = useTranslation();
 
   const communities = [
     {
+      id: 1,
       name: "The Unknown",
       logo: "unknown.png",
     },
     {
+      id: 2,
       name: "Cool_people",
       logo: "images/sun-icon.png",
     },
   ];
+
+  const { value, options, onChange } = useMultiSelect({
+    value: [],
+    options: ["1", "2", "3"]
+  });
 
   return (
     <>
@@ -68,29 +78,61 @@ export function Create() {
             </FormControl>
 
             <FormControl my={5}>
+              <FormLabel>{t('post.tags')}</FormLabel>
+              <MultiSelect
+                options={options}
+                value={value}
+                placeholder={t('placeholders.post_tags')}
+                onChange={onChange}
+                create
+              />
+            </FormControl>
+
+            <FormControl my={5}>
               <FormLabel>{t('community._')}</FormLabel>
               <Menu matchWidth={true}>
                 <MenuButton
                   as={Button}
-                  rightIcon={<Icon as={MdArrowDownward} />}
+                  rightIcon={<IconButton
+                    icon={<Icon as={ChevronDownIcon} color='black' boxSize='1.4rem' />}
+                    h='32px'
+                    w='32px'
+                    minW={0}
+                    colorScheme='gray'
+                    variant='ghost'
+                  />}
                   matchWidth={true}
                   bg='white'
-                  color='gray.500'
+                  color={selectedCommunity.id ? 'black' : '#b9c1cb'}
                   variant='outline'
                   textAlign='left'
                   w='100%'
+                  pr={1}
                   fontSize='md'
-                  fontWeight='normal'
-                  borderColor='gray.300'
+                  fontWeight='100'
+                  borderColor='#e2e8f0'
                   borderWidth='1px'
+                  _hover={{ bg: 'white' }}
                 >
-                  {t('placeholders.post_community')}
+                  {
+                    selectedCommunity.id ?
+                      <HStack>
+                        <Image
+                          boxSize={7}
+                          src='/unknown.png'
+                          fallbackSrc='/images/group-placeholder.png'
+                          mr={2}
+                        />
+                        <Text>{selectedCommunity.name}</Text>
+                      </HStack> :
+                      t('placeholders.post_community')
+                  }
                 </MenuButton>
 
                 <MenuList matchWidth={true}>
                   {communities.map(function (community, i) {
                     return (
-                      <MenuItem matchWidth={true} key={i}>
+                      <MenuItem matchWidth={true} key={i} onClick={() => { setSelectedCommunity(community) }}>
                         <Image
                           boxSize={7}
                           src='/unknown.png'
