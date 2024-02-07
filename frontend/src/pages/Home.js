@@ -1,4 +1,4 @@
-import { Flex, Box } from "@chakra-ui/react";
+import { Flex, Box, Show, Hide } from "@chakra-ui/react";
 import { useParams, useLocation } from "react-router-dom";
 import { NavigationMenu } from "../components/NavigationMenu";
 import { LatestPosts } from "../components/LatestPosts";
@@ -109,12 +109,14 @@ export function Home() {
 
   return (
     <>
-      <SEO info={{title: name}} />
-      <Flex pt={5} px={10} bg='gray.50'>
-        <Box w='30%'>
-          <NavigationMenu />
-        </Box>
-        <Box w='60%'>
+      <SEO info={{ title: name }} />
+      <Flex pt={5} px={{ base: 5, md: 2, lg: 10 }} bg='gray.50'>
+        <Hide below="md">
+          <Box w={{ md: '35%', lg: '25%' }}>
+            <NavigationMenu />
+          </Box>
+        </Hide>
+        <Box w={{ base: '100%', md: '65%', lg: '50%' }}>
           {posts.length ? (
             posts.map((post, i) => {
               return <PostCard post={post} key={i} />;
@@ -123,11 +125,13 @@ export function Home() {
             <NoResults message={t('no_published_posts')} />
           )}
         </Box>
-        <Box w='30%'>
-          {card}
-          <LatestPosts />
-          <PopularCommunities />
-        </Box>
+        <Show above="lg">
+          <Box w='25%'>
+            {card}
+            <LatestPosts />
+            <PopularCommunities />
+          </Box>
+        </Show>
       </Flex>
     </>
   );

@@ -20,7 +20,7 @@ export function Comments({ comments }) {
   console.log(user);
 
   return (
-    <Card ml={5} mb={5}>
+    <Card ml={{ base: 0, lg: 5 }} mb={5}>
       <CardHeader py={3}>
         <Flex alignItems='center'>
           <Heading size='md'>{t('comments')}</Heading>
@@ -28,7 +28,7 @@ export function Comments({ comments }) {
           <Spacer />
 
           {comments.length ? (
-            <Select width='20%'>
+            <Select width={{ base: '45%', md: '20%' }}>
               <option value='popular'>{t('comments_sort.popular')}</option>
               <option value='latest'>{t('comments_sort.latest')}</option>
               <option value='oldest'>{t('comments_sort.oldest')}</option>
@@ -42,7 +42,7 @@ export function Comments({ comments }) {
 
       <Divider />
 
-      <CardBody>
+      <CardBody px={{ base: 3, lg: 5 }}>
         {comments.length ? (
           comments.map((comment, i) => {
             return <Comment comment={comment} key={i} />;

@@ -17,7 +17,7 @@ export function AddComment({ postId }) {
   console.log(user, postId);
 
   return (
-    <Card ml={5} mb={5} height='225px'>
+    <Card ml={{ base: 0, lg: 5 }} mb={5} height='225px'>
       <CardBody py={1}>
         <FormControl my={3}>
           <Editor

@@ -1,4 +1,4 @@
-import { Flex, Box } from "@chakra-ui/react";
+import { Flex, Box, Show as ShowSideMenu } from "@chakra-ui/react";
 import { LatestPosts } from "../../components/LatestPosts";
 import { PopularCommunities } from "../../components/PopularCommunities";
 import { ShowPostCard } from "../../components/ShowPostCard";
@@ -153,21 +153,23 @@ export function Show() {
   return (
     <>
       <SEO info={seoInfo} />
-      <Flex spacing={5} pt={5} px={10} mb={5} bg='gray.50'>
-        <Box w='70%' mr={5}>
+      <Flex spacing={5} pt={5} px={{ base: 3, lg: 10 }} mb={5} bg='gray.50'>
+        <Box w={{ base: '100%', lg: '70%' }} mr={{ base: 0, lg: 5 }}>
           <ShowPostCard post={post} />
           <AddComment postId={post.id} />
           <Comments comments={post.comments} />
         </Box>
 
-        <Box w='30%'>
-          <LatestPosts />
-          <PopularCommunities />
+        <ShowSideMenu above="lg">
+          <Box w='30%'>
+            <LatestPosts />
+            <PopularCommunities />
 
-          <Box w='100%' textAlign='center' mt={5}>
-            <Footer />
+            <Box w='100%' textAlign='center' mt={5}>
+              <Footer />
+            </Box>
           </Box>
-        </Box>
+        </ShowSideMenu>
       </Flex>
     </>
   );

@@ -29,9 +29,9 @@ export function EditProfile() {
   return (
     <>
       <SEO info={{ title: t('actions.edit_profile') }} />
-      <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
+      <Flex pt={5} px={{ base: 3, lg: 10 }} bg='gray.50' minHeight='90vh' flexDirection='column'>
         <Card
-          w='70%'
+          w={{ base: '100%', lg: '70%' }}
           mx='auto'
           mb={5}
           justifyContent='center'
@@ -43,7 +43,7 @@ export function EditProfile() {
           </CardHeader>
         </Card>
 
-        <Card w='70%' mx='auto' mb={5}>
+        <Card w={{ base: '100%', lg: '70%' }} mx='auto' mb={5}>
           <CardBody>
             <FormControl>
               <FormLabel>{t('user.name')}</FormLabel>
@@ -101,7 +101,7 @@ export function EditProfile() {
           </CardBody>
         </Card>
 
-        <Card w='70%' mx='auto' mb={5}>
+        <Card w={{ base: '100%', lg: '70%' }} mx='auto' mb={5}>
           <CardHeader pb={0} mb={0}>
             <Heading size='md' textAlign='center'>
               {t('user.update_password_hint')}
@@ -130,7 +130,7 @@ export function EditProfile() {
         </Card>
 
         <Card
-          w='70%'
+          w={{ base: '100%', lg: '70%' }}
           mx='auto'
           mb={5}
           justifyContent='center'

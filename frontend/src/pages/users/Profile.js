@@ -137,10 +137,10 @@ export function Profile() {
 
   return (
     <>
-      <SEO info={{title: t('profile')}} />
-      <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
+      <SEO info={{ title: t('profile') }} />
+      <Flex pt={5} px={{ base: 5, lg: 10 }} bg='gray.50' minHeight='90vh' flexDirection='column'>
         <Card
-          w='70%'
+          w={{ base: '100%', lg: '70%' }}
           mx='auto'
           mb={5}
           justifyContent='center'
@@ -153,14 +153,14 @@ export function Profile() {
               src={user.avatar}
               bg='brand.main'
               color='white'
-              size='xl'
+              size={{ base: 'lg', lg: 'xl' }}
             />
             <Heading my={3}>{user.name}</Heading>
             <Text>I am a cool guy , who likes build stuff with assembly :)</Text>
           </CardHeader>
 
           <CardBody py={0} my={5}>
-            <Stack spacing={8} direction='row'>
+            <Stack spacing={{ base: 3, lg: 8 }} direction={{ base: 'column', lg: 'row' }}>
               <Text>
                 <Icon as={MdCake} mr={2} />
                 30 Oct 1999
@@ -179,10 +179,10 @@ export function Profile() {
           </CardBody>
         </Card>
 
-        <Card w='70%' mx='auto' mb={5}>
-          <CardBody py={0} mt={5}>
+        <Card w={{ base: '100%', lg: '70%' }} mx='auto' mb={5}>
+          <CardBody py={0} mt={5} px={{ base: 2, lg: 5 }}>
             <Tabs colorScheme='brand'>
-              <TabList>
+              <TabList overflowX={{ base: 'scroll', md: 'visible' }} overflowY={{ base: 'visible', md: 'visible' }}>
                 <Tab>
                   {t('posts')}
                   <Badge ml={2} borderRadius='lg' bg='gray' color='white'>
@@ -257,7 +257,7 @@ export function Profile() {
                 <TabPanel>
                   {communities.length ? (
                     <>
-                      <SimpleGrid columns={2} spacing={10}>
+                      <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={{ base: 5, lg: 10 }}>
                         {communities.map((community, i) => {
                           return (
                             <ProfileCommunityCard community={community} key={i} />

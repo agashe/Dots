@@ -40,7 +40,7 @@ export function Comment({ comment }) {
   }
 
   return (
-    <Card mb={5}>
+    <Card mb={5} mx={1}>
       <CardHeader py={0} pt={3}>
         <Flex spacing='4'>
           <HStack>

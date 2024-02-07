@@ -35,9 +35,9 @@ export function Edit() {
   return (
     <>
       <SEO info={{ title: t('actions.edit_community') }} />
-      <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
+      <Flex pt={5} px={{ base: 3, lg: 10 }} bg='gray.50' minHeight='90vh' flexDirection='column'>
         <Card
-          w='70%'
+          w={{ base: '100%', lg: '70%' }}
           mx='auto'
           mb={5}
           justifyContent='center'
@@ -49,7 +49,7 @@ export function Edit() {
           </CardHeader>
         </Card>
 
-        <Card w='70%' mx='auto' mb={5}>
+        <Card w={{ base: '100%', lg: '70%' }} mx='auto' mb={5}>
           <CardBody>
             <FormControl>
               <FormLabel>{t('community.name')}</FormLabel>
@@ -95,7 +95,7 @@ export function Edit() {
         </Card>
 
         <Card
-          w='70%'
+          w={{ base: '100%', lg: '70%' }}
           mx='auto'
           mb={5}
           justifyContent='center'

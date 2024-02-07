@@ -35,7 +35,7 @@ export function ShowPostCard({ post }) {
 
   return (
     <>
-      <Card ml={5} mb={5}>
+      <Card ml={{ base: 0, lg: 5 }} mb={5}>
         <Image
           src={post.image}
           alt={post.title}
@@ -89,7 +89,7 @@ export function ShowPostCard({ post }) {
         <Divider />
 
         <CardFooter py={2} pl={3}>
-          <HStack spacing={5}>
+          <HStack spacing={{ base: 1, md: 5 }}>
             <HStack spacing={2}>
               <Tooltip label={t('actions.rate_up')}>
                 <IconButton
@@ -141,8 +141,8 @@ export function ShowPostCard({ post }) {
         </CardFooter>
       </Card>
 
-      <Card ml={5} mb={5}>
-        <CardBody fontSize='1.2rem'>
+      <Card ml={{ base: 0, lg: 5 }} mb={5}>
+        <CardBody fontSize={{ base: '1rem', lg: '1.2rem' }}>
           <Text>{parse(post.body)}</Text>
         </CardBody>
       </Card>

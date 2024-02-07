@@ -82,7 +82,7 @@ export function Layout() {
           minWidth='max-content'
           alignItems='center'
           gap='2'
-          px={14}
+          px={{md: 1, lg: 14}}
           py={1}
           border='1px'
           borderColor='gray.200'
@@ -91,7 +91,7 @@ export function Layout() {
             _hover={{ textDecoration: "none" }}
             as={ReactRouterLink}
             to='/'
-            width='15%'
+            width={{md: '15%', lg: '15%'}}
           >
             <div className='logo'>
               D<span className='red-dot'></span>TS...

@@ -17,13 +17,13 @@ export function ContentLayout({ title, content }) {
   return (
     <>
       <SEO info={{ title: title }} />
-      <Flex pt={5} px={10} bg='gray.50' minHeight='90vh' flexDirection='column'>
-        <Card w='70%' mx='auto' mb={5}>
+      <Flex pt={5} px={{ base: 3, lg: 10 }} bg='gray.50' minHeight='90vh' flexDirection='column'>
+        <Card w={{ base: '100%', lg: '70%' }} mx='auto' mb={5}>
           <CardHeader py={0} pt={3}>
             <Heading textAlign='center'>{title}</Heading>
           </CardHeader>
 
-          <CardBody py={0} my={5}>
+          <CardBody py={0} my={5} px={{ base: 2, lg: 5 }}>
             <Text>{parse(content)}</Text>
           </CardBody>
         </Card>

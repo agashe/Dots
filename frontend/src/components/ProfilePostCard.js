@@ -38,15 +38,15 @@ export function ProfilePostCard({ post }) {
       position='relative'
       overflow='hidden'
       variant='outline'
-      h='200px'
+      h={{ base: '100%', sm: '250px', lg: '200px' }}
     >
       <Image
         objectFit='cover'
-        w='200px'
+        w={{ base: '100%', sm: '250px', lg: '200px' }}
         h='auto'
-        minW='200px'
-        maxW={{ base: "100%", sm: "200px" }}
-        maxH={{ base: "100%", sm: "200px" }}
+        minW={{ base: '100%', sm: '250px', lg: '200px' }}
+        maxW={{ sm: '250px', lg: '200px' }}
+        maxH={{ base: '150px', sm: '250px', lg: '200px' }}
         src={post.image}
         alt={post.title}
         fallbackSrc='images/placeholder-image.png'
@@ -80,7 +80,7 @@ export function ProfilePostCard({ post }) {
           </HStack>
         </CardBody>
 
-        <CardFooter py={0} pb={2}>
+        <CardFooter py={0} pb={2} px={{base: 0, md: 5}}>
           <Flex w='100%'>
             <Link reloadDocument>
               <Tooltip label={t('actions.rate')}>
@@ -128,10 +128,10 @@ export function ProfilePostCard({ post }) {
           top='7px'
           right='7px'
           color='brand.main'
-          variant='ghost'
+          variant={{ base: 'solid', md: 'ghost' }}
           minWidth='10px'
-          width='10px'
-          height='10px'
+          width={{ base: '30px', md: '10px' }}
+          height={{ base: '30px', md: '10px' }}
           padding='0'
           as='a'
           href='/edit-post'

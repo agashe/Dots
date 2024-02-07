@@ -29,11 +29,11 @@ export function PostCard({ post }) {
   }
 
   return (
-    <Card w='90%' mx='auto' mb={5}>
+    <Card w={{ md: '100%', lg: '90%' }} mx='auto' mb={5}>
       <Image
         src={post.image}
         alt={post.title}
-        maxHeight='400px'
+        maxHeight={{ base: '300px', md: '400px'}}
         borderTopRadius='lg'
         fallbackSrc='/images/placeholder-image.png'
         style={{ cursor: "pointer" }}
@@ -89,7 +89,7 @@ export function PostCard({ post }) {
 
       <Divider />
 
-      <CardFooter py={2}>
+      <CardFooter py={2} px={{base: 0, md: 5}}>
         <Flex w='100%'>
           <Link reloadDocument>
             <Tooltip label={t('actions.rate')}>
