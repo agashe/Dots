@@ -7,6 +7,8 @@ import {
   Tab,
   TabPanel,
   SimpleGrid,
+  Show,
+  Hide,
 } from "@chakra-ui/react";
 import { NavigationMenu } from "../components/NavigationMenu";
 import { LatestPosts } from "../components/LatestPosts";
@@ -90,18 +92,19 @@ export function Search() {
     },
   ];
 
-  const communities = [
-    {
-      name: "The Unknown",
-      members: "2",
-      logo: "unknown.png",
-    },
-    {
-      name: "Cool_people",
-      members: "10.2M",
-      logo: "/images/sun-icon.png",
-    },
-  ];
+  const communities = [];
+  // [
+  //   {
+  //     name: "The Unknown",
+  //     members: "2",
+  //     logo: "unknown.png",
+  //   },
+  //   {
+  //     name: "Cool_people",
+  //     members: "10.2M",
+  //     logo: "/images/sun-icon.png",
+  //   },
+  // ];
 
   const users = [
     {
@@ -122,47 +125,49 @@ export function Search() {
   return (
     <>
       <SEO info={{ title: t('search_results') + keyword }} />
-      <Flex pt={5} px={10} bg='gray.50'>
-        <Box w='30%'>
-          <NavigationMenu />
-        </Box>
-        <Box w='60%'>
+      <Flex pt={5} px={{ base: 5, md: 2, lg: 10 }} bg='gray.50'>
+        <Hide below="md">
+          <Box w={{ md: '35%', lg: '25%' }}>
+            <NavigationMenu />
+          </Box>
+        </Hide>
+        <Box w={{ base: '100%', md: '65%', lg: '50%' }}>
           <Tabs colorScheme='brand'>
-            <TabList w='90%' mx='auto'>
+            <TabList w={{ base: '100%', lg: '90%' }} mx='auto'>
               <Tab>{t('posts')}</Tab>
               <Tab>{t('users')}</Tab>
               <Tab>{t('communities')}</Tab>
             </TabList>
 
             <TabPanels>
-              <TabPanel>
+              <TabPanel px={{ base: 0, lg: 5 }}>
                 {posts.length ? (
                   posts.map((post, i) => {
                     return <PostCard post={post} key={i} />;
                   })
                 ) : (
-                  <NoResults message={t('no_items_were_found', { items: 'posts' })} />
+                  <NoResults message={t('errors.no_items_were_found', { items: 'posts' })} />
                 )}
               </TabPanel>
 
-              <TabPanel>
+              <TabPanel px={{ base: 0, lg: 5 }}>
                 {users.length ? (
                   <>
-                    <SimpleGrid columns={2} spacing={5}>
+                    <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={5}>
                       {users.map((user, i) => {
                         return <SearchUserCard user={user} key={i} />;
                       })}
                     </SimpleGrid>
                   </>
                 ) : (
-                  <NoResults message={t('no_items_were_found', { items: 'users' })} />
+                  <NoResults message={t('errors.no_items_were_found', { items: 'users' })} />
                 )}
               </TabPanel>
 
-              <TabPanel>
+              <TabPanel px={{ base: 0, lg: 5 }}>
                 {communities.length ? (
                   <>
-                    <SimpleGrid columns={2} spacing={5}>
+                    <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={5}>
                       {communities.map((community, i) => {
                         return (
                           <SearchCommunityCard community={community} key={i} />
@@ -171,16 +176,18 @@ export function Search() {
                     </SimpleGrid>
                   </>
                 ) : (
-                  <NoResults message={t('no_items_were_found', { items: 'communities' })} />
+                  <NoResults message={t('errors.no_items_were_found', { items: 'communities' })} />
                 )}
               </TabPanel>
             </TabPanels>
           </Tabs>
         </Box>
-        <Box w='30%'>
-          <LatestPosts />
-          <PopularCommunities />
-        </Box>
+        <Show above="lg">
+          <Box w='25%'>
+            <LatestPosts />
+            <PopularCommunities />
+          </Box>
+        </Show>
       </Flex>
     </>
   );

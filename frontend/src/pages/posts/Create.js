@@ -56,7 +56,7 @@ export function Create() {
   return (
     <>
       <SEO info={{ title: t('actions.create_post') }} />
-      <Flex pt={5} px={{ base: 3, lg: 10 }} bg='gray.50' minHeight='90vh' flexDirection='column'>
+      <Flex pt={5} px={{ base: 3, lg: 10 }} bg='gray.50' minHeight='100vh' flexDirection='column'>
         <Card
           w={{ base: '100%', lg: '70%' }}
           mx='auto'
@@ -66,7 +66,7 @@ export function Create() {
           textAlign='center'
         >
           <CardHeader>
-            <Heading textAlign='center'>{t('actions.create_post')}</Heading>
+            <Heading textAlign='center' size='lg'>{t('actions.create_post')}</Heading>
           </CardHeader>
         </Card>
 

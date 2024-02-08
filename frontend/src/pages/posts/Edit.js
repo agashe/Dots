@@ -36,7 +36,7 @@ export function Edit() {
   return (
     <>
       <SEO info={{ title: t('actions.edit_post') }} />
-      <Flex pt={5} px={{ base: 3, lg: 10 }} bg='gray.50' minHeight='90vh' flexDirection='column'>
+      <Flex pt={5} px={{ base: 3, lg: 10 }} bg='gray.50' minHeight='100vh' flexDirection='column'>
         <Card
           w={{ base: '100%', lg: '70%' }}
           mx='auto'
@@ -46,7 +46,7 @@ export function Edit() {
           textAlign='center'
         >
           <CardHeader>
-            <Heading textAlign='center'>{t('actions.edit_post')}</Heading>
+            <Heading textAlign='center' size='lg'>{t('actions.edit_post')}</Heading>
           </CardHeader>
         </Card>
 

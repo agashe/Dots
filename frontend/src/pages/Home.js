@@ -117,6 +117,12 @@ export function Home() {
           </Box>
         </Hide>
         <Box w={{ base: '100%', md: '65%', lg: '50%' }}>
+          <Show below="lg">
+            <Box>
+              {card}
+            </Box>
+          </Show>
+
           {posts.length ? (
             posts.map((post, i) => {
               return <PostCard post={post} key={i} />;

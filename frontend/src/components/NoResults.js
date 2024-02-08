@@ -7,7 +7,7 @@ export function NoResults({ message }) {
 
   return (
     <Card
-      boxSize='lg'
+      boxSize={{ base: 'xs', md: 'md', lg: 'lg' }}
       mx='auto'
       mb={5}
       textAlign='center'
@@ -17,9 +17,9 @@ export function NoResults({ message }) {
         alignItems: "center",
       }}
     >
-      <Icon as={MdErrorOutline} boxSize={48} color='brand.main' />
+      <Icon as={MdErrorOutline} boxSize={{ base: 24, lg: 48 }} color='brand.main' />
 
-      <Heading>{t('no_results')}</Heading>
+      <Heading>{t('errors.no_results')}</Heading>
 
       <Text mt={5}>{message}</Text>
     </Card>

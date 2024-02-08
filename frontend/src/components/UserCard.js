@@ -17,7 +17,7 @@ export function UserCard() {
   const { t } = useTranslation();
 
   return (
-    <Card mr={5} mb={5}>
+    <Card mr={{ base: 0, lg: 5 }} mb={5}>
       <CardBody>
         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
           <Avatar
