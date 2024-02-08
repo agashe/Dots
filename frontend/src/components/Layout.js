@@ -16,6 +16,11 @@ import {
   Avatar,
   Tooltip,
   useDisclosure,
+  Switch,
+  Text,
+  HStack,
+  Show,
+  Hide,
 } from "@chakra-ui/react";
 import {
   MdSearch,
@@ -26,16 +31,21 @@ import {
   MdEdit,
   MdAddCircle,
   MdLogout,
+  MdMenu,
 } from "react-icons/md";
 import { Outlet, Link as ReactRouterLink } from "react-router-dom";
 import { SignIn } from "./auth/SignIn";
 import { SignUp } from "./auth/SignUp";
+import { SideMenu } from "./SideMenu";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+import { SearchModal } from "./SearchModel";
 
 export function Layout() {
   const { t } = useTranslation();
-
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [searchKeyword, setSearchKeyword] = useState("");
+  
   const {
     isOpen: isOpenSignIn,
     onOpen: onOpenSignIn,
@@ -48,9 +58,17 @@ export function Layout() {
     onClose: onCloseSignUp,
   } = useDisclosure();
 
-  const user = JSON.parse(localStorage.getItem("user"));
+  const {
+    isOpen: isOpenSideMenu,
+    onOpen: onOpenSideMenu,
+    onClose: onCloseSideMenu,
+  } = useDisclosure();
 
-  const [searchKeyword, setSearchKeyword] = useState("");
+  const {
+    isOpen: isOpenSearchModal,
+    onOpen: onOpenSearchModal,
+    onClose: onCloseSearchModal,
+  } = useDisclosure();
 
   function handleSearchInput(event) {
     setSearchKeyword(event.target.value);
@@ -82,66 +100,94 @@ export function Layout() {
           minWidth='max-content'
           alignItems='center'
           gap='2'
-          px={{md: 1, lg: 14}}
+          px={{ md: 1, lg: 14 }}
           py={1}
-          border='1px'
-          borderColor='gray.200'
+          borderBottom='1px'
+          borderColor='brand.main'
         >
           <Link reloadDocument
             _hover={{ textDecoration: "none" }}
-            as={ReactRouterLink}
-            to='/'
-            width={{md: '15%', lg: '15%'}}
+            width={{ md: '15%' }}
           >
             <div className='logo'>
-              D<span className='red-dot'></span>TS...
+              <Show below='md'>
+                <Tooltip label={t('search')}>
+                  <>
+                    <IconButton
+                      colorScheme='brand'
+                      icon={<Icon as={MdMenu} boxSize={{ base: 4, md: 6 }} />}
+                      boxSize={{ base: 7, md: 10 }}
+                      minW={{ base: 7, md: 10 }}
+                      mx={1}
+                      mb={1}
+                      onClick={onOpenSideMenu}
+                    />
+                    <SideMenu isOpen={isOpenSideMenu} onClose={onCloseSideMenu} />
+                  </>
+                </Tooltip>
+              </Show>
+
+              <span onClick={() => { window.location.href = '/'; }}>
+                D<span className='red-dot'></span>TS...
+              </span>
             </div>
           </Link>
 
           <Spacer />
 
-          <Flex width='40%'>
-            <Input placeholder={t('search')} onChange={handleSearchInput} />
-            <IconButton
-              colorScheme='brand'
-              icon={<Icon as={MdSearch} boxSize={6} />}
-              ml='2'
-              onClick={submitSearch}
-            />
-          </Flex>
+          <Hide below='lg'>
+            <Flex width='40%'>
+              <Input placeholder={t('search')} onChange={handleSearchInput} />
+              <IconButton
+                colorScheme='brand'
+                icon={<Icon as={MdSearch} boxSize={6} />}
+                ml='2'
+                onClick={submitSearch}
+              />
+            </Flex>
+          </Hide>
 
           <Spacer />
 
           <ButtonGroup
-            gap='2'
+            gap={{ base: '1', md: '2' }}
             width='17%'
             justifyContent='right'
+            alignItems='center'
             paddingRight='2px'
           >
-            <Tooltip label={t('dark_mode')}>
-              <IconButton
-                colorScheme='brand'
-                icon={<Icon as={MdDarkMode} boxSize={6} />}
-              />
-            </Tooltip>
-
             {user ? (
               <>
+                <Show below='lg'>
+                  <Tooltip label={t('search')}>
+                    <IconButton
+                      colorScheme='brand'
+                      icon={<Icon as={MdSearch} boxSize={{ base: 4, md: 6 }} />}
+                      boxSize={{ base: 7, md: 10 }}
+                      minW={{ base: 7, md: 10 }}
+                      onClick={onOpenSearchModal}
+                    />
+                  </Tooltip>
+                  <SearchModal isOpen={isOpenSearchModal} onClose={onCloseSearchModal} />
+                </Show>
+
                 <Tooltip label={t('notifications')}>
                   <IconButton
                     as='a'
                     href='/notifications'
                     colorScheme='brand'
                     position='relative'
+                    boxSize={{ base: 7, md: 10 }}
+                    minW={{ base: 7, md: 10 }}
                     icon={
                       <>
-                        <Icon as={MdNotifications} boxSize={6} />
+                        <Icon as={MdNotifications} boxSize={{ base: 4, md: 6 }} />
                         <Box
                           as={"span"}
                           color={"black"}
                           position={"absolute"}
                           top={"-3px"}
-                          left={"25px"}
+                          left={{ base: '15px', md: '25px' }}
                           fontSize={"0.8rem"}
                           bgColor={"orange"}
                           borderRadius='20px'
@@ -158,14 +204,16 @@ export function Layout() {
                   />
                 </Tooltip>
 
-                <Tooltip label={t('actions.create_post')}>
-                  <IconButton
-                    as='a'
-                    href='/create-post'
-                    colorScheme='brand'
-                    icon={<Icon as={MdAdd} boxSize={6} />}
-                  />
-                </Tooltip>
+                <Hide below='lg'>
+                  <Tooltip label={t('actions.create_post')}>
+                    <IconButton
+                      as='a'
+                      href='/create-post'
+                      colorScheme='brand'
+                      icon={<Icon as={MdAdd} boxSize={6} />}
+                    />
+                  </Tooltip>
+                </Hide>
 
                 <Menu>
                   <MenuButton
@@ -177,12 +225,15 @@ export function Layout() {
                         src={user.avatar}
                         bg='brand.main'
                         color='white'
-                        boxSize={10}
+                        boxSize={{ base: 7, md: 10 }}
+                        size={{ base: 'sm', md: 'md' }}
                       />
                     }
                     variant='ghost'
                     _focus={{ bg: "none" }}
                     _hover={{ bg: "none" }}
+                    boxSize={{ base: 7, md: 10 }}
+                    minW={{ base: 7, md: 10 }}
                   />
                   <MenuList>
                     <MenuItem
@@ -217,6 +268,18 @@ export function Layout() {
                       iconSpacing={2}
                     >
                       {t('actions.create_community')}
+                    </MenuItem>
+                    <MenuDivider />
+                    <MenuItem
+                      as='button'
+                      href='/create-community'
+                      icon={<Icon as={MdDarkMode} boxSize={5} />}
+                      iconSpacing={2}
+                    >
+                      <HStack spacing={5}>
+                        <Text>{t('dark_mode')}</Text>
+                        <Switch colorScheme="brand" isChecked />
+                      </HStack>
                     </MenuItem>
                     <MenuDivider />
                     <MenuItem
