@@ -13,8 +13,14 @@ import {
   Link,
   HStack,
   Tooltip,
+  Spacer,
+  Show,
+  Hide,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
-
 import {
   // MdThumbUp,
   // MdThumbDown,
@@ -23,15 +29,17 @@ import {
   MdChat,
   MdOutlineShare,
   MdOutlineErrorOutline,
+  MdMoreHoriz,
 } from "react-icons/md";
-
 import { AddComment } from "./AddComment";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function Comment({ comment }) {
   const user = JSON.parse(localStorage.getItem("user"));
   const [addComment, setAddComment] = useState(false);
+  const { t } = useTranslation();
 
   console.log(user);
 
@@ -41,31 +49,32 @@ export function Comment({ comment }) {
 
   return (
     <Card mb={5} mx={1}>
-      <CardHeader py={0} pt={3}>
-        <Flex spacing='4'>
-          <HStack>
+      <CardHeader py={0} pt={3} px={{ base: 1, md: 5 }}>
+        <Flex>
+          <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
+            <Avatar
+              name={comment.user.name}
+              src={comment.user.avatar}
+              bg='brand.main'
+              color='white'
+              boxSize={6}
+              mr={2}
+            />
+          </Link>
+
+          <Box>
             <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
-              <Avatar
-                name={comment.user.name}
-                src={comment.user.avatar}
-                bg='brand.main'
-                color='white'
-                boxSize={6}
-              />
+              <Heading size={{ base: 'xs', md: 'sm' }}>{comment.user.name}</Heading>
             </Link>
+          </Box>
 
-            <Box>
-              <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
-                <Heading size='sm'>{comment.user.name}</Heading>
-              </Link>
-            </Box>
+          <Spacer />
 
-            <Text fontSize='sm'>({comment.date})</Text>
-          </HStack>
+          <Text fontSize={{ base: 'xs', md: 'sm' }}>({comment.date})</Text>
         </Flex>
       </CardHeader>
 
-      <CardBody py={0} my={2}>
+      <CardBody py={0} my={2} px={{ base: 1, md: 5 }}>
         <Text>{comment.title}</Text>
       </CardBody>
 
@@ -79,6 +88,8 @@ export function Comment({ comment }) {
                 boxSize={4}
                 color='lime'
                 _hover={{ textDecoration: "none" }}
+                w={{ base: 5, md: 10 }}
+                minW={{ base: 5, md: 10 }}
               />
             </Tooltip>
 
@@ -91,6 +102,8 @@ export function Comment({ comment }) {
                 boxSize={4}
                 color='blue'
                 _hover={{ textDecoration: "none" }}
+                w={{ base: 5, md: 10 }}
+                minW={{ base: 5, md: 10 }}
               />
             </Tooltip>
           </HStack>
@@ -105,23 +118,44 @@ export function Comment({ comment }) {
             />
           </Tooltip>
 
-          <Tooltip label='Share'>
-            <IconButton
-              variant='ghost'
-              boxSize={4}
-              icon={<Icon as={MdOutlineShare} />}
-              _hover={{ textDecoration: "none" }}
-            />
-          </Tooltip>
+          <Hide below='md'>
+            <Tooltip label='Share'>
+              <IconButton
+                variant='ghost'
+                boxSize={4}
+                icon={<Icon as={MdOutlineShare} />}
+                _hover={{ textDecoration: "none" }}
+              />
+            </Tooltip>
 
-          <Tooltip label='Report'>
-            <IconButton
-              variant='ghost'
-              boxSize={4}
-              icon={<Icon as={MdOutlineErrorOutline} />}
-              _hover={{ textDecoration: "none" }}
-            />
-          </Tooltip>
+            <Tooltip label='Report'>
+              <IconButton
+                variant='ghost'
+                boxSize={4}
+                icon={<Icon as={MdOutlineErrorOutline} />}
+                _hover={{ textDecoration: "none" }}
+              />
+            </Tooltip>
+          </Hide>
+
+          <Show below='md'>
+            <Menu>
+              <MenuButton
+                as={IconButton}
+                aria-label='Options'
+                icon={<Icon boxSize={5} as={MdMoreHoriz} />}
+                variant='ghost'
+              />
+              <MenuList>
+                <MenuItem icon={<Icon boxSize={5} as={MdOutlineShare} />}>
+                  {t('actions.share')}
+                </MenuItem>
+                <MenuItem icon={<Icon boxSize={5} as={MdOutlineErrorOutline} />}>
+                  {t('actions.report')}
+                </MenuItem>
+              </MenuList>
+            </Menu>
+          </Show>
         </HStack>
       </CardFooter>
 
@@ -131,11 +165,11 @@ export function Comment({ comment }) {
         </Box>
       )}
 
-      <Box ml={5} mr={5}>
+      <Box mx={{ base: 1, md: 5 }}>
         {comment.sub_comments.length
           ? comment.sub_comments.map((comment, i) => {
-              return <Comment comment={comment} key={i} />;
-            })
+            return <Comment comment={comment} key={i} />;
+          })
           : ""}
       </Box>
     </Card>

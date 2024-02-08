@@ -42,7 +42,7 @@ export function Comments({ comments }) {
 
       <Divider />
 
-      <CardBody px={{ base: 3, lg: 5 }}>
+      <CardBody px={{ base: 1, lg: 5 }}>
         {comments.length ? (
           comments.map((comment, i) => {
             return <Comment comment={comment} key={i} />;

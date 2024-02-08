@@ -17,13 +17,13 @@ export function AddComment({ postId }) {
   console.log(user, postId);
 
   return (
-    <Card ml={{ base: 0, lg: 5 }} mb={5} height='225px'>
+    <Card ml={{ base: 0, lg: 5 }} mb={5} height={{ base: '450px', md: '225px' }}>
       <CardBody py={1}>
         <FormControl my={3}>
           <Editor
             value={text}
             handler={setText}
-            height={"100px"}
+            height={window.innerWidth < 500 ? '250px' : '100px'}
             placeholder={t('thank_you')}
           />
         </FormControl>

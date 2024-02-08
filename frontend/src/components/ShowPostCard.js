@@ -16,6 +16,12 @@ import {
   Link,
   HStack,
   Tooltip,
+  Show,
+  Hide,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from "@chakra-ui/react";
 import {
   // MdThumbUp,
@@ -25,6 +31,7 @@ import {
   MdChat,
   MdOutlineShare,
   MdOutlineErrorOutline,
+  MdMoreHoriz,
 } from "react-icons/md";
 import { Link as ReactRouterLink } from "react-router-dom";
 import parse from "html-react-parser";
@@ -90,7 +97,7 @@ export function ShowPostCard({ post }) {
 
         <CardFooter py={2} pl={3}>
           <HStack spacing={{ base: 1, md: 5 }}>
-            <HStack spacing={2}>
+            <HStack spacing={{ base: 1, md: 2 }}>
               <Tooltip label={t('actions.rate_up')}>
                 <IconButton
                   variant='ghost'
@@ -122,21 +129,42 @@ export function ShowPostCard({ post }) {
               </Button>
             </Tooltip>
 
-            <Button
-              variant='ghost'
-              leftIcon={<Icon boxSize={5} as={MdOutlineShare} />}
-              _hover={{ textDecoration: "none" }}
-            >
-              {t('actions.share')}
-            </Button>
+            <Hide below='md'>
+              <Button
+                variant='ghost'
+                leftIcon={<Icon boxSize={5} as={MdOutlineShare} />}
+                _hover={{ textDecoration: "none" }}
+              >
+                {t('actions.share')}
+              </Button>
 
-            <Button
-              variant='ghost'
-              leftIcon={<Icon boxSize={5} as={MdOutlineErrorOutline} />}
-              _hover={{ textDecoration: "none" }}
-            >
-              {t('actions.report')}
-            </Button>
+              <Button
+                variant='ghost'
+                leftIcon={<Icon boxSize={5} as={MdOutlineErrorOutline} />}
+                _hover={{ textDecoration: "none" }}
+              >
+                {t('actions.report')}
+              </Button>
+            </Hide>
+
+            <Show below='md'>
+              <Menu>
+                <MenuButton
+                  as={IconButton}
+                  aria-label='Options'
+                  icon={<Icon boxSize={7} as={MdMoreHoriz} />}
+                  variant='ghost'
+                />
+                <MenuList>
+                  <MenuItem icon={<Icon boxSize={5} as={MdOutlineShare} />}>
+                    {t('actions.share')}
+                  </MenuItem>
+                  <MenuItem icon={<Icon boxSize={5} as={MdOutlineErrorOutline} />}>
+                    {t('actions.report')}
+                  </MenuItem>
+                </MenuList>
+              </Menu>
+            </Show>
           </HStack>
         </CardFooter>
       </Card>
