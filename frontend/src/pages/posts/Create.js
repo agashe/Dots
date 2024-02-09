@@ -20,6 +20,7 @@ import {
   MenuList,
   MenuItem,
   Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { Footer } from "../../components/Footer";
 import { MdRemoveCircle, MdArrowDownward } from "react-icons/md";
@@ -34,6 +35,7 @@ export function Create() {
   const [body, setBody] = useState("");
   const [selectedCommunity, setSelectedCommunity] = useState({});
   const { t } = useTranslation();
+  const communitySelectBg = useColorModeValue('gray.50', 'gray.700');
 
   const communities = [
     {
@@ -56,7 +58,7 @@ export function Create() {
   return (
     <>
       <SEO info={{ title: t('actions.create_post') }} />
-      <Flex pt={5} px={{ base: 3, lg: 10 }} bg='gray.50' minHeight='100vh' flexDirection='column'>
+      <Flex pt={5} px={{ base: 3, lg: 10 }}  minHeight='100vh' flexDirection='column'>
         <Card
           w={{ base: '100%', lg: '70%' }}
           mx='auto'
@@ -98,11 +100,11 @@ export function Create() {
                     h='32px'
                     w='32px'
                     minW={0}
-                    colorScheme='gray'
+                    bg={communitySelectBg}
                     variant='ghost'
                   />}
                   matchWidth={true}
-                  bg='white'
+                  bg={communitySelectBg}
                   color={selectedCommunity.id ? 'black' : '#b9c1cb'}
                   variant='outline'
                   textAlign='left'
@@ -112,7 +114,7 @@ export function Create() {
                   fontWeight='100'
                   borderColor='#e2e8f0'
                   borderWidth='1px'
-                  _hover={{ bg: 'white' }}
+                  _hover={{ bg: communitySelectBg }}
                 >
                   {
                     selectedCommunity.id ?

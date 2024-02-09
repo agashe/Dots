@@ -21,6 +21,8 @@ import {
   HStack,
   Show,
   Hide,
+  useColorMode,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import {
   MdSearch,
@@ -41,11 +43,14 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { SearchModal } from "./SearchModel";
 
+
 export function Layout() {
   const { t } = useTranslation();
   const user = JSON.parse(localStorage.getItem("user"));
   const [searchKeyword, setSearchKeyword] = useState("");
-  
+  const { colorMode, toggleColorMode } = useColorMode();
+  const bg = useColorModeValue('gray.50', 'gray.800');
+
   const {
     isOpen: isOpenSignIn,
     onOpen: onOpenSignIn,
@@ -92,7 +97,7 @@ export function Layout() {
           top: "0",
           left: "0",
           width: "100%",
-          backgroundColor: "#ffffff",
+          backgroundColor: bg === 'gray.50' ? '#f7fafc': '#1a202c',
           zIndex: "10",
         }}
       >
@@ -272,13 +277,18 @@ export function Layout() {
                     <MenuDivider />
                     <MenuItem
                       as='button'
-                      href='/create-community'
                       icon={<Icon as={MdDarkMode} boxSize={5} />}
                       iconSpacing={2}
+                      onClick={toggleColorMode}
                     >
                       <HStack spacing={5}>
                         <Text>{t('dark_mode')}</Text>
-                        <Switch colorScheme="brand" isChecked />
+                        {
+                          (colorMode === 'light') ?
+                            <Switch colorScheme="brand" isInvalid />
+                            :
+                            <Switch colorScheme="brand" isChecked />
+                        }
                       </HStack>
                     </MenuItem>
                     <MenuDivider />
@@ -310,7 +320,7 @@ export function Layout() {
         </Flex>
       </header>
 
-      <Box mt='64px'>
+      <Box mt='64px' bg={bg}>
         <Outlet />
       </Box>
     </div>

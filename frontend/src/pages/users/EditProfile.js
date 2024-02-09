@@ -29,7 +29,7 @@ export function EditProfile() {
   return (
     <>
       <SEO info={{ title: t('actions.edit_profile') }} />
-      <Flex pt={5} px={{ base: 3, lg: 10 }} bg='gray.50' minHeight='100vh' flexDirection='column'>
+      <Flex pt={5} px={{ base: 3, lg: 10 }}  minHeight='100vh' flexDirection='column'>
         <Card
           w={{ base: '100%', lg: '70%' }}
           mx='auto'

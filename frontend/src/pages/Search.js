@@ -125,7 +125,7 @@ export function Search() {
   return (
     <>
       <SEO info={{ title: t('search_results') + keyword }} />
-      <Flex pt={5} px={{ base: 5, md: 2, lg: 10 }} bg='gray.50'>
+      <Flex pt={5} px={{ base: 5, md: 2, lg: 10 }} >
         <Hide below="md">
           <Box w={{ md: '35%', lg: '25%' }}>
             <NavigationMenu />

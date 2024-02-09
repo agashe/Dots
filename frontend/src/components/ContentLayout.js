@@ -17,7 +17,7 @@ export function ContentLayout({ title, content }) {
   return (
     <>
       <SEO info={{ title: title }} />
-      <Flex pt={5} px={{ base: 3, lg: 10 }} bg='gray.50' minHeight='100vh' flexDirection='column'>
+      <Flex pt={5} px={{ base: 3, lg: 10 }}  minHeight='100vh' flexDirection='column'>
         <Card w={{ base: '100%', lg: '70%' }} mx='auto' mb={5}>
           <CardHeader py={0} pt={3}>
             <Heading textAlign='center' size='lg'>{title}</Heading>

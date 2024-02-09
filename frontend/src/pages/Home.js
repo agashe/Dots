@@ -110,7 +110,7 @@ export function Home() {
   return (
     <>
       <SEO info={{ title: name }} />
-      <Flex pt={5} px={{ base: 5, md: 2, lg: 10 }} bg='gray.50'>
+      <Flex pt={5} px={{ base: 5, md: 2, lg: 10 }}>
         <Hide below="md">
           <Box w={{ md: '35%', lg: '25%' }}>
             <NavigationMenu />
