@@ -15,21 +15,34 @@ import {
   HStack,
   Stack,
   Tooltip,
+  useDisclosure,
 } from "@chakra-ui/react";
 import {
   MdThumbsUpDown,
   MdChat,
   MdOutlineShare,
   MdEditSquare,
+  MdDelete,
 } from "react-icons/md";
 import { Link as ReactRouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Confirm } from "./Confirm";
 
 export function ProfilePostCard({ post }) {
   const { t } = useTranslation();
 
+  const {
+    isOpen: isOpenConfirm,
+    onOpen: onOpenConfirm,
+    onClose: onCloseConfirm,
+  } = useDisclosure();
+
   function goToPost() {
     window.location.href = '/p/1/ahmed'; // `p/${post.id}/${post.title}`
+  }
+
+  function handleDelete() {
+    //
   }
 
   return (
@@ -127,7 +140,7 @@ export function ProfilePostCard({ post }) {
           position='absolute'
           top='7px'
           right='7px'
-          color='brand.main'
+          colorScheme='brand'
           variant={{ base: 'solid', md: 'ghost' }}
           minWidth='10px'
           width={{ base: '30px', md: '10px' }}
@@ -137,6 +150,30 @@ export function ProfilePostCard({ post }) {
           href='/edit-post'
         />
       </Tooltip>
+
+      <Tooltip label={t('actions.delete')}>
+        <IconButton
+          icon={<Icon as={MdDelete} />}
+          position='absolute'
+          top='25px'
+          right='7px'
+          colorScheme='brand'
+          variant={{ base: 'solid', md: 'ghost' }}
+          minWidth='10px'
+          width={{ base: '30px', md: '10px' }}
+          height={{ base: '30px', md: '10px' }}
+          padding='0'
+          as='button'
+          onClick={onOpenConfirm}
+        />
+      </Tooltip>
+
+      <Confirm
+        isOpen={isOpenConfirm}
+        onClose={onCloseConfirm}
+        title={t('actions.delete_community')}
+        handler={handleDelete}
+      />
     </Card>
   );
 }

@@ -110,13 +110,19 @@ export function EditProfile() {
 
           <CardBody>
             <HStack>
-              <Box mr={3} w='50%'>
+              <Box mr={3} w='33%'>
+                <FormControl my={5}>
+                  <FormLabel>{t('user.current_password')}</FormLabel>
+                  <Input type='password' placeholder={t('placeholders.user_current_password')} />
+                </FormControl>
+              </Box>
+              <Box mr={3} w='33%'>
                 <FormControl my={5}>
                   <FormLabel>{t('user.new_password')}</FormLabel>
                   <Input type='password' placeholder={t('placeholders.user_password')} />
                 </FormControl>
               </Box>
-              <Box w='50%'>
+              <Box w='33%'>
                 <FormControl my={5}>
                   <FormLabel>{t('user.confirm')}</FormLabel>
                   <Input

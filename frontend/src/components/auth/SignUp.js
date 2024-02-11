@@ -44,13 +44,13 @@ export function SignUp({ isOpen, onClose }) {
       <ModalContent textAlign='center'>
         <ModalHeader>{t('user.sign_up_hint')}</ModalHeader>
         <ModalCloseButton />
-        <ModalBody pb={6}>
+        <ModalBody>
           <FormControl>
             <FormLabel>{t('user.name')}</FormLabel>
             <Input type='text' placeholder={t('user.name')} onChange={handleInput} />
           </FormControl>
 
-          <FormControl>
+          <FormControl mt={4}>
             <FormLabel>{t('user.email')}</FormLabel>
             <Input type='email' placeholder={t('user.email')} />
           </FormControl>
@@ -66,13 +66,13 @@ export function SignUp({ isOpen, onClose }) {
           </FormControl>
         </ModalBody>
 
-        <ModalFooter flexDirection='column'>
+        <ModalFooter flexDirection='column' pb={1}>
           <small>
             {t('user.accept_terms')}
             <Link reloadDocument color='brand.main'>{t('terms')}</Link>
           </small>
 
-          <Button colorScheme='blue' width='100%' my={2} onClick={submitSignUp}>
+          <Button colorScheme='blue' width='100%' my={3} onClick={submitSignUp}>
             {t('actions.create')}
           </Button>
         </ModalFooter>

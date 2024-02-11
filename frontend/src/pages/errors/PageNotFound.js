@@ -24,10 +24,10 @@ export function PageNotFound() {
         >
           <Icon as={MdQuestionMark} boxSize={48} color='brand.main' />
 
-          <Heading>{t('page_not_found')}</Heading>
+          <Heading>{t('errors.page_not_found')}</Heading>
 
           <Text mt={5}>
-            {t('page_not_found_message')}
+            {t('errors.page_not_found_message')}
           </Text>
         </Card>
 

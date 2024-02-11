@@ -9,16 +9,28 @@ import {
   Icon,
   IconButton,
   Tooltip,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { MdEditSquare } from "react-icons/md";
+import { MdEditSquare, MdDelete } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { Link as ReactRouterLink } from "react-router-dom";
+import { Confirm } from "./Confirm";
 
 export function ProfileCommunityCard({ community }) {
   const { t } = useTranslation();
 
+  const {
+    isOpen: isOpenConfirm,
+    onOpen: onOpenConfirm,
+    onClose: onCloseConfirm,
+  } = useDisclosure();
+
   function goToCommunity() {
     window.location.href = '/c/ahmed'; // `c/${community.name}`
+  }
+
+  function handleDelete() {
+    //
   }
 
   return (
@@ -50,7 +62,7 @@ export function ProfileCommunityCard({ community }) {
           position='absolute'
           top='7px'
           right='7px'
-          color='brand.main'
+          colorScheme='brand'
           variant='ghost'
           minWidth='10px'
           width='10px'
@@ -58,6 +70,30 @@ export function ProfileCommunityCard({ community }) {
           padding='0'
         />
       </Tooltip>
+
+      <Tooltip label={t('actions.delete')}>
+        <IconButton
+          icon={<Icon as={MdDelete} />}
+          position='absolute'
+          top='25px'
+          right='7px'
+          colorScheme='brand'
+          variant={{ base: 'solid', md: 'ghost' }}
+          minWidth='10px'
+          width={{ base: '30px', md: '10px' }}
+          height={{ base: '30px', md: '10px' }}
+          padding='0'
+          as='button'
+          onClick={onOpenConfirm}
+        />
+      </Tooltip>
+
+      <Confirm
+        isOpen={isOpenConfirm}
+        onClose={onCloseConfirm}
+        title={t('actions.delete_community')}
+        handler={handleDelete}
+      />
     </Card>
   );
 }

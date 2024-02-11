@@ -80,7 +80,7 @@ export function Layout() {
   }
 
   function submitSearch() {
-    window.location.href = "/s/" + searchKeyword;
+    window.location.href = "/s/" + searchKeyword.replace(' ', '+');
   }
 
   function signOut() {
@@ -97,7 +97,7 @@ export function Layout() {
           top: "0",
           left: "0",
           width: "100%",
-          backgroundColor: bg === 'gray.50' ? '#f7fafc': '#1a202c',
+          backgroundColor: bg === 'gray.50' ? '#f7fafc' : '#1a202c',
           zIndex: "10",
         }}
       >
@@ -142,7 +142,7 @@ export function Layout() {
 
           <Hide below='lg'>
             <Flex width='40%'>
-              <Input placeholder={t('search')} onChange={handleSearchInput} />
+              <Input placeholder={t('search')} onChange={handleSearchInput} onKeyDown={(e) => { if (e.which === 13) submitSearch(); }} />
               <IconButton
                 colorScheme='brand'
                 icon={<Icon as={MdSearch} boxSize={6} />}
@@ -305,9 +305,17 @@ export function Layout() {
               </>
             ) : (
               <>
+                <Button colorScheme='brand' onClick={onOpenSignUp} variant='outline'>
+                  {t('user.sign_up')}
+                </Button>
                 <Button colorScheme='brand' onClick={onOpenSignIn}>
                   {t('user.sign_in')}
                 </Button>
+                <SignIn
+                  isOpen={isOpenSignIn}
+                  onClose={onCloseSignIn}
+                  onOpenSignUp={onOpenSignUp}
+                />
                 <SignIn
                   isOpen={isOpenSignIn}
                   onClose={onCloseSignIn}
