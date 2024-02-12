@@ -1,6 +1,6 @@
 # Dots
 
-A forum platform for building discussion communities , with a rich set of features. Built using React, Ruby on Rails and PostgreSQL.
+A forum platform for building discussion communities , with a rich set of features. Built using React, Ruby on Rails and MongoDb.
 
 ## Features
 

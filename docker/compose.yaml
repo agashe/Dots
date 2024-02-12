@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  cache:
+    image: redis:7.2-alpine
+    restart: always
+    ports:
+      - 6379:6379
+    volumes: 
+      - cache:/data
+
+  database:
+    image: mongo
+    restart: always
+    volumes:
+      - database:/data/db
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+
+  database_admin:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      - database
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=database
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - ME_CONFIG_BASICAUTH_USERNAME=${ME_CONFIG_MONGODB_ADMINUSERNAME}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${ME_CONFIG_MONGODB_ADMINPASSWORD}
+      # - ME_CONFIG_MONGODB_AUTH_DATABASE=admin
+      # - ME_CONFIG_MONGODB_AUTH_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      # - ME_CONFIG_MONGODB_AUTH_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+
+volumes:
+  cache:
+  database:
