@@ -10,6 +10,7 @@ class Post < BaseModel
       'rate',
       'tags',
       'is_reported',
+      'is_published',
     ])
   end
 end

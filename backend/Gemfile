@@ -44,3 +44,9 @@ gem 'mongo'
 
 # Install DotEnv Loader
 gem 'dotenv-rails', :groups => [:development, :test]
+
+# Install faker for seeding
+gem 'faker'
+
+# Install bcrypt
+gem 'bcrypt'

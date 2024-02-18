@@ -1,13 +1,5 @@
 #!/usr/bin/ruby
 
-# Require dependencies
-require "rails"
-require "mongo"
-require "dotenv-rails"
-
-# Load .env file
-Dotenv::Rails.load
-
 # Create new MongoDB client
 client = Mongo::Client.new(['localhost:' + ENV["MONGO_DB_PORT"]],
   user: ENV["MONGO_DB_USERNAME"],
@@ -27,6 +19,8 @@ collections = [
   'sessions',
   'tags',
   'users',
+  'members',
+  'rates',
 ]
 
 # Create collections

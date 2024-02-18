@@ -2,7 +2,8 @@ class Page < BaseModel
   ##
   # Page Model Constructor
   def initialize
-    super(:communities, [
+    super(:pages, [
+      'name',
       'title',
       'text',
     ])

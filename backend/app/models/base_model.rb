@@ -25,8 +25,8 @@ class BaseModel
   # @return [bool]
   def create(data)
     # check if data is valid
-    if !validate({field})
-      raise "Unknown field " + field + " in model " + @collection.to_s
+    if !validate(data)
+      raise "Unknown field in model " + @collection.to_s
     end
     
     # add uuid
@@ -54,8 +54,8 @@ class BaseModel
   # @return [bool]
   def update(id, data)
     # check if data is valid
-    if !validate({field})
-      raise "Unknown field " + field + " in model " + @collection.to_s
+    if !validate(data)
+      raise "Unknown field in model " + @collection.to_s
     end
 
     # update timestamps
@@ -113,7 +113,7 @@ class BaseModel
   # @param  [mixed]    value
   # @return [HashMap]
   def findBy(field, value)
-    if !validate({field})
+    if !validate({field => value})
       raise "Unknown field " + field + " in model " + @collection.to_s
     end
 
@@ -137,7 +137,7 @@ class BaseModel
   end
 
   ##
-  # Get limited number of latest models
+  # Get n number of latest models
   #
   # @param  [int]    n
   # @return [array]
@@ -145,6 +145,24 @@ class BaseModel
     return @collection.find({:deleted_at => nil})
       .sort({created_at:-1})
       .limit(n)
+  end
+  
+  ##
+  # Get n number of random models
+  #
+  # @param  [int]    n
+  # @return [array]
+  def random(n)
+    return @collection.aggregate([{ '$sample': { size: n } }]).to_a
+  end
+
+  ##
+  # Run query over models
+  #
+  # @param  [HashMap]    q
+  # @return [array]
+  def query(q)
+    return @collection.find(q)
   end
 
   private
@@ -155,6 +173,6 @@ class BaseModel
   # @param  [HashMap]    input_fields
   # @return [bool]
   def validate(input_fields)
-    return (@fields - input_fields).empty?
+    return (input_fields.keys - @fields).empty?
   end
 end
