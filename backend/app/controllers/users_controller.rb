@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   ##
   # Users Controller Constructor
-  def initialize
+  def initialize    
     # pass
   end
 
@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   #
   # @return [Response]
   def profile
-    ok({}, "Data was loaded successfully")
+    ok({}, "Profile was loaded successfully")
   end
 
   ##

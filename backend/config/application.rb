@@ -15,6 +15,9 @@ require "action_cable/engine"
 require "rails/test_unit/railtie"
 require "mongo"
 
+# Register auth middleware
+require_relative "../lib/middlewares/auth_middleware"
+
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
@@ -44,5 +47,16 @@ module Backend
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Allow CORS
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '*', headers: :any, methods: :any
+      end
+    end
+
+    # Add auth middleware
+    config.middleware.insert_before 0, Middlewares::AuthMiddleware
   end
 end

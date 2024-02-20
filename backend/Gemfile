@@ -50,3 +50,9 @@ gem 'faker'
 
 # Install bcrypt
 gem 'bcrypt'
+
+# Install JWT
+gem 'jwt'
+
+# Install Rack CORS
+gem 'rack-cors'
