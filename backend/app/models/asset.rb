@@ -5,8 +5,8 @@ class Asset < BaseModel
     super(:assets, [
       'entity',
       'entity_id',
-      'asset_name',
       'asset_type',
+      'asset_name',
       'asset_size',
       'asset_mime',
       'path',

@@ -3,15 +3,26 @@ module Middlewares
     def initialize(app)
       @app = app
       @session_model = Session.new
+      @user_id = nil
     end
   
     def call(env)
-      request = ActionDispatch::Request.new(env)
+      request = ActionDispatch::Request.new(env)      
 
-      if !validate_secure_token(request.headers['Authorization'].split(' ').last)
+      # skip public and auth controllers
+      if (request.fullpath.include? 'pages') || (request.fullpath.include? 'sign')
+        return @app.call(env)
+      end
+      
+      begin
+        if !validate_secure_token(request.headers['Authorization'].split(' ').last)
+          return [401, {}, [I18n.t('errors.unauthorized')]]
+        end
+      rescue
         return [401, {}, [I18n.t('errors.unauthorized')]]
       end
-  
+
+      env['user_id'] = @user_id
       @app.call(env)
     end
 
@@ -28,7 +39,11 @@ module Middlewares
 
       session = @session_model.findBy('user_id', data[0]['user_id']).first
 
-      return (session != nil)
+      if session != nil
+        @user_id = data[0]['user_id']
+      end
+
+      return @user_id
     end
   end
 end

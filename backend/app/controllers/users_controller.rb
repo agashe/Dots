@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   ##
   # Users Controller Constructor
   def initialize    
-    # pass
+    @asset_model = Asset.new
   end
 
   ##
@@ -35,21 +35,5 @@ class UsersController < ApplicationController
   # @return [Response]
   def communities
     ok({}, "Data was loaded successfully")
-  end
-
-  ##
-  # Update user's avatar
-  #
-  # @return [Response]
-  def update_avatar
-    ok(params[:title], "Data was loaded successfully")
-  end
-
-  ##
-  # Delete user's avatar
-  #
-  # @return [Response]
-  def delete_avatar
-    ok(params[:title], "Data was loaded successfully")
   end
 end

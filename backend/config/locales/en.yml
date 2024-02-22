@@ -3,13 +3,19 @@ en:
     auth:
       sign_up: "Account was created successfully"
       sign_in: "Account was signed in successfully"
+    assets:
+      uploaded: "File was uploaded successfully"
+      deleted: "File was deleted successfully"
   
   errors:
     email_exists: "This email is already registered"
     email_not_registered: "No account was registered with this email"
     password_not_confirmed: "The password doesn't match the confirm"
     invalid_credentials: "Invalid email or password"
+    invalid_operation: "Invalid operation"
+    operation_failed: "Operation failed"
     unauthorized: "Unauthorized"
+    model_not_found: "The model you requested is not found"
     validation:
       required: "The field '%{field}' is required"
       email: "Invalid email address"

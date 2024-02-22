@@ -62,8 +62,7 @@ class ApplicationController < ActionController::API
           
           if params[field].length < min_len
             all_good = false
-            error = I18n.t('errors.validation.min_len', 
-              field: field, count: min_len)
+            error = I18n.t('errors.validation.min_len', field: field, count: min_len)
             break
           end
         elsif condition.include? "max_len"
@@ -72,8 +71,7 @@ class ApplicationController < ActionController::API
           
           if params[field].length > max_len
             all_good = false
-            error = I18n.t('errors.validation.max_len', 
-              field: field, count: max_len)
+            error = I18n.t('errors.validation.max_len', field: field, count: max_len)
             break
           end
         elsif condition.include? "min"
