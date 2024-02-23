@@ -115,4 +115,13 @@ class ApplicationController < ActionController::API
     log_model = Log.new
     log_model.create({'event' => event})
   end
+  
+  ##
+  # Return full url
+  #
+  # @param  [string] event 
+  # @return [string] or [nil]
+  def url(path)
+    return path != nil ? url_for(path) : nil
+  end
 end

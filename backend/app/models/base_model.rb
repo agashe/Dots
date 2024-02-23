@@ -22,8 +22,9 @@ class BaseModel
   # Create new model
   #
   # @param  [HashMap]  data
-  # @return [bool]
-  def create(data)
+  # @param  [bool]     return_object
+  # @return [int], [Object] or [nil]
+  def create(data, return_object = false)
     # check if data is valid
     if !validate(data)
       raise "Unknown field in model " + @collection.to_s
@@ -42,8 +43,8 @@ class BaseModel
     # do insert
     result = @collection.insert_one(data)
 
-    # return status
-    return (result.n == 1)
+    # return either the newly created object or just the id
+    return (result.n == 1) ? (return_object ? find(data[:id]) : data[:id]) : nil
   end
 
   ##
@@ -51,8 +52,9 @@ class BaseModel
   #
   # @param  [string]   id
   # @param  [HashMap]  data
-  # @return [bool]
-  def update(id, data)
+  # @param  [bool]     return_object
+  # @return [int], [Object] or [nil]
+  def update(id, data, return_object = false)
     # check if data is valid
     if !validate(data)
       raise "Unknown field in model " + @collection.to_s
@@ -64,8 +66,8 @@ class BaseModel
     # update model
     result = @collection.find(:id => id).update_one("$set" => data)
 
-    # return status
-    return (result.n == 1)
+    # return either the updated object or just the id
+    return (result.n == 1) ? (return_object ? find(id) : id) : nil
   end
 
   ##
@@ -163,6 +165,20 @@ class BaseModel
   # @return [array]
   def query(q)
     return @collection.find(q)
+  end
+
+  ##
+  # Get related models
+  #
+  # @param  [string] related_model_name
+  # @param  [string] foreign_field
+  # @param  [string] model_id
+  # @return [array]
+  def has(related_model_name, foreign_field, model_id)
+    related_model = related_model_name.new
+    relations = related_model.findBy(foreign_field, model_id)
+
+    return relations
   end
 
   private

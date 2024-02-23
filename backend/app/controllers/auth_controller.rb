@@ -40,6 +40,7 @@ class AuthController < ApplicationController
       'id' => user['id'],
       'name' => user['name'],
       'email' => user['email'],
+      'avatar' => url(@user_model.avatar(user['id'])),
       'token' => token,
     }, I18n.t('messages.auth.sign_up'))
   end
@@ -72,19 +73,18 @@ class AuthController < ApplicationController
       return error(I18n.t('errors.email_exists'))
     end
 
-    created = @user_model.create({
+    created_user_id = @user_model.create({
       'name' => params[:name],
       'email' => params[:email],
       'password' => BCrypt::Password.create(params[:password]),
     })
 
-    id = @user_model.findBy('email', params[:email]).first['id']
-    token = generate_secure_token(id)
+    token = generate_secure_token(created_user_id)
 
     log("New account was successfully created by email : #{params[:email]}")
 
     ok({
-      'id' => id,
+      'id' => created_user_id,
       'name' => params[:name],
       'email' => params[:email],
       'token' => token,

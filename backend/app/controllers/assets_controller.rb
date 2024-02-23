@@ -55,15 +55,17 @@ class AssetsController < ApplicationController
       'asset_type' => params['type']
     }).first
 
+    asset_id = ''
+
     if !asset
-      created = @asset_model.create({
+      asset_id = @asset_model.create({
         'entity' => params['entity'],
         'entity_id' => params['entity_id'],
         'asset_type' => params['type'],
         'asset_name' => params['meta']['name'],
         'asset_size' => params['meta']['size'],
         'asset_mime' => params['meta']['mime'],
-        'path' => '',
+        'path' => path,
       })
     else
       begin
@@ -72,7 +74,7 @@ class AssetsController < ApplicationController
         return error(I18n.t('errors.operation_failed'))
       end
 
-      updated = @asset_model.update(asset['id'], {
+      asset_id = @asset_model.update(asset['id'], {
         'asset_name' => params['meta']['name'],
         'asset_size' => params['meta']['size'],
         'asset_mime' => params['meta']['mime'],
@@ -80,12 +82,12 @@ class AssetsController < ApplicationController
       })
     end
 
-    log(
-      "A file was uploaded by (#{request.env['user_id']}) to model " + 
-      "of type(#{params['entity']}) and id(#{params['entity_id']})"
-    )
+    log("A new file (#{asset_id}) was uploaded by (#{request.env['user_id']})")
 
-    ok({}, I18n.t('messages.assets.uploaded'))
+    ok({
+      'id' => asset_id,
+      'path' => url(path),
+    }, I18n.t('messages.assets.uploaded'))
   end
 
   ##
@@ -132,6 +134,7 @@ class AssetsController < ApplicationController
     end
 
     # since the model will be deleted :)
+    asset_id = asset['id']
     path = asset['path']
 
     begin
@@ -140,12 +143,9 @@ class AssetsController < ApplicationController
       return error(I18n.t('errors.operation_failed'))
     end
 
-    delete = @asset_model.destroy(asset['id'])
+    deleted_asset = @asset_model.destroy(asset['id'])
 
-    log(
-      "A file was deleted by (#{request.env['user_id']}) to model " + 
-      "of type(#{params['entity']}) and id(#{params['entity_id']})"
-    )
+    log("A file (#{asset_id}) was deleted by (#{request.env['user_id']})")
 
     ok({}, I18n.t('messages.assets.deleted'))
   end
