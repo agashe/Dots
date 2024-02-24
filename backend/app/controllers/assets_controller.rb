@@ -18,7 +18,9 @@ class AssetsController < ApplicationController
       'entity' => 'required',
       'entity_id' => 'required',
       'type' => 'required',
-      'meta' => 'required',
+      'meta.name' => 'required',
+      'meta.size' => 'required',
+      'meta.mime' => 'required',
       'file' => 'required',
     })
 
