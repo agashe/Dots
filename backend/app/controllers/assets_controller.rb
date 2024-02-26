@@ -84,6 +84,16 @@ class AssetsController < ApplicationController
       })
     end
 
+    # remove "public" from web route
+    path = path.sub('public/', '')
+    
+    updated_model = update_model_data(
+      params['entity'],
+      params['entity_id'],
+      params['type'],
+      url(path)
+    )
+
     log("A new file (#{asset_id}) was uploaded by (#{request.env['user_id']})")
 
     ok({
@@ -146,6 +156,13 @@ class AssetsController < ApplicationController
     end
 
     deleted_asset = @asset_model.destroy(asset['id'])
+
+    updated_model = update_model_data(
+      params['entity'],
+      params['entity_id'],
+      params['type'],
+      ''
+    )
 
     log("A file (#{asset_id}) was deleted by (#{request.env['user_id']})")
 
@@ -223,7 +240,7 @@ class AssetsController < ApplicationController
   # @param  [Hashmap] info
   # @return [string]
   def get_file_save_path(info)
-    path = 'storage/uploads'
+    path = 'public/assets/uploads'
     file_name = info['meta']['name'] + '_' + Time.now.to_i.to_s
 
     if info['entity'] == 'user'
@@ -232,11 +249,11 @@ class AssetsController < ApplicationController
       end
     elsif info['entity'] == 'community'
       if info['type'] == 'logo'
-        path += '/avatars'
+        path += '/logos'
       end
     elsif info['entity'] == 'post'
       if info['type'] == 'banner'
-        path += '/avatars'
+        path += '/banners'
       end
     end    
 
@@ -262,5 +279,25 @@ class AssetsController < ApplicationController
   # @return [void]
   def delete_file(path)
     File.delete(path) if File.exist?(path)
+  end
+
+  ##
+  # Update asset path on model
+  #
+  # @param  [string] entity
+  # @param  [string] entity_id
+  # @param  [string] asset_type
+  # @param  [string] asset_path
+  # @return [bool] 
+  def update_model_data(entity, entity_id, asset_type, asset_path)
+    if entity == 'user'
+      model = @user_model.update(entity_id, {asset_type => asset_path})
+    elsif entity == 'community'
+      model = @community_model.update(entity_id, {asset_type => asset_path})
+    elsif entity == 'post' 
+      model = @post_model.update(entity_id, {asset_type => asset_path})
+    end
+
+    return model
   end
 end

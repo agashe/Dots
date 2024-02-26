@@ -10,7 +10,9 @@ module Middlewares
       request = ActionDispatch::Request.new(env)      
 
       # skip public and auth controllers
-      if (request.fullpath.include? 'pages') || (request.fullpath.include? 'sign')
+      if (request.fullpath.include? 'pages') || 
+         (request.fullpath.include? 'sign') ||
+         (request.fullpath.include? 'assets')
         return @app.call(env)
       end
       

@@ -7,6 +7,7 @@ class Community < BaseModel
       'name',
       'description',
       'members_count',
+      'logo',
       'is_closed',
     ])
   end

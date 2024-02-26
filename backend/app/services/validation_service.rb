@@ -15,7 +15,7 @@ class ValidationService
       field_value = get_field_value(field, params)
 
       # if the field is not required and doesn't exists , skip
-      if !conditions.include?('required') && !field_value
+      if !conditions.include?('required') && (field_value == nil || field_value == '')
         next
       end
 

@@ -57,6 +57,6 @@ class ApplicationController < ActionController::API
   # @param  [string] event 
   # @return [string] or [nil]
   def url(path)
-    return path != nil ? url_for(path) : nil
+    return path != nil ? request.protocol + request.host_with_port + '/' + path : nil
   end
 end

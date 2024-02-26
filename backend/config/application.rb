@@ -58,5 +58,7 @@ module Backend
 
     # Add auth middleware
     config.middleware.insert_before 0, Middlewares::AuthMiddleware
+
+    config.public_file_server.enabled = true
   end
 end

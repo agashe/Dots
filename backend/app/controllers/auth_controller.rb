@@ -28,7 +28,9 @@ class AuthController < ApplicationController
       return error(I18n.t('errors.email_not_registered'))
     end
 
-    if user[:password] != BCrypt::Password.new(user[:password])
+    user_password = BCrypt::Password.new(user[:password])
+
+    if !user_password.is_password?(params[:password])
       return error(I18n.t('errors.invalid_credentials'))
     end
 
@@ -40,7 +42,7 @@ class AuthController < ApplicationController
       'id' => user['id'],
       'name' => user['name'],
       'email' => user['email'],
-      'avatar' => url(@user_model.avatar(user['id'])),
+      'avatar' => user['avatar'],
       'token' => token,
     }, I18n.t('messages.auth.sign_up'))
   end

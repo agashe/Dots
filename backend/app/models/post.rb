@@ -9,6 +9,8 @@ class Post < BaseModel
       'text',
       'rate',
       'tags',
+      'comments_count',
+      'banner',
       'is_reported',
       'is_published',
     ])

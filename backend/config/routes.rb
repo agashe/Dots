@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     
     # Users Routes
     scope path: '/users' do
+      get '/home',       to: 'users#home',        as: 'users_home'
       get '/profile',       to: 'users#profile',        as: 'users_profile'
       put '/profile',       to: 'users#update_profile', as: 'users_update_profile'
       get '/notifications', to: 'users#notifications',  as: 'users_notifications'
@@ -51,7 +52,7 @@ Rails.application.routes.draw do
     end
 
     # Assets Routes
-    scope path: '/assets' do
+    scope path: '/files' do
       post    '/', to: 'assets#upload', as: 'assets_upload'
       delete  '/', to: 'assets#delete', as: 'assets_delete'
     end

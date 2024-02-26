@@ -10,25 +10,10 @@ class User < BaseModel
       'work',
       'birth_date',
       'bio',
+      'avatar',
       'is_validated',
       'is_active',
     ])
-
-    @asset_model = Asset.new
-  end
-
-  ##
-  # Get avatar
-  #
-  # @return [string] or [nil]
-  def avatar(id)
-    image = @asset_model.query({
-      'entity' => 'user',
-      'entity_id' => id,
-      'asset_type' => 'avatar',
-    }).first
-
-    return image ? image['path'] : nil
   end
 
   ##
@@ -36,7 +21,22 @@ class User < BaseModel
   #
   # @return [array]
   def posts(id)
-    # image = has(Asset, 'entity_id', id).first
-    # return image ? image['path'] : nil
+    return has(Post, 'user_id', id)
+  end
+
+  ##
+  # Get comments
+  #
+  # @return [array]
+  def comments(id)
+    return has(Comment, 'user_id', id)
+  end
+  
+  ##
+  # Get communities
+  #
+  # @return [array]
+  def communities(id)
+    return has(Community, 'user_id', id)
   end
 end

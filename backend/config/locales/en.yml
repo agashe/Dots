@@ -6,6 +6,12 @@ en:
     assets:
       uploaded: "File was uploaded successfully"
       deleted: "File was deleted successfully"
+    users:
+      update_profile: "User profile was updated successfully"
+      load_profile: "User profile was loaded successfully"
+      load_notifications: "User notifications was loaded successfully"
+      load_communities: "User joined communities was loaded successfully"
+      load_home: "User home was loaded successfully"
   
   errors:
     email_exists: "This email is already registered"
