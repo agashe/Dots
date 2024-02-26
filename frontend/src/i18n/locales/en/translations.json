@@ -110,6 +110,7 @@
         "post_community": "Select a community for your post",
         "post_text": "Your post content",
         "user_name": "John Doe",
+        "user_email": "john.doe@example.com",
         "user_current_password": "Enter your current password",
         "user_password": "Pick a strong Password",
         "user_confirm": "Re-Enter the strong Password",

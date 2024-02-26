@@ -51,6 +51,11 @@ export function EditProfile() {
             </FormControl>
 
             <FormControl my={5}>
+              <FormLabel>{t('user.email')}</FormLabel>
+              <Input type='text' placeholder={t('placeholders.user_email')} disabled />
+            </FormControl>
+
+            <FormControl my={5}>
               <FormLabel>{t('user.avatar')}</FormLabel>
               <HStack>
                 <Box mr={3}>
