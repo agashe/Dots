@@ -3,15 +3,15 @@ en:
     auth:
       sign_up: "Account was created successfully"
       sign_in: "Account was signed in successfully"
-    assets:
-      uploaded: "File was uploaded successfully"
-      deleted: "File was deleted successfully"
-    users:
-      update_profile: "User profile was updated successfully"
-      load_profile: "User profile was loaded successfully"
-      load_notifications: "User notifications was loaded successfully"
-      load_communities: "User joined communities was loaded successfully"
-      load_home: "User home was loaded successfully"
+    success:
+      load: "Loaded successfully"
+      create: "Created successfully"
+      update: "Updated successfully"
+      delete: "Deleted successfully"
+      rate: "Rated successfully"
+    communities:
+      join: "The user joined the community successfully"
+      leave: "The user left the community successfully"
   
   errors:
     email_exists: "This email is already registered"
@@ -22,6 +22,13 @@ en:
     operation_failed: "Operation failed"
     unauthorized: "Unauthorized"
     model_not_found: "The model you requested is not found"
+    community_exists: "This community name is already registered"
+    community_closed: "This community is not active"
+    user_already_member: "The user is already a member of this community"
+    user_not_member: "The user is not a member of this community"
+    user_is_community_master: "This user is the master of this community"
+    invalid_rate_value: "Rate value should be 1 or -1"
+    already_rated: "This user already submitted his rate"
     validation:
       required: "The field '%{field}' is required"
       email: "Invalid email address"

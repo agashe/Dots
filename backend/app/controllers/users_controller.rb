@@ -4,6 +4,8 @@ class UsersController < ApplicationController
   def initialize    
     @asset_model = Asset.new
     @user_model = User.new
+    @community_model = Community.new
+    @member_model = Member.new
   end
 
   ##
@@ -27,7 +29,7 @@ class UsersController < ApplicationController
         'comments' => @user_model.comments(user['id']),
         'communities' => @user_model.communities(user['id']),
       }
-    }, I18n.t('messages.users.load_profile'))
+    }, I18n.t('messages.success.load'))
   end
 
   ##
@@ -79,7 +81,7 @@ class UsersController < ApplicationController
       'birth_date' => updated_user['birth_date'],
       'bio' => updated_user['bio'],
       'avatar' => updated_user['avatar'],
-    }, I18n.t('messages.users.update_profile'))
+    }, I18n.t('messages.success.update'))
   end
 
   ##
@@ -87,7 +89,7 @@ class UsersController < ApplicationController
   #
   # @return [Response]
   def notifications
-    ok({}, I18n.t('messages.users.load_notifications'))
+    ok({}, I18n.t('messages.success.load'))
   end
 
   ##
@@ -95,14 +97,36 @@ class UsersController < ApplicationController
   #
   # @return [Response]
   def communities
-    ok({}, I18n.t('messages.users.load_communities'))
+    communities = []
+    joined_communities_ids = []
+      
+    @member_model.findBy('user_id', request.env['user_id']).each do |member|
+      joined_communities_ids.push(member['community_id'])
+    end
+
+    @community_model.in('id', joined_communities_ids).each do |community|
+      if community['is_closed']
+        next
+      end
+
+      communities.push(community)
+    end
+
+    @community_model.query({
+      'user_id' => request.env['user_id'],
+      'is_closed' => false
+    }).each do |community|
+      communities.push(community)
+    end
+
+    ok(communities, I18n.t('messages.success.load'))
   end
 
   ##
   # Load user's timeline
   #
   # @return [Response]
-  def home
-    ok({}, I18n.t('messages.users.load_home'))
+  def homepage
+    ok({}, I18n.t('messages.success.load'))
   end
 end

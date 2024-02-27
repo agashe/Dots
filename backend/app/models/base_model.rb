@@ -141,10 +141,11 @@ class BaseModel
   ##
   # Get n number of latest models
   #
-  # @param  [int]    n
+  # @param  [int]        n
+  # @param  [HashMap]    q
   # @return [array]
-  def latest(n)
-    return @collection.find({:deleted_at => nil})
+  def latest(n, q = {:deleted_at => nil})
+    return @collection.find(q)
       .sort({created_at:-1})
       .limit(n)
   end
@@ -165,6 +166,26 @@ class BaseModel
   # @return [array]
   def query(q)
     return @collection.find(q)
+  end
+
+  ##
+  # Find model by "like" operator
+  #
+  # @param  [string]   field
+  # @param  [mixed]    value
+  # @return [HashMap]
+  def like(field, value)
+    return @collection.find({field: {'$regex': "/#{value}/"}})
+  end
+
+  ##
+  # Find model where id among an array of ids
+  #
+  # @param  [string]   field
+  # @param  [array]    values
+  # @return [HashMap]
+  def in(field, values)
+    return @collection.find(field => {'$in': values})
   end
 
   ##

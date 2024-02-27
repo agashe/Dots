@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   scope path: '/api/v1' do
     # Public Routes
-    root 'public#home',   as: 'public_home'
+    get  '/home',       to: 'public#home', as: 'public_home'
     get  '/search',       to: 'public#search', as: 'public_search'
     get  '/pages/:title', to: 'public#page',   as: 'public_page'
     
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     
     # Users Routes
     scope path: '/users' do
-      get '/home',       to: 'users#home',        as: 'users_home'
+      get '/homepage',       to: 'users#homepage',        as: 'users_homepage'
       get '/profile',       to: 'users#profile',        as: 'users_profile'
       put '/profile',       to: 'users#update_profile', as: 'users_update_profile'
       get '/notifications', to: 'users#notifications',  as: 'users_notifications'
@@ -33,10 +33,10 @@ Rails.application.routes.draw do
 
     # Posts Routes
     scope path: '/posts' do
-      get    '/',       to: 'posts#show',   as: 'posts_show'
       post   '/',       to: 'posts#create', as: 'posts_create'
       put    '/',       to: 'posts#update', as: 'posts_update'
       delete '/',       to: 'posts#delete', as: 'posts_delete'
+      get    '/show',   to: 'posts#show',   as: 'posts_show'
       get    '/list',   to: 'posts#list',   as: 'posts_list'
       post   '/rate',   to: 'posts#rate',   as: 'posts_rate'
       post   '/report', to: 'posts#report', as: 'posts_report'
@@ -52,7 +52,7 @@ Rails.application.routes.draw do
     end
 
     # Assets Routes
-    scope path: '/files' do
+    scope path: '/asset-files' do
       post    '/', to: 'assets#upload', as: 'assets_upload'
       delete  '/', to: 'assets#delete', as: 'assets_delete'
     end

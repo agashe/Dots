@@ -21,7 +21,7 @@ class ValidationService
 
       conditions.each do |condition|
         if condition == "required"
-          if field_value == nil || field_value.empty?
+          if field_value == nil || field_value.to_s.empty?
             all_good = false
             error = I18n.t('errors.validation.required', field: field)
             break

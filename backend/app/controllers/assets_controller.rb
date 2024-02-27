@@ -99,7 +99,7 @@ class AssetsController < ApplicationController
     ok({
       'id' => asset_id,
       'path' => url(path),
-    }, I18n.t('messages.assets.uploaded'))
+    }, I18n.t('messages.assets.upload'))
   end
 
   ##
@@ -166,7 +166,7 @@ class AssetsController < ApplicationController
 
     log("A file (#{asset_id}) was deleted by (#{request.env['user_id']})")
 
-    ok({}, I18n.t('messages.assets.deleted'))
+    ok({}, I18n.t('messages.assets.delete'))
   end
 
   private
