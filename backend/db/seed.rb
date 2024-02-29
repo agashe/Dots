@@ -12,6 +12,7 @@ user_model = User.new
     'work' => Faker::Job.title,
     'birth_date' => Faker::Date.birthday(min_age: 18, max_age: 99),
     'bio' => Faker::Lorem.sentences(number: 1),
+    'avatar' => '',
     'is_validated' => Faker::Boolean.boolean(true_ratio: 0.9),
     'is_active' => Faker::Boolean.boolean(true_ratio: 0.9),
   })
@@ -28,6 +29,7 @@ community_model = Community.new
     'name' => Faker::String.random(length: 3..12),
     'description' => Faker::Lorem.sentences(number: 1),
     'members_count' => 0,
+    'logo' => '',
     'is_closed' => Faker::Boolean.boolean(true_ratio: 0.9),
   })
 end
@@ -91,6 +93,8 @@ post_model = Post.new
     'text' => Faker::Lorem.paragraphs(number: 4),
     'rate' => 0,
     'tags' => tags,
+    'comments_count' => 0,
+    'banner' => '',
     'is_reported' => Faker::Boolean.boolean(true_ratio: 0.9),
     'is_published' => Faker::Boolean.boolean(true_ratio: 0.9),
   })
@@ -102,8 +106,10 @@ puts "\033[93mSeed posts completed successfully\033[0m"
 comment_model = Comment.new 
 
 (1..15000).each do |comment|
+  post = post_model.random(1).first[:id]
+
   comment_model.create({
-    'post_id' => post_model.random(1).first[:id],
+    'post_id' => post['id'],
     'comment_id' => rand(1..10) > 5 ? 
       (comment_model.random(1).first != nil ? 
       comment_model.random(1).first[:id] : nil) : nil,
@@ -111,6 +117,10 @@ comment_model = Comment.new
     'text' => Faker::Lorem.sentences(number: 1),
     'rate' => 0,
     'is_reported' => Faker::Boolean.boolean(true_ratio: 0.9),
+  })
+
+  post_model.update(post['id'], {
+    'comments_count' => post['comments_count'].to_i + 1
   })
 end
 

@@ -6,6 +6,8 @@ class UsersController < ApplicationController
     @user_model = User.new
     @community_model = Community.new
     @member_model = Member.new
+    @post_model = Post.new
+    @tag_model = Tag.new
   end
 
   ##
@@ -18,7 +20,7 @@ class UsersController < ApplicationController
     ok({
       'id' => user['id'],
       'name' => user['name'],
-      'name' => user['email'],
+      'email' => user['email'],
       'location' => user['location'],
       'work' => user['work'],
       'birth_date' => user['birth_date'],
@@ -75,7 +77,7 @@ class UsersController < ApplicationController
     ok({
       'id' => updated_user['id'],
       'name' => updated_user['name'],
-      'name' => updated_user['email'],
+      'email' => updated_user['email'],
       'location' => updated_user['location'],
       'work' => updated_user['work'],
       'birth_date' => updated_user['birth_date'],
@@ -93,18 +95,103 @@ class UsersController < ApplicationController
   end
 
   ##
-  # Load communities that the user has joined
+  # Load communities that the user has joined or created
   #
   # @return [Response]
   def communities
-    communities = []
-    joined_communities_ids = []
-      
-    @member_model.findBy('user_id', request.env['user_id']).each do |member|
-      joined_communities_ids.push(member['community_id'])
+    ok(get_user_communities(), I18n.t('messages.success.load'))
+  end
+
+  ##
+  # Load user's timeline
+  #
+  # @return [Response]
+  def timeline
+    validation_result = validate(params, {
+      'page' => 'required|number|min:1',
+    })
+    
+    if !validation_result['status']
+      return error(validation_result['message'])
     end
 
-    @community_model.in('id', joined_communities_ids).each do |community|
+    tags = []
+    posts = []
+    per_page = 10
+    top_posts = []
+    list_items_count = 5
+    popular_communities = []
+
+    posts_query = {
+      'is_published' => true,
+      'deleted_at' => nil,
+    }
+
+    # timeline posts
+    timeline_posts_query = posts_query.clone
+    timeline_posts_query['community_id'] = {'$in' => get_user_communities(true)}
+    total_pages = (@post_model.count(timeline_posts_query).to_f / per_page).ceil()
+    posts = @post_model.paginate(params['page'], per_page, timeline_posts_query)
+
+    # top posts
+    top_posts = @post_model.sort(
+      list_items_count, 
+      'comments_count', 
+      false, 
+      posts_query
+    )
+
+    # popular communities
+    popular_communities = @community_model.sort(
+      list_items_count, 
+      'members_count', 
+      false, 
+      {
+        'is_closed' => false
+      }
+    )
+
+    # tags    
+    tags = @tag_model.get_fields(['name'])
+
+    ok({
+      'posts' => posts,
+      'current_page' => params['page'],
+      'per_page' => per_page,
+      'pages' => total_pages,
+      'top_posts' => top_posts,
+      'popular_communities' => popular_communities,
+      'tags' => tags,
+    }, I18n.t('messages.success.load'))
+  end
+
+  private
+
+  ##
+  # Get communities created/joined by user
+  #
+  # @param  [bool] ids_only
+  # @return [array]
+  def get_user_communities(ids_only = false)
+    communities = []
+    communities_ids = []
+      
+    @member_model.findBy('user_id', request.env['user_id']).each do |member|
+      communities_ids.push(member['community_id'])
+    end
+
+    @community_model.query({
+      'user_id' => request.env['user_id'],
+      'is_closed' => false
+    }).each do |community|
+      communities_ids.push(community['id'])
+    end
+
+    if ids_only
+      return communities_ids
+    end
+
+    @community_model.in('id', communities_ids).each do |community|
       if community['is_closed']
         next
       end
@@ -112,21 +199,6 @@ class UsersController < ApplicationController
       communities.push(community)
     end
 
-    @community_model.query({
-      'user_id' => request.env['user_id'],
-      'is_closed' => false
-    }).each do |community|
-      communities.push(community)
-    end
-
-    ok(communities, I18n.t('messages.success.load'))
-  end
-
-  ##
-  # Load user's timeline
-  #
-  # @return [Response]
-  def homepage
-    ok({}, I18n.t('messages.success.load'))
+    return communities
   end
 end

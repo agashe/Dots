@@ -68,6 +68,13 @@ class ValidationService
             error = I18n.t('errors.validation.max', field: field, number: max)
             break
           end
+        elsif condition == "number"
+          if !(field_value.is_a? Integer) && !(field_value.is_a? Float)
+            puts field_value.is_a? Integer
+            all_good = false
+            error = I18n.t('errors.validation.number', field: field)
+            break
+          end
         end
       end
 

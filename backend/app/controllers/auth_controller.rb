@@ -101,7 +101,7 @@ class AuthController < ApplicationController
   # @param  [int] user_id
   # @return [string] 
   def generate_secure_token(user_id)
-    exp = Time.now.to_i + 4 * 3600
+    exp = Time.now.to_i + (24 * 3600)
     payload = {'user_id' => user_id, 'exp' => exp}
     secret_key = Rails.application.credentials.secret_key_base
     token = JWT.encode(payload, secret_key, 'HS256')

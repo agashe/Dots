@@ -53,6 +53,10 @@ class CommentsController < ApplicationController
       'is_reported' => false,
     })
 
+    updated_post = @post_model.update(post['id'], {
+      'comments_count' => post['comments_count'].to_i + 1
+    })
+
     log("A new comment (#{created_comment}) was created by (#{request.env['user_id']})")
 
     ok({

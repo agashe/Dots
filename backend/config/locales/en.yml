@@ -36,4 +36,5 @@ en:
       max_len: "The field '%{field}' can't be greater than %{count} characters"
       min: "The field '%{field}' can't be less than %{number}"
       max: "The field '%{field}' can't be greater than %{number}"
+      number: "The field '%{field}' only accepts numeric values"
 

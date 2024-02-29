@@ -119,7 +119,7 @@ class BaseModel
       raise "Unknown field " + field + " in model " + @collection.to_s
     end
 
-    return @collection.find({field => value, :deleted_at => nil})
+    return @collection.find({field => value, :deleted_at => nil}).to_a
   end
 
   ##
@@ -127,15 +127,39 @@ class BaseModel
   #
   # @return [array]
   def all()
-    return @collection.find({:deleted_at => nil})
+    return @collection.find({:deleted_at => nil}).to_a
+  end
+  
+  ##
+  # Get specific field value from all models
+  #
+  # @param [array]    fields
+  # @return [array]
+  def get_fields(fields)
+    fields = fields.to_h { |field| [field, 1] }
+
+    if !validate(fields)
+      raise "Unknown field in model " + @collection.to_s
+    end
+
+    fields['_id'] = 0
+
+    return @collection.find({:deleted_at => nil}).projection(fields).to_a
   end
 
   ##
   # Get count of models
   #
+  # @param  [HashMap]    q
   # @return [int]
-  def count()
-    return @collection.find({:deleted_at => nil}).count()
+  def count(q = nil)
+    if q == nil
+      q = {:deleted_at => nil}
+    else 
+      q['deleted_at'] = nil
+    end
+
+    return @collection.find(q).count()
   end
 
   ##
@@ -146,8 +170,22 @@ class BaseModel
   # @return [array]
   def latest(n, q = {:deleted_at => nil})
     return @collection.find(q)
-      .sort({created_at:-1})
-      .limit(n)
+      .sort({created_at: -1})
+      .limit(n).to_a
+  end
+  
+  ##
+  # Get n latest models by page number
+  #
+  # @param  [int]        page
+  # @param  [int]        per_page
+  # @param  [HashMap]    query
+  # @return [array]
+  def paginate(page, per_page, query = {:deleted_at => nil})
+    return @collection.find(query)
+      .sort({created_at: -1})
+      .skip((page - 1) * per_page)
+      .limit(per_page).to_a
   end
   
   ##
@@ -165,7 +203,7 @@ class BaseModel
   # @param  [HashMap]    q
   # @return [array]
   def query(q)
-    return @collection.find(q)
+    return @collection.find(q).to_a
   end
 
   ##
@@ -175,7 +213,11 @@ class BaseModel
   # @param  [mixed]    value
   # @return [HashMap]
   def like(field, value)
-    return @collection.find({field: {'$regex': "/#{value}/"}})
+    if !validate({field => value})
+      raise "Unknown field " + field + " in model " + @collection.to_s
+    end
+
+    return @collection.find({field: {'$regex': "/#{value}/"}}).to_a
   end
 
   ##
@@ -185,7 +227,25 @@ class BaseModel
   # @param  [array]    values
   # @return [HashMap]
   def in(field, values)
-    return @collection.find(field => {'$in': values})
+    if !validate({field => values[0]})
+      raise "Unknown field " + field + " in model " + @collection.to_s
+    end
+
+    return @collection.find(field => {'$in': values}).to_a
+  end
+
+  ##
+  # Get n number of models sorted by some criteria
+  #
+  # @param  [int]        n
+  # @param  [string]     sort_by
+  # @param  [bool]       asc
+  # @param  [HashMap]    q
+  # @return [array]
+  def sort(n, sort_by, asc = false, q = {:deleted_at => nil})
+    return @collection.find(q)
+      .sort({sort_by: (asc ? 1 : -1) })
+      .limit(n).to_a
   end
 
   ##
@@ -199,7 +259,7 @@ class BaseModel
     related_model = related_model_name.new
     relations = related_model.findBy(foreign_field, model_id)
 
-    return relations
+    return relations.to_a
   end
 
   private
@@ -210,6 +270,7 @@ class BaseModel
   # @param  [HashMap]    input_fields
   # @return [bool]
   def validate(input_fields)
-    return (input_fields.keys - @fields).empty?
+    model_fields = @fields + ['id', 'created_at', 'updated_at', 'deleted_at']
+    return (input_fields.keys - model_fields).empty?
   end
 end

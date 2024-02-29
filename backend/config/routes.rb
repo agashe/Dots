@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     # Public Routes
     get  '/home',       to: 'public#home', as: 'public_home'
     get  '/search',       to: 'public#search', as: 'public_search'
-    get  '/pages/:title', to: 'public#page',   as: 'public_page'
+    get  '/pages/:name', to: 'public#page',   as: 'public_page'
     
     # Auth Routes
     scope path: '/auth' do
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     
     # Users Routes
     scope path: '/users' do
-      get '/homepage',       to: 'users#homepage',        as: 'users_homepage'
+      get '/timeline',       to: 'users#timeline',        as: 'users_timeline'
       get '/profile',       to: 'users#profile',        as: 'users_profile'
       put '/profile',       to: 'users#update_profile', as: 'users_update_profile'
       get '/notifications', to: 'users#notifications',  as: 'users_notifications'

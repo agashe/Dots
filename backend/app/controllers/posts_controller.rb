@@ -25,6 +25,7 @@ class PostsController < ApplicationController
     validation_result = validate(params, {
       'entity' => 'required',
       'entity_id' => 'required',
+      'page' => 'required|number|min:1',
     })
     
     if !validation_result['status']
@@ -32,6 +33,7 @@ class PostsController < ApplicationController
     end
 
     posts = []
+    per_page = 10
 
     posts_query = {
       'is_published' => true,
@@ -48,11 +50,15 @@ class PostsController < ApplicationController
       return error(I18n.t('errors.invalid_operation'))
     end
     
-    @post_model.latest(10, posts_query).each do |post|
-      posts.push(post)
-    end
+    total_pages = (@post_model.count(posts_query) / per_page).round()
+    posts = @post_model.paginate(params['page'], per_page, posts_query)
 
-    ok(posts, I18n.t('messages.success.load'))
+    ok({
+      'posts' => posts,
+      'current_page' => params['page'],
+      'per_page' => per_page,
+      'pages' => total_pages,
+    }, I18n.t('messages.success.load'))
   end
 
   ##
@@ -228,13 +234,7 @@ class PostsController < ApplicationController
   #
   # @return [Response]
   def tags
-    tags = []
-    
-    @tag_model.all().each do |tag|
-      tags.push(tag['name'])
-    end
-
-    ok(tags, I18n.t('messages.success.load'))
+    ok(@tag_model.get_fields(['name']), I18n.t('messages.success.load'))
   end
 
   private
