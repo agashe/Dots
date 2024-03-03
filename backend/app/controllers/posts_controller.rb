@@ -7,6 +7,7 @@ class PostsController < ApplicationController
     @tag_model = Tag.new
     @member_model = Member.new
     @rate_model = Rate.new
+    @comment_model = Comment.new
   end
 
   ##
@@ -14,7 +15,32 @@ class PostsController < ApplicationController
   #
   # @return [Response]
   def show
-    ok(@post_model.find(params['post_id']), I18n.t('messages.success.load'))
+    validation_result = validate(params, {
+      'post_id' => 'required',
+      'page' => 'required|number|min:1',
+    })
+    
+    if !validation_result['status']
+      return error(validation_result['message'])
+    end
+
+    per_page = 50
+
+    comments_query = {
+      'post_id' => params['post_id']
+    }
+
+    total_pages = (@comment_model.count(comments_query).to_f / per_page).ceil()
+    comments = @comment_model.paginate(params['page'], per_page, comments_query)
+
+    ok({
+      'post' => PostResource::format(@post_model.find(params['post_id'])), 
+      'comments' => CommentResource::format_array(comments),
+      'current_page' => params['page'],
+      'per_page' => per_page,
+      'pages' => total_pages,
+    }, I18n.t('messages.success.load')
+    )
   end
   
   ##
@@ -50,11 +76,11 @@ class PostsController < ApplicationController
       return error(I18n.t('errors.invalid_operation'))
     end
     
-    total_pages = (@post_model.count(posts_query) / per_page).round()
+    total_pages = (@post_model.count(posts_query).to_f / per_page).ceil()
     posts = @post_model.paginate(params['page'], per_page, posts_query)
 
     ok({
-      'posts' => posts,
+      'posts' => PostResource::format_array(posts),
       'current_page' => params['page'],
       'per_page' => per_page,
       'pages' => total_pages,
@@ -96,7 +122,7 @@ class PostsController < ApplicationController
 
     log("A new post (#{created_post['id']}) was created by (#{request.env['user_id']})")
 
-    ok(created_post, I18n.t('messages.success.create'))
+    ok(PostResource::format(created_post), I18n.t('messages.success.create'))
   end
 
   ##
@@ -133,7 +159,7 @@ class PostsController < ApplicationController
 
     log("Post (#{updated_post['id']}) was updated by (#{request.env['user_id']})")
 
-    ok(updated_post, I18n.t('messages.success.update'))
+    ok(PostResource::format(updated_post), I18n.t('messages.success.update'))
   end
 
   ##

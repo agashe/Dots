@@ -38,13 +38,10 @@ class AuthController < ApplicationController
 
     log("New sign-in was successfully made by email : #{params[:email]}")
 
-    ok({
-      'id' => user['id'],
-      'name' => user['name'],
-      'email' => user['email'],
-      'avatar' => user['avatar'],
-      'token' => token,
-    }, I18n.t('messages.auth.sign_up'))
+    ok(
+      UserResource::format(user).merge({'token' => token}),
+      I18n.t('messages.auth.sign_up')
+    )
   end
 
   ##

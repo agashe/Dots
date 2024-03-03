@@ -11,7 +11,7 @@ class User < BaseModel
       'birth_date',
       'bio',
       'avatar',
-      'is_validated',
+      'is_verified',
       'is_active',
     ])
   end

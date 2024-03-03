@@ -51,17 +51,15 @@ class CommentsController < ApplicationController
       'text' => params['text'],
       'rate' => 0,
       'is_reported' => false,
-    })
+    }, true)
 
     updated_post = @post_model.update(post['id'], {
       'comments_count' => post['comments_count'].to_i + 1
     })
 
-    log("A new comment (#{created_comment}) was created by (#{request.env['user_id']})")
+    log("A new comment (#{created_comment['id']}) was created by (#{request.env['user_id']})")
 
-    ok({
-      'id' => created_comment
-    }, I18n.t('messages.success.create'))
+    ok(CommentResource::format(created_comment), I18n.t('messages.success.create'))
   end
 
   ##

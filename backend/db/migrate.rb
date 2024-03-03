@@ -22,6 +22,8 @@ collections = [
   'members',
   'rates',
   'logs',
+  'notifications',
+  'abuse_reports',
 ]
 
 # Create collections

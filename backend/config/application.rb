@@ -59,6 +59,10 @@ module Backend
     # Add auth middleware
     config.middleware.insert_before 0, Middlewares::AuthMiddleware
 
+    # Allow public assets
     config.public_file_server.enabled = true
+
+    # Enable static methods
+    config.autoload_paths += %W(#{config.root}/lib)
   end
 end

@@ -24,22 +24,18 @@ class CommunitiesController < ApplicationController
       return error(I18n.t('errors.community_exists'))
     end
 
-    community_id = @community_model.create({
+    created_community = @community_model.create({
       'user_id' => request.env['user_id'], 
       'name' => params['name'], 
       'description' => params['description'], 
       'members_count' => 0, 
       'logo' => '', 
       'is_closed' => false, 
-    })
+    }, true)
 
-    log("A new community (#{community_id}) was created by (#{request.env['user_id']})")
+    log("A new community (#{created_community['id']}) was created by (#{request.env['user_id']})")
 
-    ok({
-      'id' => community_id,
-      'name' => params['name'],
-      'description' => params['description'],
-    }, I18n.t('messages.success.create'))
+    ok(CommunityResource::format(created_community), I18n.t('messages.success.create'))
   end
 
   ##
@@ -89,12 +85,7 @@ class CommunitiesController < ApplicationController
 
     log("Community (#{updated_community['id']}) was updated by (#{request.env['user_id']})")
 
-    ok({
-      'id' => updated_community['id'],
-      'name' => updated_community['name'],
-      'description' => updated_community['description'],
-      'logo' => updated_community['logo'],
-    }, I18n.t('messages.success.update'))
+    ok(CommunityResource::format(updated_community), I18n.t('messages.success.update'))
   end
 
   ##

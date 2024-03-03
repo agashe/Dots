@@ -16,20 +16,16 @@ class UsersController < ApplicationController
   # @return [Response]
   def profile
     user = @user_model.find(request.env['user_id'])
-    
+    posts = @user_model.posts(user['id'])
+    comments = @user_model.comments(user['id'])
+    communities = @user_model.communities(user['id'])
+
     ok({
-      'id' => user['id'],
-      'name' => user['name'],
-      'email' => user['email'],
-      'location' => user['location'],
-      'work' => user['work'],
-      'birth_date' => user['birth_date'],
-      'bio' => user['bio'],
-      'avatar' => url_for('storage/uploads/avatars/avatar2_1708844140.jpeg'),
-      'data' => {
-        'posts' => @user_model.posts(user['id']),
-        'comments' => @user_model.comments(user['id']),
-        'communities' => @user_model.communities(user['id']),
+      'user' => UserResource::format(user),
+      'user_content' => {
+        'posts' => PostResource::format_array(posts),
+        'comments' => CommentResource::format_array(comments),
+        'communities' => CommunityResource::format_array(communities),
       }
     }, I18n.t('messages.success.load'))
   end
@@ -69,21 +65,15 @@ class UsersController < ApplicationController
 
       updated_data['password'] = BCrypt::Password.create(params['password'])
     end
+    
+    # format birth date
+    if params.has_key?('birth_date')
+      updated_data['birth_date'] = Date.parse(params['birth_date']).to_fs(:rfc822)
+    end
 
     updated_user = @user_model.update(request.env['user_id'], updated_data, true)
 
-    # format birth date
-
-    ok({
-      'id' => updated_user['id'],
-      'name' => updated_user['name'],
-      'email' => updated_user['email'],
-      'location' => updated_user['location'],
-      'work' => updated_user['work'],
-      'birth_date' => updated_user['birth_date'],
-      'bio' => updated_user['bio'],
-      'avatar' => updated_user['avatar'],
-    }, I18n.t('messages.success.update'))
+    ok(UserResource::format(updated_user), I18n.t('messages.success.update'))
   end
 
   ##
@@ -99,7 +89,10 @@ class UsersController < ApplicationController
   #
   # @return [Response]
   def communities
-    ok(get_user_communities(), I18n.t('messages.success.load'))
+    ok(
+      CommunityResource::format_array(get_user_communities()),
+      I18n.t('messages.success.load')
+    )
   end
 
   ##
@@ -152,16 +145,16 @@ class UsersController < ApplicationController
     )
 
     # tags    
-    tags = @tag_model.get_fields(['name'])
+    tags = @tag_model.all
 
     ok({
-      'posts' => posts,
+      'posts' => PostResource::format_array(posts),
+      'popular_communities' => CommunityResource::format_array(popular_communities),
+      'top_posts' => PostResource::format_array(top_posts),
+      'tags' => TagResource::format_array(tags),
       'current_page' => params['page'],
       'per_page' => per_page,
       'pages' => total_pages,
-      'top_posts' => top_posts,
-      'popular_communities' => popular_communities,
-      'tags' => tags,
     }, I18n.t('messages.success.load'))
   end
 

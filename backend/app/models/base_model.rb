@@ -217,7 +217,7 @@ class BaseModel
       raise "Unknown field " + field + " in model " + @collection.to_s
     end
 
-    return @collection.find({field: {'$regex': "/#{value}/"}}).to_a
+    return @collection.find({field: {'$regex': value}}).to_a
   end
 
   ##

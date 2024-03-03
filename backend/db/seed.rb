@@ -10,10 +10,10 @@ user_model = User.new
     'password' => Faker::Internet.password(min_length: 8),
     'location' => Faker::Address.country,
     'work' => Faker::Job.title,
-    'birth_date' => Faker::Date.birthday(min_age: 18, max_age: 99),
-    'bio' => Faker::Lorem.sentences(number: 1),
+    'birth_date' => Faker::Date.birthday(min_age: 18, max_age: 99).to_fs(:rfc822),
+    'bio' => Faker::Lorem.sentence,
     'avatar' => '',
-    'is_validated' => Faker::Boolean.boolean(true_ratio: 0.9),
+    'is_verified' => Faker::Boolean.boolean(true_ratio: 0.9),
     'is_active' => Faker::Boolean.boolean(true_ratio: 0.9),
   })
 end
@@ -27,10 +27,10 @@ community_model = Community.new
   community_model.create({
     'user_id' => user_model.random(1).first[:id],
     'name' => Faker::String.random(length: 3..12),
-    'description' => Faker::Lorem.sentences(number: 1),
+    'description' => Faker::Lorem.sentence,
     'members_count' => 0,
     'logo' => '',
-    'is_closed' => Faker::Boolean.boolean(true_ratio: 0.9),
+    'is_closed' => Faker::Boolean.boolean(true_ratio: 0.1),
   })
 end
 
@@ -90,12 +90,12 @@ post_model = Post.new
     'community_id' => community[:id],
     'user_id' => community[:user_id], # just to make our life easier
     'title' => Faker::Lorem.sentences(number: 1),
-    'text' => Faker::Lorem.paragraphs(number: 4),
+    'text' => Faker::Lorem.paragraphs(number: 4).join('\n'),
     'rate' => 0,
     'tags' => tags,
     'comments_count' => 0,
     'banner' => '',
-    'is_reported' => Faker::Boolean.boolean(true_ratio: 0.9),
+    'is_reported' => Faker::Boolean.boolean(true_ratio: 0.1),
     'is_published' => Faker::Boolean.boolean(true_ratio: 0.9),
   })
 end
@@ -114,9 +114,9 @@ comment_model = Comment.new
       (comment_model.random(1).first != nil ? 
       comment_model.random(1).first[:id] : nil) : nil,
     'user_id' => user_model.random(1).first[:id],
-    'text' => Faker::Lorem.sentences(number: 1),
+    'text' => Faker::Lorem.sentence,
     'rate' => 0,
-    'is_reported' => Faker::Boolean.boolean(true_ratio: 0.9),
+    'is_reported' => Faker::Boolean.boolean(true_ratio: 0.1),
   })
 
   post_model.update(post['id'], {
@@ -190,7 +190,7 @@ page_model = Page.new
   page_model.create({
     "name" => name, 
     "title" => title, 
-    "text" => Faker::Lorem.paragraphs(number: 4)
+    "text" => Faker::Lorem.paragraphs(number: 4).join('\n')
   })
 end
 
