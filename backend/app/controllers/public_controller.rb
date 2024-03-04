@@ -86,7 +86,9 @@ class PublicController < ApplicationController
 
     results = []
     per_page = 10
+    list_items_count = 5
 
+    # search results
     if params['entity'] == 'post'
       posts_query = {
         'is_published' => true,
@@ -119,12 +121,37 @@ class PublicController < ApplicationController
       return error(I18n.t('errors.invalid_operation'))
     end
     
+    # top posts
+    top_posts = @post_model.sort(
+      list_items_count, 
+      'comments_count', 
+      false, 
+      posts_query
+    )
+
+    # popular communities
+    popular_communities = @community_model.sort(
+      list_items_count, 
+      'members_count', 
+      false, 
+      {
+        'is_closed' => false
+      }
+    )
+
+    # tags    
+    tags = @tag_model.get_fields(['name'])
+
+
     ok({
       'entity' => params['entity'],
       'results' => results,
       'current_page' => params['page'],
       'per_page' => per_page,
       'pages' => total_pages,
+      'popular_communities' => CommunityResource::format_array(popular_communities),
+      'top_posts' => PostResource::format_array(top_posts),
+      'tags' => TagResource::format_array(tags),
     }, I18n.t('messages.success.load'))
   end
 

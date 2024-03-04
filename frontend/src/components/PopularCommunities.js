@@ -44,7 +44,7 @@ export function PopularCommunities({ communities }) {
                       <Box>
                         <Heading size='sm'>{community.name}</Heading>
                         <Text fontSize='xs'>
-                          {community.members_count + ' ' + t('members')}
+                          {community.members_count} {t('members')}
                         </Text>
                       </Box>
                     </Flex>

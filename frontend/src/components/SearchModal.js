@@ -36,7 +36,7 @@ export function SearchModal({ isOpen, onClose }) {
         <ModalBody pb={5}>
           <FormControl>
             <Flex>
-              <Input placeholder={t('search')} onChange={handleSearchInput} />
+              <Input id='search-input' placeholder={t('search')} onChange={handleSearchInput} />
               <IconButton
                 colorScheme='brand'
                 icon={<Icon as={MdSearch} boxSize={6} />}

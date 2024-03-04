@@ -21,7 +21,7 @@ export function SearchUserCard({ user }) {
 
           <Box>
             <Heading size='sm'>{user.name}</Heading>
-            <Text fontSize='xs'>{user.posts} {t('posts')} </Text>
+            <Text fontSize='xs'>{user.posts_count} {t('posts')} </Text>
           </Box>
         </Flex>
       </Link>

@@ -9,7 +9,7 @@ export function SearchCommunityCard({ community }) {
     <Card p={5} position='relative'>
       <Link reloadDocument
         _hover={{ textDecoration: "none" }}
-        to={"/c/Cool_people"}
+        to={"/c/" + community.name}
       >
         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
           <Image
@@ -21,7 +21,7 @@ export function SearchCommunityCard({ community }) {
 
           <Box>
             <Heading size='sm'>{community.name}</Heading>
-            <Text fontSize='xs'>{community.members} {t('members')} </Text>
+            <Text fontSize='xs'>{community.members_count} {t('members')} </Text>
           </Box>
         </Flex>
       </Link>

@@ -5,6 +5,12 @@ class UserResource < BaseResource
   # @param  [HashMap] data
   # @return [HashMap]
   def self.format(data)
+    post_model = Post.new
+    posts_count = post_model.count({
+      'is_published' => true,
+      'user_id' => data['id']
+    })
+
     return {
       'id' => data['id'],
       'name' => data['name'],
@@ -16,6 +22,7 @@ class UserResource < BaseResource
       'avatar' => data['avatar'],
       'is_verified' => data['is_verified'],
       'is_active' => data['is_active'],
+      'posts_count' => posts_count,
       'joined_at' => Date.parse(data['created_at']).to_fs(:rfc822),
     }
   end

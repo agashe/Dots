@@ -40,8 +40,7 @@ import { SignUp } from "./auth/SignUp";
 import { SideMenu } from "./SideMenu";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
-import { SearchModal } from "./SearchModel";
-
+import { SearchModal } from "./SearchModal";
 
 export function Layout() {
   const { t } = useTranslation();
@@ -142,7 +141,7 @@ export function Layout() {
 
           <Hide below='lg'>
             <Flex width='40%'>
-              <Input placeholder={t('search')} onChange={handleSearchInput} onKeyDown={(e) => { if (e.which === 13) submitSearch(); }} />
+              <Input id='search-input' placeholder={t('search')} onChange={handleSearchInput} onKeyDown={(e) => { if (e.which === 13) submitSearch(); }} />
               <IconButton
                 colorScheme='brand'
                 icon={<Icon as={MdSearch} boxSize={6} />}
