@@ -3,7 +3,6 @@ import {
   List,
   ListItem,
   ListIcon,
-  Link,
   Divider,
   Heading,
   Flex,
@@ -17,73 +16,46 @@ import {
   MdQuestionMark,
   MdRemoveRedEye,
 } from "react-icons/md";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Footer } from "./Footer";
 
-export function NavigationMenu() {
+export function NavigationMenu({ tags }) {
   const { t } = useTranslation();
 
-  const rightTags = [
-    "Travel",
-    "Tech",
-    "Science",
-    "Politics",
-    "Programming",
-    "Music",
-    "Movies",
-    "History",
-    "Fashion",
-    "Art",
-    "Anime",
-    "Business",
-  ];
-
-  const leftTags = [
-    "Cars",
-    "DIY",
-    "Food",
-    "Law",
-    "Military",
-    "Place",
-    "Podcast",
-    "Reading",
-    "Religion",
-    "Pets",
-    "Sports",
-    "Gaming",
-  ];
+  const rightTags = tags.slice(0, (tags.length / 2));
+  const leftTags = tags.slice(tags.length / 2);
 
   return (
     <>
       <List spacing={3} fontSize='xl' color='brand.main'>
-        <ListItem>
-          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/'>
+        <ListItem pl='4' my='2'>
+          <Link reloadDocument to='/'>
             <ListIcon as={MdHome} boxSize={6} /> {t('home')}
           </Link>
         </ListItem>
-        <ListItem>
-          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/FAQ'>
+        <ListItem pl='4' my='2'>
+          <Link reloadDocument to='/FAQ'>
             <ListIcon as={MdQuestionMark} boxSize={6} /> {t('faq')}
           </Link>
         </ListItem>
-        <ListItem>
-          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/terms-of-usage'>
+        <ListItem pl='4' my='2'>
+          <Link reloadDocument to='/terms-of-usage'>
             <ListIcon as={MdDoneOutline} boxSize={6} /> {t('terms')}
           </Link>
         </ListItem>
-        <ListItem>
-          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/privacy-policy'>
+        <ListItem pl='4' my='2'>
+          <Link reloadDocument to='/privacy-policy'>
             <ListIcon as={MdRemoveRedEye} boxSize={6} /> {t('privacy')}
           </Link>
         </ListItem>
-        <ListItem>
-          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/contact'>
+        <ListItem pl='4' my='2'>
+          <Link reloadDocument to='/contact'>
             <ListIcon as={MdCall} boxSize={6} /> {t('contact')}
           </Link>
         </ListItem>
-        <ListItem>
-          <Link reloadDocument p='5' my='2' as={ReactRouterLink} to='/about'>
+        <ListItem pl='4' my='2'>
+          <Link reloadDocument to='/about'>
             <ListIcon as={MdInfo} boxSize={6} /> {t('about')}
           </Link>
         </ListItem>
@@ -105,10 +77,9 @@ export function NavigationMenu() {
                     <Link reloadDocument
                       ml={1}
                       color='brand.main'
-                      as={ReactRouterLink}
-                      to={"/t/" + tag}
+                      to={"/t/" + tag.name}
                     >
-                      #{tag}
+                      #{tag.name}
                     </Link>
                   </ListItem>
                 );
@@ -124,10 +95,9 @@ export function NavigationMenu() {
                     <Link reloadDocument
                       ml={1}
                       color='brand.main'
-                      as={ReactRouterLink}
-                      to={"/t/" + tag}
+                      to={"/t/" + tag.name}
                     >
-                      #{tag}
+                      #{tag.name}
                     </Link>
                   </ListItem>
                 );

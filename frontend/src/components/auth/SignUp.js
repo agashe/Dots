@@ -10,10 +10,10 @@ import {
   FormLabel,
   Input,
   Button,
-  Link,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 export function SignUp({ isOpen, onClose }) {
   const [inputs] = useState([]); //setInputs

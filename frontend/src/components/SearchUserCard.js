@@ -1,5 +1,5 @@
-import { Flex, Box, Card, Heading, Text, Link, Avatar } from "@chakra-ui/react";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Flex, Box, Card, Heading, Text, Avatar } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export function SearchUserCard({ user }) {
@@ -9,7 +9,6 @@ export function SearchUserCard({ user }) {
     <Card p={5} position='relative'>
       <Link reloadDocument
         _hover={{ textDecoration: "none" }}
-        as={ReactRouterLink}
         to={"/u/1/ahmed"}
       >
         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>

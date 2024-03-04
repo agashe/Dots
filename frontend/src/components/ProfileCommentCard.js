@@ -2,7 +2,6 @@ import {
   Box,
   Heading,
   Text,
-  Link,
   Tooltip,
   Icon,
   IconButton,
@@ -11,6 +10,7 @@ import {
 import { MdDelete } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { Confirm } from "./Confirm";
+import { Link } from "react-router-dom";
 
 export function ProfileCommentCard({ comment }) {
   const { t } = useTranslation();

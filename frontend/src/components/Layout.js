@@ -7,7 +7,6 @@ import {
   Input,
   IconButton,
   Icon,
-  Link,
   Menu,
   MenuDivider,
   MenuButton,
@@ -35,7 +34,7 @@ import {
   MdLogout,
   MdMenu,
 } from "react-icons/md";
-import { Outlet, Link as ReactRouterLink } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import { SignIn } from "./auth/SignIn";
 import { SignUp } from "./auth/SignUp";
 import { SideMenu } from "./SideMenu";
@@ -113,6 +112,7 @@ export function Layout() {
           <Link reloadDocument
             _hover={{ textDecoration: "none" }}
             width={{ md: '15%' }}
+            to='/'
           >
             <div className='logo'>
               <Show below='md'>

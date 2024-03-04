@@ -11,7 +11,6 @@ import {
   Icon,
   IconButton,
   Spacer,
-  Link,
   HStack,
   Stack,
   Tooltip,
@@ -24,7 +23,7 @@ import {
   MdEditSquare,
   MdDelete,
 } from "react-icons/md";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Confirm } from "./Confirm";
 
@@ -71,7 +70,6 @@ export function ProfilePostCard({ post }) {
         <CardHeader py={0} pt={3}>
           <Link reloadDocument
             style={{ textAlign: "left" }}
-            as={ReactRouterLink}
             to={"/p/1/ahmed"}
           >
             <Heading size='md'>{post.title}</Heading>
@@ -79,14 +77,14 @@ export function ProfilePostCard({ post }) {
         </CardHeader>
         <CardBody py={0}>
           <Text fontSize='sm' my={1}>
-            {post.date} @ <Link reloadDocument as={ReactRouterLink} to={"/c/" + post.community}>{post.community}</Link>{" "}
+            {post.date} @ <Link reloadDocument to={"/c/" + post.community}>{post.community}</Link>{" "}
           </Text>
 
           <HStack spacing='24px' color='brand.main'>
             {post.tags.map((tag, i) => {
               return (
                 <Text fontSize='md' key={i}>
-                  <Link reloadDocument as={ReactRouterLink} to={"/t/" + tag}>#{tag}</Link>
+                  <Link reloadDocument to={"/t/" + tag}>#{tag}</Link>
                 </Text>
               );
             })}

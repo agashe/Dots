@@ -8,13 +8,12 @@ import {
   StackDivider,
   Text,
   Image,
-  Link,
   Flex,
 } from "@chakra-ui/react";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
-export function PopularCommunities() {
+export function PopularCommunities({ communities }) {
   const { t } = useTranslation();
 
   return (
@@ -25,77 +24,35 @@ export function PopularCommunities() {
 
       <CardBody>
         <Stack divider={<StackDivider />} spacing='4'>
-          <Link reloadDocument
-            _hover={{ textDecoration: "none" }}
-            as={ReactRouterLink}
-            to={"/c/Night owls"}
-          >
-            <Box>
-              <Link reloadDocument _hover={{ textDecoration: "none" }}>
-                <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                  <Image
-                    boxSize={8}
-                    src='/images/moon-icon.jpeg'
-                    fallbackSrc='/images/group-placeholder.png'
-                    alt='Community Logo'
-                  />
-
+          {
+            communities.map(function (community) {
+              return (
+                <Link reloadDocument
+                  style={{ textDecoration: "none" }}
+                  to={"/c/" + community.name}
+                  key={community.id}
+                >
                   <Box>
-                    <Heading size='sm'>Night owls</Heading>
-                    <Text fontSize='xs'>1.1k {t('members')} </Text>
+                    <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
+                      <Image
+                        boxSize={8}
+                        src={community.logo}
+                        fallbackSrc='/images/group-placeholder.png'
+                        alt='Community Logo'
+                      />
+
+                      <Box>
+                        <Heading size='sm'>{community.name}</Heading>
+                        <Text fontSize='xs'>
+                          {community.members_count + ' ' + t('members')}
+                        </Text>
+                      </Box>
+                    </Flex>
                   </Box>
-                </Flex>
-              </Link>
-            </Box>
-          </Link>
-          <Box>
-            <Link reloadDocument _hover={{ textDecoration: "none" }}>
-              <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                <Image
-                  boxSize={8}
-                  src='/images/star-icon.png'
-                  fallbackSrc='/images/group-placeholder.png'
-                />
-
-                <Box>
-                  <Heading size='sm'>All stars</Heading>
-                  <Text fontSize='xs'>100 members </Text>
-                </Box>
-              </Flex>
-            </Link>
-          </Box>
-          <Box>
-            <Link reloadDocument _hover={{ textDecoration: "none" }}>
-              <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                <Image
-                  boxSize={8}
-                  src='/images/sun-icon.png'
-                  fallbackSrc='/images/group-placeholder.png'
-                />
-
-                <Box>
-                  <Heading size='sm'>Cool_people</Heading>
-                  <Text fontSize='xs'>10.2M members </Text>
-                </Box>
-              </Flex>
-            </Link>
-          </Box>
-          <Box>
-            <Link reloadDocument _hover={{ textDecoration: "none" }}>
-              <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                <Image
-                  boxSize={8}
-                  src='unknown.png'
-                  fallbackSrc='/images/group-placeholder.png'
-                />
-
-                <Box>
-                  <Heading size='sm'>The Unknown</Heading>
-                  <Text fontSize='xs'>2 members </Text>
-                </Box>
-              </Flex>
-            </Link>
-          </Box>
+                </Link>
+              );
+            })
+          }
         </Stack>
       </CardBody>
     </Card>

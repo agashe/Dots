@@ -13,7 +13,6 @@ import {
   Button,
   Icon,
   IconButton,
-  Link,
   HStack,
   Tooltip,
   Show,
@@ -33,7 +32,7 @@ import {
   MdOutlineErrorOutline,
   MdMoreHoriz,
 } from "react-icons/md";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import parse from "html-react-parser";
 import { useTranslation } from "react-i18next";
 
@@ -55,7 +54,7 @@ export function ShowPostCard({ post }) {
         <CardHeader py={0} pt={3}>
           <Flex spacing='4'>
             <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
+              <Link reloadDocument to={"/u/1/ahmed"}>
                 <Avatar
                   name={post.user.name}
                   src={post.user.avatar}
@@ -65,12 +64,12 @@ export function ShowPostCard({ post }) {
               </Link>
 
               <Box>
-                <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
+                <Link reloadDocument to={"/u/1/ahmed"}>
                   <Heading size='sm'>{post.user.name}</Heading>
                 </Link>
                 <Text fontSize='xs'>
                   {post.date} @{" "}
-                  <Link reloadDocument as={ReactRouterLink} to={"/c/" + post.community}>
+                  <Link reloadDocument to={"/c/" + post.community}>
                     {post.community}
                   </Link>{" "}
                 </Text>

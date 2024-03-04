@@ -1,5 +1,5 @@
-import { Flex, Box, Card, Heading, Text, Image, Link } from "@chakra-ui/react";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Flex, Box, Card, Heading, Text, Image } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 export function SearchCommunityCard({ community }) {
@@ -9,7 +9,6 @@ export function SearchCommunityCard({ community }) {
     <Card p={5} position='relative'>
       <Link reloadDocument
         _hover={{ textDecoration: "none" }}
-        as={ReactRouterLink}
         to={"/c/Cool_people"}
       >
         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>

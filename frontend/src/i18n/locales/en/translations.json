@@ -100,7 +100,8 @@
         "page_not_found": "404, Page Not Found",
         "page_not_found_message": "Oops ! It seems that the page you are looking for , doesn't exists",
         "account_has_no_items": "This Account didn't create any {{items}} yet",
-        "no_notifications": "You haven't received any notifications yet"
+        "no_notifications": "You haven't received any notifications yet",
+        "server_error": "500, Server Error"
     },
     "placeholders": {
         "community_name": "The Avengers",

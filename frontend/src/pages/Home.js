@@ -1,4 +1,4 @@
-import { Flex, Box, Show, Hide } from "@chakra-ui/react";
+import { Flex, Box, Show, Hide, useToast } from "@chakra-ui/react";
 import { useParams, useLocation } from "react-router-dom";
 import { NavigationMenu } from "../components/NavigationMenu";
 import { LatestPosts } from "../components/LatestPosts";
@@ -9,8 +9,9 @@ import { useTranslation } from "react-i18next";
 import { TagCard } from "../components/TagCard";
 import { CommunityCard } from "../components/CommunityCard";
 import { UserCard } from "../components/UserCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SEO } from "../components/SEO";
+import axios from 'axios';
 
 export function Home() {
   const { t } = useTranslation();
@@ -19,6 +20,8 @@ export function Home() {
   // this could be for : user, tag, community or homepage
   let { id, name } = useParams();
   const location = useLocation();
+  const [homePageContent, setHomePageContent] = useState({});
+  const toast = useToast();
   let type = 'all';
   let card = '';
 
@@ -37,75 +40,23 @@ export function Home() {
 
   useEffect(function () {
     window.scrollTo(0, 0);
-  }, []);
 
-  const posts = [
-    {
-      title: "Lorem ipsum dolor sit amet",
-      image: "https://w.wallhaven.cc/full/jx/wallhaven-jxyopy.png",
-      community: "All stars",
-      date: "15 Mar 2021",
-      tags: ["Place", "Music"],
-      counters: {
-        rate: 777,
-        comments: 200,
-      },
-      user: {
-        name: "Ahmed Omar",
-        avatar: "",
-      },
-    },
-    {
-      title: `Aqua `,
-      image:
-        "https://w0.peakpx.com/wallpaper/671/487/HD-wallpaper-aqua-anime-azul-kawaii-konosuba.jpg",
-      community: "Anime World",
-      date: "12 Dec 2023",
-      tags: ["Anime"],
-      counters: {
-        rate: 300,
-        comments: 30,
-      },
-      user: {
-        name: "Ali Shadi",
-        avatar: "",
-      },
-    },
-    {
-      title: `Megumin ...`,
-      image:
-        "https://thicc-af.mywaifulist.moe/waifus/megumin-konosuba-god-s-blessing-on-this-wonderful-world/Ts2151UN1dnhE1gYDCjLdMg0gBZ8SADzIcgLWgV2_thumbnail.jpg",
-      community: "Anime World",
-      date: "12 Dec 2023",
-      tags: ["Anime"],
-      counters: {
-        rate: 300,
-        comments: 30,
-      },
-      user: {
-        name: "Hessan Al Said",
-        avatar:
-          "https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg",
-      },
-    },
-    {
-      title: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-        Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis. 
-        Duis euismod neque ac convallis molestie`,
-      image: "",
-      community: "Cool_people",
-      date: "17 Jan",
-      tags: ["Cars", "Science", "Tech"],
-      counters: {
-        rate: 5000,
-        comments: 5000,
-      },
-      user: {
-        name: "Segun Adebayo",
-        avatar: "https://bit.ly/sage-adebayo",
-      },
-    },
-  ];
+    axios.post(process.env.REACT_APP_BACKEND_URL + "/home", {
+      page: 1
+    })
+      .then(function (response) {
+        setHomePageContent(response.data.data);
+      })
+      .catch(function (error) {
+        toast({
+          title: t('errors.server_error'),
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  }, []);
 
   return (
     <>
@@ -113,7 +64,7 @@ export function Home() {
       <Flex pt={5} px={{ base: 5, md: 2, lg: 10 }}>
         <Hide below="md">
           <Box w={{ md: '35%', lg: '25%' }}>
-            <NavigationMenu />
+            <NavigationMenu tags={homePageContent.tags ?? []} />
           </Box>
         </Hide>
         <Box w={{ base: '100%', md: '65%', lg: '50%' }}>
@@ -123,19 +74,19 @@ export function Home() {
             </Box>
           </Show>
 
-          {posts.length ? (
-            posts.map((post, i) => {
+          {homePageContent.posts ? (
+            homePageContent.posts.map((post, i) => {
               return <PostCard post={post} key={i} />;
             })
           ) : (
-            <NoResults message={t('no_published_posts')} />
+            <NoResults message={t('errors.no_published_posts')} />
           )}
         </Box>
         <Show above="lg">
           <Box w='25%'>
             {card}
-            <LatestPosts />
-            <PopularCommunities />
+            <LatestPosts posts={homePageContent.top_posts ?? []} />
+            <PopularCommunities communities={homePageContent.popular_communities ?? []} />
           </Box>
         </Show>
       </Flex>

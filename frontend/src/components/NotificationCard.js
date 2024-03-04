@@ -3,11 +3,10 @@ import {
   Box,
   Heading,
   Text,
-  Link,
   Avatar,
   Icon,
 } from "@chakra-ui/react";
-
+import { Link } from "react-router-dom";
 import { MdNotifications } from "react-icons/md";
 
 export function NotificationCard({ notification }) {

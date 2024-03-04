@@ -1,16 +1,29 @@
+import { useState, useEffect } from "react";
 import { ContentLayout } from "../components/ContentLayout";
 import { useTranslation } from "react-i18next";
+import axios from 'axios';
+import { useToast } from "@chakra-ui/react";
 
 export function Contact() {
   const { t } = useTranslation();
+  const [content, setContent] = useState({});
+  const toast = useToast();
 
-  let content = `
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-    Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-    Duis euismod neque ac convallis molestie.
-    <br />
-    <br />
-  `;
+  useEffect(function () {
+    axios.get(process.env.REACT_APP_BACKEND_URL + "/pages/contact")
+      .then(function (response) {
+        setContent(response.data.data);
+      })
+      .catch(function (error) {
+        toast({
+          title: t('errors.server_error'),
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  }, []);
 
-  return <ContentLayout title={t('contact')} content={content} />;
+  return <ContentLayout title={content.title ?? ''} content={content.text ?? ''} />;
 }

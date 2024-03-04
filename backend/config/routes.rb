@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   scope path: '/api/v1' do
     # Public Routes
-    get  '/home',       to: 'public#home', as: 'public_home'
-    get  '/search',       to: 'public#search', as: 'public_search'
+    post  '/home',       to: 'public#home', as: 'public_home'
+    post  '/search',       to: 'public#search', as: 'public_search'
     get  '/pages/:name', to: 'public#page',   as: 'public_page'
     
     # Auth Routes
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     
     # Users Routes
     scope path: '/users' do
-      get '/timeline',       to: 'users#timeline',        as: 'users_timeline'
+      post '/timeline',       to: 'users#timeline',        as: 'users_timeline'
       get '/profile',       to: 'users#profile',        as: 'users_profile'
       put '/profile',       to: 'users#update_profile', as: 'users_update_profile'
       get '/notifications', to: 'users#notifications',  as: 'users_notifications'
@@ -36,8 +36,8 @@ Rails.application.routes.draw do
       post   '/',       to: 'posts#create', as: 'posts_create'
       put    '/',       to: 'posts#update', as: 'posts_update'
       delete '/',       to: 'posts#delete', as: 'posts_delete'
-      get    '/show',   to: 'posts#show',   as: 'posts_show'
-      get    '/list',   to: 'posts#list',   as: 'posts_list'
+      post    '/show',   to: 'posts#show',   as: 'posts_show'
+      post    '/list',   to: 'posts#list',   as: 'posts_list'
       post   '/rate',   to: 'posts#rate',   as: 'posts_rate'
       post   '/report', to: 'posts#report', as: 'posts_report'
       get    '/tags',   to: 'posts#tags',   as: 'posts_tags'

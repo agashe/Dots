@@ -10,7 +10,6 @@ import {
   Text,
   Icon,
   IconButton,
-  Link,
   HStack,
   Tooltip,
   Spacer,
@@ -32,7 +31,7 @@ import {
   MdMoreHoriz,
 } from "react-icons/md";
 import { AddComment } from "./AddComment";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -51,7 +50,7 @@ export function Comment({ comment }) {
     <Card mb={5} mx={1}>
       <CardHeader py={0} pt={3} px={{ base: 1, md: 5 }}>
         <Flex>
-          <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
+          <Link reloadDocument to={"/u/1/ahmed"}>
             <Avatar
               name={comment.user.name}
               src={comment.user.avatar}
@@ -63,7 +62,7 @@ export function Comment({ comment }) {
           </Link>
 
           <Box>
-            <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
+            <Link reloadDocument to={"/u/1/ahmed"}>
               <Heading size={{ base: 'xs', md: 'sm' }}>{comment.user.name}</Heading>
             </Link>
           </Box>

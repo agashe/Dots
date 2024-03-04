@@ -13,11 +13,10 @@ import {
   Button,
   Icon,
   Spacer,
-  Link,
   HStack,
   Tooltip,
 } from "@chakra-ui/react";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { MdThumbsUpDown, MdChat, MdOutlineShare } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 
@@ -31,9 +30,9 @@ export function PostCard({ post }) {
   return (
     <Card w={{ md: '100%', lg: '90%' }} mx='auto' mb={5}>
       <Image
-        src={post.image}
+        src={post.banner}
         alt={post.title}
-        maxHeight={{ base: '300px', md: '400px'}}
+        maxHeight={{ base: '300px', md: '400px' }}
         borderTopRadius='lg'
         fallbackSrc='/images/placeholder-image.png'
         style={{ cursor: "pointer" }}
@@ -43,7 +42,7 @@ export function PostCard({ post }) {
       <CardHeader py={0} pt={3}>
         <Flex spacing='4'>
           <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-            <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
+            <Link reloadDocument to={"/u/1/ahmed"}>
               <Avatar
                 name={post.user.name}
                 src={post.user.avatar}
@@ -53,13 +52,13 @@ export function PostCard({ post }) {
             </Link>
 
             <Box>
-              <Link reloadDocument as={ReactRouterLink} to={"/u/1/ahmed"}>
+              <Link reloadDocument to={"/u/1/ahmed"}>
                 <Heading size='sm'>{post.user.name}</Heading>
               </Link>
               <Text fontSize='xs'>
-                {post.date} @{" "}
-                <Link reloadDocument as={ReactRouterLink} to={"/c/" + post.community}>
-                  {post.community}
+                {post.created_at} @{" "}
+                <Link reloadDocument to={"/c/" + post.community.name}>
+                  {post.community.name}
                 </Link>{" "}
               </Text>
             </Box>
@@ -70,7 +69,6 @@ export function PostCard({ post }) {
       <CardBody py={0} my={5}>
         <Link reloadDocument
           style={{ textAlign: "left" }}
-          as={ReactRouterLink}
           to={"/p/1/ahmed"}
         >
           <Heading size='md'>{post.title}</Heading>
@@ -80,7 +78,7 @@ export function PostCard({ post }) {
           {post.tags.map((tag, i) => {
             return (
               <Text fontSize='md' key={i}>
-                <Link reloadDocument as={ReactRouterLink} to={"/t/" + tag}>#{tag}</Link>
+                <Link reloadDocument to={"/t/" + tag}>#{tag}</Link>
               </Text>
             );
           })}
@@ -89,7 +87,7 @@ export function PostCard({ post }) {
 
       <Divider />
 
-      <CardFooter py={2} px={{base: 0, md: 5}}>
+      <CardFooter py={2} px={{ base: 0, md: 5 }}>
         <Flex w='100%'>
           <Link reloadDocument>
             <Tooltip label={t('actions.rate')}>
@@ -98,7 +96,7 @@ export function PostCard({ post }) {
                 leftIcon={<Icon as={MdThumbsUpDown} />}
                 _hover={{ textDecoration: "none" }}
               >
-                {post.counters.rate}
+                {post.rate}
               </Button>
             </Tooltip>
           </Link>
@@ -112,7 +110,7 @@ export function PostCard({ post }) {
                 leftIcon={<Icon as={MdChat} />}
                 _hover={{ textDecoration: "none" }}
               >
-                {post.counters.comments}
+                {post.comments_count}
               </Button>
             </Tooltip>
           </Link>

@@ -5,7 +5,6 @@ import {
   Heading,
   Text,
   Image,
-  Link,
   Icon,
   IconButton,
   Tooltip,
@@ -13,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import { MdEditSquare, MdDelete } from "react-icons/md";
 import { useTranslation } from "react-i18next";
-import { Link as ReactRouterLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Confirm } from "./Confirm";
 
 export function ProfileCommunityCard({ community }) {
@@ -46,7 +45,7 @@ export function ProfileCommunityCard({ community }) {
           />
 
           <Box>
-            <Link reloadDocument as={ReactRouterLink} to={"/c/" + community.name}>
+            <Link reloadDocument to={"/c/" + community.name}>
               <Heading size='sm'>{community.name}</Heading>
               <Text fontSize='xs'>{community.members} {t('members')} </Text>
             </Link>
