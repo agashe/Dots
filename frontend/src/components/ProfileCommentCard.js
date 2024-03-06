@@ -28,12 +28,12 @@ export function ProfileCommentCard({ comment }) {
   return (
     <Link reloadDocument _hover={{ textDecoration: "none" }} position='relative'>
       <Box p={3} shadow='md' borderWidth='1px'>
-        <Heading fontSize='xl'>{comment.title}</Heading>
+        {/* <Heading fontSize='xl'>{comment.title}</Heading> */}
         <Text fontSize='md' my={1}>
-          {comment.comment}
+          {comment.text}
         </Text>
         <Text fontSize='sm' mt={5}>
-          {comment.date}
+          {comment.created_at}
         </Text>
       </Box>
       <Tooltip label={t('actions.delete')}>

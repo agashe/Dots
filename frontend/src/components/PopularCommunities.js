@@ -29,7 +29,7 @@ export function PopularCommunities({ communities }) {
               return (
                 <Link reloadDocument
                   style={{ textDecoration: "none" }}
-                  to={"/c/" + community.name}
+                  to={"/c/" + community.name.replaceAll(' ', '+')}
                   key={community.id}
                 >
                   <Box>

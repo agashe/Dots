@@ -13,7 +13,7 @@ import {
 import { MdCake, MdMap, MdCardMembership } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 
-export function UserCard() {
+export function UserCard({ user }) {
   const { t } = useTranslation();
 
   return (
@@ -21,20 +21,22 @@ export function UserCard() {
       <CardBody>
         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
           <Avatar
-            name='Ahmed Omar'
-            src='https://avatarfiles.alphacoders.com/372/372516.jpg'
+            name={user.name}
+            src={user.avatar}
             bg='brand.main'
             color='white'
           />
 
           <Box>
-            <Heading size='sm'>Ahmed Omar</Heading>
-            <Text fontSize='xs'>200 {t('posts')} </Text>
+            <Heading size='sm'>{user.name}</Heading>
+            <Text fontSize='xs'>{user.posts_count} {t('posts')} </Text>
           </Box>
 
+          <Divider />
+          
           <Box>
             <Text fontSize='sm'>
-              I am a cool guy , who likes build stuff with assembly :)
+              {user.bio}
             </Text>
           </Box>
 
@@ -44,17 +46,17 @@ export function UserCard() {
             <Stack spacing={3}>
               <Text>
                 <Icon as={MdCake} mr={2} />
-                30 Oct 1999
+                {user.birth_date}
               </Text>
 
               <Text>
                 <Icon as={MdMap} mr={2} />
-                Zolo Lolo , Kal-Mangaro Islands
+                {user.location}
               </Text>
 
               <Text>
                 <Icon as={MdCardMembership} mr={2} />
-                Freelancer
+                {user.work}
               </Text>
             </Stack>
           </Box>

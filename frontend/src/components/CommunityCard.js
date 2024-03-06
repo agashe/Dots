@@ -10,29 +10,32 @@ import {
 } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 
-export function CommunityCard() {
+export function CommunityCard({ community }) {
   const { t } = useTranslation();
 
+  function goToCommunity() {
+    window.location.href = '/c/' + community.name.replaceAll(' ', '+');
+  }
+  
   return (
     <Card mr={{ base: 0, lg: 5 }} mb={5}>
       <CardBody>
         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
           <Image
             boxSize={10}
-            src='unknown.png'
+            src={community.logo}
             fallbackSrc='/images/group-placeholder.png'
+            onClick={goToCommunity}
             alt='Community logo'
           />
 
           <Box>
-            <Heading size='sm'>The Unknown</Heading>
-            <Text fontSize='xs'>2 {t('members')} </Text>
+            <Heading size='sm'>{community.name}</Heading>
+            <Text fontSize='xs'>{community.members_count} {t('members')} </Text>
           </Box>
           <Box>
             <Text fontSize='sm'>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent
-              et neque lectus. Suspendisse venenatis imperdiet lobortis. Duis
-              euismod neque ac convallis molestie
+              {community.description}
             </Text>
           </Box>
 

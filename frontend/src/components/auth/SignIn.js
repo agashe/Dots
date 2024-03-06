@@ -10,33 +10,45 @@ import {
   FormLabel,
   Input,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 export function SignIn({ isOpen, onClose, onOpenSignUp }) {
-  const [inputs] = useState([]); //setInputs
+  const [inputs, setInputs] = useState([]);
   const { t } = useTranslation();
+  const toast = useToast();
 
   function submitSignIn(event) {
     event.preventDefault();
 
-    const user = {
-      name: "Ahmed Omar",
-      avatar: "https://avatarfiles.alphacoders.com/372/372516.jpg",
-      email: inputs["email"],
-      password: inputs["password"],
-      token: "123",
-    };
-
-    localStorage.setItem("user", JSON.stringify(user));
-
-    window.location.href = "/";
+    axios.post(process.env.REACT_APP_BACKEND_URL + "/auth/sign-in", {
+      name: inputs['name'],
+      email: inputs['email'],
+      password: inputs['password'],
+      confirm: inputs['confirm'],
+    })
+      .then(function (response) {
+        localStorage.setItem("user", JSON.stringify(response.data.data));
+        window.location.href = "/";
+      })
+      .catch(function (error) {
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   }
 
   function handleInput(event) {
     inputs[event.target.name] = event.target.value;
+    setInputs(inputs);
   }
 
   return (
@@ -48,13 +60,14 @@ export function SignIn({ isOpen, onClose, onOpenSignUp }) {
         <ModalBody pb={6}>
           <FormControl>
             <FormLabel>{t('user.email')}</FormLabel>
-            <Input type='email' placeholder={t('user.email')} onChange={handleInput} />
+            <Input type='email' name='email' placeholder={t('user.email')} onChange={handleInput} />
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>{t('user.password')}</FormLabel>
             <Input
               type='password'
+              name='password'
               placeholder={t('user.password')}
               onChange={handleInput}
             />

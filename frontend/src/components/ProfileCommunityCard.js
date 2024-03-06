@@ -25,7 +25,7 @@ export function ProfileCommunityCard({ community }) {
   } = useDisclosure();
 
   function goToCommunity() {
-    window.location.href = '/c/ahmed'; // `c/${community.name}`
+    window.location.href = '/c/' + community.name.replaceAll(' ', '+');
   }
 
   function handleDelete() {
@@ -45,9 +45,9 @@ export function ProfileCommunityCard({ community }) {
           />
 
           <Box>
-            <Link reloadDocument to={"/c/" + community.name}>
+            <Link reloadDocument to={'/c/' + community.name.replaceAll(' ', '+')}>
               <Heading size='sm'>{community.name}</Heading>
-              <Text fontSize='xs'>{community.members} {t('members')} </Text>
+              <Text fontSize='xs'>{community.members_count} {t('members')} </Text>
             </Link>
           </Box>
         </Flex>

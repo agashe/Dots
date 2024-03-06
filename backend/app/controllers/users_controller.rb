@@ -22,11 +22,9 @@ class UsersController < ApplicationController
 
     ok({
       'user' => UserResource::format(user),
-      'user_content' => {
-        'posts' => PostResource::format_array(posts),
-        'comments' => CommentResource::format_array(comments),
-        'communities' => CommunityResource::format_array(communities),
-      }
+      'posts' => PostResource::format_array(posts),
+      'comments' => CommentResource::format_array(comments),
+      'communities' => CommunityResource::format_array(communities),
     }, I18n.t('messages.success.load'))
   end
 

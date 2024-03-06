@@ -8,6 +8,7 @@ class PostsController < ApplicationController
     @member_model = Member.new
     @rate_model = Rate.new
     @comment_model = Comment.new
+    @user_model = User.new
   end
 
   ##
@@ -59,19 +60,51 @@ class PostsController < ApplicationController
     end
 
     posts = []
+    entity = {}
     per_page = 10
+    top_posts = []
+    list_items_count = 5
+    popular_communities = []
 
     posts_query = {
       'is_published' => true,
       'deleted_at' => nil
     }
 
+    # top posts
+    top_posts = @post_model.sort(
+      list_items_count, 
+      'comments_count', 
+      false, 
+      posts_query
+    )
+
+    # popular communities
+    popular_communities = @community_model.sort(
+      list_items_count, 
+      'members_count', 
+      false, 
+      {
+        'is_closed' => false
+      }
+    )
+
+    # tags    
+    tags = @tag_model.all
+    
     if params['entity'] == 'user'
       posts_query['user_id'] = params['entity_id']
+      entity = UserResource::format(@user_model.find(params['entity_id']))
     elsif params['entity'] == 'community'        
-      posts_query['community_id'] = params['entity_id']
+      entity = CommunityResource::format(
+        @community_model.findBy('name', params['entity_id']).first
+      )
+      posts_query['community_id'] = entity['id']
     elsif params['entity'] == 'tag'
       posts_query['tags'] = params['entity_id']
+      entity = TagResource::format(
+        @tag_model.findBy('name', params['entity_id']).first
+      )
     else
       return error(I18n.t('errors.invalid_operation'))
     end
@@ -81,6 +114,10 @@ class PostsController < ApplicationController
 
     ok({
       'posts' => PostResource::format_array(posts),
+      'entity' => entity,
+      'popular_communities' => CommunityResource::format_array(popular_communities),
+      'top_posts' => PostResource::format_array(top_posts),
+      'tags' => TagResource::format_array(tags),
       'current_page' => params['page'],
       'per_page' => per_page,
       'pages' => total_pages,

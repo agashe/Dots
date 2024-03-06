@@ -10,32 +10,46 @@ import {
   FormLabel,
   Input,
   Button,
+  useToast
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 export function SignUp({ isOpen, onClose }) {
-  const [inputs] = useState([]); //setInputs
+  const [inputs, setInputs] = useState([]);
   const { t } = useTranslation();
+  const toast = useToast();
 
   function submitSignUp(event) {
     event.preventDefault();
 
-    const user = {
-      name: "ahmed",
-      email: inputs["email"],
-      password: inputs["password"],
-      token: "123",
-    };
-
-    localStorage.setItem("user", JSON.stringify(user));
-
-    window.location.href = "/";
+    axios.post(process.env.REACT_APP_BACKEND_URL + "/auth/sign-up", {
+      name: inputs['name'],
+      email: inputs['email'],
+      password: inputs['password'],
+      confirm: inputs['confirm'],
+    })
+      .then(function (response) {
+        localStorage.setItem("user", JSON.stringify(response.data.data));
+        window.location.href = "/";
+      })
+      .catch(function (error) {
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   }
 
   function handleInput(event) {
-    inputs[event.target.name] = event.target.value;
+    let newInputs = inputs;
+    newInputs[event.target.name] = event.target.value;
+    setInputs(newInputs);
   }
 
   return (
@@ -47,22 +61,22 @@ export function SignUp({ isOpen, onClose }) {
         <ModalBody>
           <FormControl>
             <FormLabel>{t('user.name')}</FormLabel>
-            <Input type='text' placeholder={t('user.name')} onChange={handleInput} />
+            <Input type='text' name='name' placeholder={t('user.name')} onChange={handleInput} />
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>{t('user.email')}</FormLabel>
-            <Input type='email' placeholder={t('user.email')} />
+            <Input type='email' name='email' placeholder={t('user.email')} onChange={handleInput} />
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>{t('user.password')}</FormLabel>
-            <Input type='password' placeholder={t('user.password')} />
+            <Input type='password' name='password' placeholder={t('user.password')} onChange={handleInput} />
           </FormControl>
 
           <FormControl mt={4}>
             <FormLabel>{t('user.confirm')}</FormLabel>
-            <Input type='password' placeholder={t('user.confirm')} />
+            <Input type='password' name='confirm' placeholder={t('user.confirm')} onChange={handleInput} />
           </FormControl>
         </ModalBody>
 

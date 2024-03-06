@@ -30,7 +30,7 @@ export function LatestPosts({ posts }) {
           {
             posts.map(function (post) {
               return (
-                <Link reloadDocument to={"/p/" + post.id + "/" + post.title}>
+                <Link reloadDocument to={"/p/" + post.id + "/" + post.title.replaceAll(' ', '+')} key={post.id}>
                   <Box>
                     <Heading size='xs' textTransform='uppercase'>
                       {post.title}

@@ -37,7 +37,7 @@ export function ProfilePostCard({ post }) {
   } = useDisclosure();
 
   function goToPost() {
-    window.location.href = '/p/1/ahmed'; // `p/${post.id}/${post.title}`
+    window.location.href = '/p/'+ post.id + '/' + post.title.replaceAll(' ', '+');
   }
 
   function handleDelete() {
@@ -59,7 +59,7 @@ export function ProfilePostCard({ post }) {
         minW={{ base: '100%', sm: '250px', lg: '200px' }}
         maxW={{ sm: '250px', lg: '200px' }}
         maxH={{ base: '150px', sm: '250px', lg: '200px' }}
-        src={post.image}
+        src={post.banner}
         alt={post.title}
         fallbackSrc='images/placeholder-image.png'
         style={{ cursor: "pointer" }}
@@ -70,21 +70,21 @@ export function ProfilePostCard({ post }) {
         <CardHeader py={0} pt={3}>
           <Link reloadDocument
             style={{ textAlign: "left" }}
-            to={"/p/1/ahmed"}
+            to={'/p/'+ post.id + '/' + post.title.replaceAll(' ', '+')}
           >
             <Heading size='md'>{post.title}</Heading>
           </Link>
         </CardHeader>
         <CardBody py={0}>
           <Text fontSize='sm' my={1}>
-            {post.date} @ <Link reloadDocument to={"/c/" + post.community}>{post.community}</Link>{" "}
+            {post.date} @ <Link reloadDocument to={'/c/' + post.community.name.replaceAll(' ', '+')}>{post.community.name}</Link>{" "}
           </Text>
 
           <HStack spacing='24px' color='brand.main'>
             {post.tags.map((tag, i) => {
               return (
                 <Text fontSize='md' key={i}>
-                  <Link reloadDocument to={"/t/" + tag}>#{tag}</Link>
+                  <Link reloadDocument to={'/t/' + tag.replaceAll(' ', '+')}>#{tag}</Link>
                 </Text>
               );
             })}
@@ -100,7 +100,7 @@ export function ProfilePostCard({ post }) {
                   leftIcon={<Icon as={MdThumbsUpDown} />}
                   _hover={{ textDecoration: "none" }}
                 >
-                  {post.counters.rate}
+                  {post.rate}
                 </Button>
               </Tooltip>
             </Link>
@@ -114,7 +114,7 @@ export function ProfilePostCard({ post }) {
                   leftIcon={<Icon as={MdChat} />}
                   _hover={{ textDecoration: "none" }}
                 >
-                  {post.counters.comments}
+                  {post.comments_count}
                 </Button>
               </Tooltip>
             </Link>
