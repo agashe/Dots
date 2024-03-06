@@ -20,7 +20,7 @@ class CommunitiesController < ApplicationController
       return error(validation_result['message'])
     end
 
-    if check_community_name_is_available(params['name'])
+    if !check_community_name_is_available(params['name'])
       return error(I18n.t('errors.community_exists'))
     end
 

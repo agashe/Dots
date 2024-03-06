@@ -56,7 +56,7 @@ export function ProfileCommunityCard({ community }) {
       <Tooltip label={t('actions.edit')}>
         <IconButton
           as='a'
-          href='/edit-community'
+          href={'/edit-community/' + community.name.replaceAll(' ', '+')}
           icon={<Icon as={MdEditSquare} />}
           position='absolute'
           top='7px'

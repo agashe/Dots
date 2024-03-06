@@ -16,7 +16,7 @@ export function CommunityCard({ community }) {
   function goToCommunity() {
     window.location.href = '/c/' + community.name.replaceAll(' ', '+');
   }
-  
+
   return (
     <Card mr={{ base: 0, lg: 5 }} mb={5}>
       <CardBody>
@@ -33,16 +33,17 @@ export function CommunityCard({ community }) {
             <Heading size='sm'>{community.name}</Heading>
             <Text fontSize='xs'>{community.members_count} {t('members')} </Text>
           </Box>
-          <Box>
-            <Text fontSize='sm'>
-              {community.description}
-            </Text>
-          </Box>
-
-          <Box w='100%'>
-            <Button w='100%'>{t('actions.join')}</Button>
-          </Box>
         </Flex>
+
+        <Box my={5}>
+          <Text fontSize='sm'>
+            {community.description}
+          </Text>
+        </Box>
+
+        <Box w='100%'>
+          <Button w='100%'>{t('actions.join')}</Button>
+        </Box>
       </CardBody>
     </Card>
   );

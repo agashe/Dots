@@ -84,7 +84,7 @@ export const router = createBrowserRouter([
         Component: CreateCommunity,
       },
       {
-        path: "edit-community",
+        path: "edit-community/:name",
         loader: protectedLoader,
         Component: EditCommunity,
       },
