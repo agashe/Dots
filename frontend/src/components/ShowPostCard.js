@@ -43,7 +43,7 @@ export function ShowPostCard({ post }) {
     <>
       <Card ml={{ base: 0, lg: 5 }} mb={5}>
         <Image
-          src={post.image}
+          src={post.banner}
           alt={post.title}
           maxHeight='500px'
           borderTopRadius='lg'
@@ -54,7 +54,7 @@ export function ShowPostCard({ post }) {
         <CardHeader py={0} pt={3}>
           <Flex spacing='4'>
             <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-              <Link reloadDocument to={"/u/1/ahmed"}>
+              <Link reloadDocument to={'/u/' + post.user.id + '/' + post.user.name.replaceAll(' ', '+')}>
                 <Avatar
                   name={post.user.name}
                   src={post.user.avatar}
@@ -64,13 +64,13 @@ export function ShowPostCard({ post }) {
               </Link>
 
               <Box>
-                <Link reloadDocument to={"/u/1/ahmed"}>
+                <Link reloadDocument to={'/u/' + post.user.id + '/' + post.user.name.replaceAll(' ', '+')}>
                   <Heading size='sm'>{post.user.name}</Heading>
                 </Link>
                 <Text fontSize='xs'>
-                  {post.date} @{" "}
-                  <Link reloadDocument to={"/c/" + post.community}>
-                    {post.community}
+                  {post.created_at} @{" "}
+                  <Link reloadDocument to={'/c/' + post.community.name.replaceAll(' ', '+')}>
+                    {post.community.name}
                   </Link>{" "}
                 </Text>
               </Box>
@@ -106,7 +106,7 @@ export function ShowPostCard({ post }) {
                 />
               </Tooltip>
 
-              <Text>{post.counters.rate}</Text>
+              <Text>{post.rate}</Text>
 
               <Tooltip label={t('actions.rate_down')}>
                 <IconButton
@@ -124,7 +124,7 @@ export function ShowPostCard({ post }) {
                 leftIcon={<Icon boxSize={5} as={MdChat} />}
                 _hover={{ textDecoration: "none" }}
               >
-                {post.counters.comments}
+                {post.comments_count}
               </Button>
             </Tooltip>
 
@@ -170,7 +170,7 @@ export function ShowPostCard({ post }) {
 
       <Card ml={{ base: 0, lg: 5 }} mb={5}>
         <CardBody fontSize={{ base: '1rem', lg: '1.2rem' }}>
-          <Text>{parse(post.body)}</Text>
+          <Text>{parse(post.text)}</Text>
         </CardBody>
       </Card>
     </>

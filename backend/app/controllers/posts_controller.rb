@@ -26,6 +26,7 @@ class PostsController < ApplicationController
     end
 
     per_page = 50
+    list_items_count = 5
 
     comments_query = {
       'post_id' => params['post_id']
@@ -34,9 +35,34 @@ class PostsController < ApplicationController
     total_pages = (@comment_model.count(comments_query).to_f / per_page).ceil()
     comments = @comment_model.paginate(params['page'], per_page, comments_query)
 
+    posts_query = {
+      'is_published' => true,
+      'deleted_at' => nil
+    }
+
+    # top posts
+    top_posts = @post_model.sort(
+      list_items_count, 
+      'comments_count', 
+      false, 
+      posts_query
+    )
+
+    # popular communities
+    popular_communities = @community_model.sort(
+      list_items_count, 
+      'members_count', 
+      false, 
+      {
+        'is_closed' => false
+      }
+    )
+    
     ok({
       'post' => PostResource::format(@post_model.find(params['post_id'])), 
       'comments' => CommentResource::format_array(comments),
+      'popular_communities' => CommunityResource::format_array(popular_communities),
+      'top_posts' => PostResource::format_array(top_posts),
       'current_page' => params['page'],
       'per_page' => per_page,
       'pages' => total_pages,

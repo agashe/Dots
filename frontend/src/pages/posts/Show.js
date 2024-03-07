@@ -1,153 +1,48 @@
-import { Flex, Box, Show as ShowSideMenu } from "@chakra-ui/react";
+import { Flex, Box, Show as ShowSideMenu, useToast } from "@chakra-ui/react";
 import { LatestPosts } from "../../components/LatestPosts";
 import { PopularCommunities } from "../../components/PopularCommunities";
 import { ShowPostCard } from "../../components/ShowPostCard";
 import { AddComment } from "../../components/AddComment";
 import { Comments } from "../../components/Comments";
 import { Footer } from "../../components/Footer";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { useParams } from "react-router-dom";
 import { SEO } from "../../components/SEO";
+import axios from 'axios';
 
 export function Show() {
-  const post = {
-    title: "Lorem ipsum dolor sit amet",
-    image: "https://w.wallhaven.cc/full/jx/wallhaven-jxyopy.png",
-    community: "All stars",
-    date: "15 Mar 2021",
-    tags: ["Place", "Music"],
-    body: `
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.
-      <br />
-      <br />
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.
-      <br />
-      <br />
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.
-      <br />
-      <br />
-      <br />
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.
-      <br />
-      <br />
-      <br />
-      <br />
-
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis.
-      Duis euismod neque ac convallis molestie.
-    `,
-    counters: {
-      rate: 777,
-      comments: 200,
-    },
-    user: {
-      name: "Ahmed Omar",
-      avatar: "",
-    },
-    comments: [
-      {
-        title: "Lorem ipsum dolor sit amet",
-        comment: "Lorem ipsum ...",
-        user: {
-          name: "Hessan Al Said",
-          avatar:
-            "https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg",
-        },
-        rate: "40",
-        date: "7 Feb 2022",
-        sub_comments: [
-          {
-            title: "Lorem ipsum dolor sit amet",
-            comment: "Lorem ipsum ...",
-            user: {
-              name: "Hessan Al Said",
-              avatar:
-                "https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg",
-            },
-            rate: "40",
-            date: "7 Feb 2022",
-            sub_comments: [
-              {
-                title: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis. 
-                  Duis euismod neque ac convallis molestie`,
-                comment: "Suspendisse venenatis imperdiet lobortis ...",
-                user: {
-                  name: "Hessan Al Said",
-                  avatar:
-                    "https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg",
-                },
-                rate: "-1",
-                date: "24 May 2020",
-                sub_comments: [],
-              },
-            ],
-          },
-          {
-            title: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis. 
-              Duis euismod neque ac convallis molestie`,
-            comment: "Suspendisse venenatis imperdiet lobortis ...",
-            user: {
-              name: "Hessan Al Said",
-              avatar:
-                "https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg",
-            },
-            rate: "-1",
-            date: "24 May 2020",
-            sub_comments: [],
-          },
-        ],
-      },
-      {
-        title: `Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Praesent et neque lectus. Suspendisse venenatis imperdiet lobortis. 
-          Duis euismod neque ac convallis molestie`,
-        comment: "Suspendisse venenatis imperdiet lobortis ...",
-        user: {
-          name: "Hessan Al Said",
-          avatar:
-            "https://i.pinimg.com/736x/8e/6d/89/8e6d8909b822dc22b8488c6f5fe471d4.jpg",
-        },
-        rate: "-1",
-        date: "24 May 2020",
-        sub_comments: [],
-      },
-    ],
-  };
+  const [postContent, setPostContent] = useState({});
+  const { id, title } = useParams();
+  const { t } = useTranslation();
+  const toast = useToast();
 
   useEffect(function () {
     window.scrollTo(0, 0);
+
+    axios.post(process.env.REACT_APP_BACKEND_URL + '/posts/show', {
+      post_id: id,
+      page: 1
+    })
+      .then(function (response) {
+        setPostContent(response.data.data);
+      })
+      .catch(function (error) {
+        toast({
+          title: t('errors.server_error'),
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   }, []);
 
   const seoInfo = {
-    title: post.title,
-    description: post.body.slice(0, 100),
-    keywords: post.tags.join(' , '),
-    image: post.image,
+    title: postContent.post ? postContent.post.title : '',
+    description: postContent.post ? postContent.post.text.slice(0, 100) : '',
+    keywords: postContent.post ? postContent.post.tags.join(' , ') : '',
+    image: postContent.post ? postContent.post.banner : '',
   };
 
   return (
@@ -155,16 +50,24 @@ export function Show() {
       <SEO info={seoInfo} />
       <Flex spacing={5} pt={5} px={{ base: 3, lg: 10 }} mb={5} >
         <Box w={{ base: '100%', lg: '70%' }} mr={{ base: 0, lg: 5 }}>
-          <ShowPostCard post={post} />
-          <AddComment postId={post.id} />
-          <Comments comments={post.comments} />
+          {
+            postContent.post != undefined ? 
+            <>
+              <ShowPostCard post={postContent.post} />
+              <AddComment postId={postContent.post} />
+              <Comments comments={[]} />
+            </> : ''
+          }
         </Box>
 
         <ShowSideMenu above="lg">
           <Box w='30%'>
-            <LatestPosts />
-            <PopularCommunities />
-
+            {
+              postContent.post != undefined ? <>
+                <LatestPosts posts={postContent.top_posts} />
+                <PopularCommunities communities={postContent.popular_communities} />
+              </> : ''
+            }
             <Box w='100%' textAlign='center' mt={5}>
               <Footer />
             </Box>

@@ -145,7 +145,7 @@ export function ProfilePostCard({ post }) {
           height={{ base: '30px', md: '10px' }}
           padding='0'
           as='a'
-          href='/edit-post'
+          href={'/edit-post/' + post.id}
         />
       </Tooltip>
 

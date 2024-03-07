@@ -94,7 +94,7 @@ export const router = createBrowserRouter([
         Component: CreatePost,
       },
       {
-        path: "edit-post",
+        path: "edit-post/:id",
         loader: protectedLoader,
         Component: EditPost,
       },

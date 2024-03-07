@@ -32,7 +32,7 @@ export function Edit() {
   const [descriptionInput, setDescriptionInput] = useState('');
   const [logoInput, setLogoInput] = useState('');
   const { t } = useTranslation();
-  let { name } = useParams();
+  const { name } = useParams();
   const toast = useToast();
 
   useEffect(function () {
