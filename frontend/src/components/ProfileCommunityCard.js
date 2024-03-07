@@ -9,14 +9,19 @@ import {
   IconButton,
   Tooltip,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { MdEditSquare, MdDelete } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import { Confirm } from "./Confirm";
+import { useState } from "react";
+import axios from 'axios';
 
 export function ProfileCommunityCard({ community }) {
+  const [communityId, setCommunityId] = useState('');
   const { t } = useTranslation();
+  const toast = useToast();
 
   const {
     isOpen: isOpenConfirm,
@@ -28,8 +33,24 @@ export function ProfileCommunityCard({ community }) {
     window.location.href = '/c/' + community.name.replaceAll(' ', '+');
   }
 
-  function handleDelete() {
-    //
+  function handleDelete(event) {
+    event.preventDefault();
+
+    axios.post(process.env.REACT_APP_BACKEND_URL + "/communities/delete", {
+      community_id: communityId,
+    })
+      .then(function (response) {
+        window.location.href = '/profile';
+      })
+      .catch(function (error) {
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   }
 
   return (
@@ -46,46 +67,53 @@ export function ProfileCommunityCard({ community }) {
 
           <Box>
             <Link reloadDocument to={'/c/' + community.name.replaceAll(' ', '+')}>
-              <Heading size='sm'>{community.name}</Heading>
+              <Heading size='sm'>
+                {community.name}
+                {community.is_closed ? " [" + t('statuses.closed_community') + "]" : ''}
+              </Heading>
               <Text fontSize='xs'>{community.members_count} {t('members')} </Text>
             </Link>
           </Box>
         </Flex>
       </Link>
 
-      <Tooltip label={t('actions.edit')}>
-        <IconButton
-          as='a'
-          href={'/edit-community/' + community.name.replaceAll(' ', '+')}
-          icon={<Icon as={MdEditSquare} />}
-          position='absolute'
-          top='7px'
-          right='7px'
-          colorScheme='brand'
-          variant='ghost'
-          minWidth='10px'
-          width='10px'
-          height='10px'
-          padding='0'
-        />
-      </Tooltip>
+      {
+        community.is_closed ? '' : <>
+          <Tooltip label={t('actions.edit')}>
+            <IconButton
+              as='a'
+              href={'/edit-community/' + community.name.replaceAll(' ', '+')}
+              icon={<Icon as={MdEditSquare} />}
+              position='absolute'
+              top='7px'
+              right='7px'
+              colorScheme='brand'
+              variant='ghost'
+              minWidth='10px'
+              width='10px'
+              height='10px'
+              padding='0'
+            />
+          </Tooltip>
 
-      <Tooltip label={t('actions.delete')}>
-        <IconButton
-          icon={<Icon as={MdDelete} />}
-          position='absolute'
-          top='25px'
-          right='7px'
-          colorScheme='brand'
-          variant={{ base: 'solid', md: 'ghost' }}
-          minWidth='10px'
-          width={{ base: '30px', md: '10px' }}
-          height={{ base: '30px', md: '10px' }}
-          padding='0'
-          as='button'
-          onClick={onOpenConfirm}
-        />
-      </Tooltip>
+          <Tooltip label={t('actions.delete')}>
+            <IconButton
+              icon={<Icon as={MdDelete} />}
+              position='absolute'
+              top='25px'
+              right='7px'
+              colorScheme='brand'
+              variant={{ base: 'solid', md: 'ghost' }}
+              minWidth='10px'
+              width={{ base: '30px', md: '10px' }}
+              height={{ base: '30px', md: '10px' }}
+              padding='0'
+              as='button'
+              onClick={(e) => { onOpenConfirm(); setCommunityId(community.id); }}
+            />
+          </Tooltip>
+        </>
+      }
 
       <Confirm
         isOpen={isOpenConfirm}

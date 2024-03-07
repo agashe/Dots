@@ -15,6 +15,7 @@ import {
   Stack,
   Tooltip,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import {
   MdThumbsUpDown,
@@ -26,9 +27,13 @@ import {
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Confirm } from "./Confirm";
+import { useState } from "react";
+import axios from 'axios';
 
 export function ProfilePostCard({ post }) {
+  const [postId, setPostId] = useState('');
   const { t } = useTranslation();
+  const toast = useToast();
 
   const {
     isOpen: isOpenConfirm,
@@ -37,11 +42,27 @@ export function ProfilePostCard({ post }) {
   } = useDisclosure();
 
   function goToPost() {
-    window.location.href = '/p/'+ post.id + '/' + post.title.replaceAll(' ', '+');
+    window.location.href = '/p/' + post.id + '/' + post.title.replaceAll(' ', '+');
   }
 
-  function handleDelete() {
-    //
+  function handleDelete(event) {
+    event.preventDefault();
+
+    axios.post(process.env.REACT_APP_BACKEND_URL + "/posts/delete", {
+      post_id: postId,
+    })
+      .then(function (response) {
+        window.location.href = '/profile';
+      })
+      .catch(function (error) {
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   }
 
   return (
@@ -70,7 +91,7 @@ export function ProfilePostCard({ post }) {
         <CardHeader py={0} pt={3}>
           <Link reloadDocument
             style={{ textAlign: "left" }}
-            to={'/p/'+ post.id + '/' + post.title.replaceAll(' ', '+')}
+            to={'/p/' + post.id + '/' + post.title.replaceAll(' ', '+')}
           >
             <Heading size='md'>{post.title}</Heading>
           </Link>
@@ -91,7 +112,7 @@ export function ProfilePostCard({ post }) {
           </HStack>
         </CardBody>
 
-        <CardFooter py={0} pb={2} px={{base: 0, md: 5}}>
+        <CardFooter py={0} pb={2} px={{ base: 0, md: 5 }}>
           <Flex w='100%'>
             <Link reloadDocument>
               <Tooltip label={t('actions.rate')}>
@@ -162,7 +183,7 @@ export function ProfilePostCard({ post }) {
           height={{ base: '30px', md: '10px' }}
           padding='0'
           as='button'
-          onClick={onOpenConfirm}
+          onClick={(e) => { onOpenConfirm(); setPostId(post.id); }}
         />
       </Tooltip>
 

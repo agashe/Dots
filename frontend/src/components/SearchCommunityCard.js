@@ -20,7 +20,10 @@ export function SearchCommunityCard({ community }) {
           />
 
           <Box>
-            <Heading size='sm'>{community.name}</Heading>
+            <Heading size='sm'>
+              {community.name}
+              {community.is_closed ? " [" + t('statuses.closed_community') + "]" : ''}
+            </Heading>
             <Text fontSize='xs'>{community.members_count} {t('members')} </Text>
           </Box>
         </Flex>

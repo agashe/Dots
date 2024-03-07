@@ -64,6 +64,10 @@
         "banner": "Banner",
         "text": "Text"
     },
+    "statuses": {
+        "closed_community": "CLOSED",
+        "deleted_comment": "DELETED"
+    },
     "posts": "Posts",
     "actions": {
         "create": "Create",
