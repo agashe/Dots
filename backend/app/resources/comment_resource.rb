@@ -10,11 +10,14 @@ class CommentResource < BaseResource
 
     return {
       'id' => data['id'],
+      'post_id' => data['post_id'],
       'parent_comment' => data['comment_id'],
       'user' => UserResource.format(user),
-      'text' => data['deleted_at'] == nil ? data['text'] : '[DELETED !]',
+      'text' => data['text'],
       'rate' => data['rate'],
       'is_reported' => data['is_reported'],
+      'is_deleted' => data['deleted_at'].to_b,
+      'sub_comments' => [],
       'created_at' => Date.parse(data['created_at']).to_fs(:rfc822),
     }
   end

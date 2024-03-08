@@ -45,7 +45,7 @@ export function Comments({ comments }) {
       <CardBody px={{ base: 1, lg: 5 }}>
         {comments.length ? (
           comments.map((comment, i) => {
-            return <Comment comment={comment} key={i} />;
+            return <Comment comment={comment} key={comment.id} />;
           })
         ) : (
           <Heading>{t('comment_hint')}</Heading>

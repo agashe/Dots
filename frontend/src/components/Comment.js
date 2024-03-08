@@ -34,6 +34,7 @@ import { AddComment } from "./AddComment";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import parse from "html-react-parser";
 
 export function Comment({ comment }) {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -50,31 +51,36 @@ export function Comment({ comment }) {
     <Card mb={5} mx={1}>
       <CardHeader py={0} pt={3} px={{ base: 1, md: 5 }}>
         <Flex>
-          <Link reloadDocument to={"/u/1/ahmed"}>
+          <Link reloadDocument to={'/u/' + comment.user.id + '/' + comment.user.name.replaceAll(' ', '+')}>
             <Avatar
               name={comment.user.name}
               src={comment.user.avatar}
               bg='brand.main'
               color='white'
-              boxSize={6}
+              size='sm'
               mr={2}
             />
           </Link>
 
-          <Box>
-            <Link reloadDocument to={"/u/1/ahmed"}>
+          <Box mt={1}>
+            <Link reloadDocument to={'/u/' + comment.user.id + '/' + comment.user.name.replaceAll(' ', '+')}>
               <Heading size={{ base: 'xs', md: 'sm' }}>{comment.user.name}</Heading>
             </Link>
           </Box>
 
           <Spacer />
 
-          <Text fontSize={{ base: 'xs', md: 'sm' }}>({comment.date})</Text>
+          <Text fontSize={{ base: 'xs', md: 'sm' }}>({comment.created_at})</Text>
         </Flex>
       </CardHeader>
 
       <CardBody py={0} my={2} px={{ base: 1, md: 5 }}>
-        <Text>{comment.title}</Text>
+        <Text>
+          {
+            comment.is_deleted ?
+              "[" + t('statuses.deleted_comment') + "]" : parse(comment.text)
+          }
+        </Text>
       </CardBody>
 
       <CardFooter py={2} pl='10px'>

@@ -4,25 +4,53 @@ import {
   CardFooter,
   FormControl,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { Editor } from "./Editor";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import axios from 'axios';
 
-export function AddComment({ postId }) {
+export function AddComment({ postId, commentId = '' }) {
   const user = JSON.parse(localStorage.getItem("user"));
-  const [text, setText] = useState("");
+  const [textInput, setTextInput] = useState("");
   const { t } = useTranslation();
+  const toast = useToast();
 
-  console.log(user, postId);
+  function submit(event) {
+    event.preventDefault();
+
+    if (!textInput) {
+      return;
+    }
+
+    axios.post(process.env.REACT_APP_BACKEND_URL + "/comments", {
+      post_id: postId,
+      comment_id: commentId,
+      user_id: user.id,
+      text: textInput,
+    })
+      .then(function (response) {
+        window.location.reload();
+      })
+      .catch(function (error) {
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  }
 
   return (
     <Card ml={{ base: 0, lg: 5 }} mb={5} height={{ base: '450px', md: '225px' }}>
       <CardBody py={1}>
         <FormControl my={3}>
           <Editor
-            value={text}
-            handler={setText}
+            value={textInput}
+            handler={setTextInput}
             height={window.innerWidth < 500 ? '250px' : '100px'}
             placeholder={t('thank_you')}
           />
@@ -30,7 +58,7 @@ export function AddComment({ postId }) {
       </CardBody>
 
       <CardFooter pt={0} pb={3}>
-        <Button>{t('actions.comment')}</Button>
+        <Button onClick={submit}>{t('actions.comment')}</Button>
       </CardFooter>
     </Card>
   );

@@ -54,8 +54,8 @@ export function Show() {
             postContent.post != undefined ? 
             <>
               <ShowPostCard post={postContent.post} />
-              <AddComment postId={postContent.post} />
-              <Comments comments={[]} />
+              <AddComment postId={postContent.post.id} />
+              <Comments comments={postContent.comments} />
             </> : ''
           }
         </Box>
