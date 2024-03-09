@@ -17,8 +17,6 @@ export function Comments({ comments }) {
   const user = JSON.parse(localStorage.getItem("user"));
   const { t } = useTranslation();
 
-  console.log(user);
-
   return (
     <Card ml={{ base: 0, lg: 5 }} mb={5}>
       <CardHeader py={3}>

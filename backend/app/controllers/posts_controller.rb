@@ -28,6 +28,12 @@ class PostsController < ApplicationController
     per_page = 50
     list_items_count = 5
 
+    post = @post_model.find(params['post_id'])
+
+    if !post
+      return error(I18n.t('errors.model_not_found'))
+    end
+
     comments_query = {
       'post_id' => params['post_id']
     }
@@ -58,8 +64,23 @@ class PostsController < ApplicationController
       }
     )
     
+    # check user rate
+    user_rate = nil
+
+    if request.env['user_id'] != nil
+      rate = @rate_model.query({
+        'entity' => 'post',
+        'entity_id' => post['id'],
+        'user_id' => request.env['user_id'],
+      }).first
+
+      if rate != nil
+        post['user_rate'] = rate['value']
+      end
+    end
+
     ok({
-      'post' => PostResource::format(@post_model.find(params['post_id'])), 
+      'post' => PostResource::format(post), 
       'comments' => CommentResource::format_array(comments),
       'popular_communities' => CommunityResource::format_array(popular_communities),
       'top_posts' => PostResource::format_array(top_posts),
@@ -293,20 +314,23 @@ class PostsController < ApplicationController
       return error(I18n.t('errors.already_rated'))
     else
       created_rate = @rate_model.create({
-      'entity' => 'post',
-      'entity_id' => post['id'],
-      'user_id' => request.env['user_id'],
-      'value' => params['value']
-    }).first
+        'entity' => 'post',
+        'entity_id' => post['id'],
+        'user_id' => request.env['user_id'],
+        'value' => params['value']
+      }, true)
     end
 
     updated_post = @post_model.update(params['post_id'], {
       'rate' => post['rate'] + params['value'],
-    })
+    }, true)
 
     log("Post (#{updated_post['id']}) was rated by (#{request.env['user_id']})")
 
-    ok({}, I18n.t('messages.success.rate'))
+    ok({
+      'user_rate' => created_rate['value'],
+      'post_rate' => updated_post['rate']
+    }, I18n.t('messages.success.rate'))
   end
 
   ##

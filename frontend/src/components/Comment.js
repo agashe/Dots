@@ -41,8 +41,6 @@ export function Comment({ comment }) {
   const [addComment, setAddComment] = useState(false);
   const { t } = useTranslation();
 
-  console.log(user);
-
   function showAddComment() {
     setAddComment(!addComment);
   }

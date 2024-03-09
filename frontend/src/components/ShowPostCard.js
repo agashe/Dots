@@ -21,10 +21,11 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  useToast,
 } from "@chakra-ui/react";
 import {
-  // MdThumbUp,
-  // MdThumbDown,
+  MdThumbUp,
+  MdThumbDown,
   MdOutlineThumbUp,
   MdOutlineThumbDown,
   MdChat,
@@ -35,9 +36,58 @@ import {
 import { Link } from "react-router-dom";
 import parse from "html-react-parser";
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import axios from 'axios';
 
 export function ShowPostCard({ post }) {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const [postRate, setPostRate] = useState(post.rate);
   const { t } = useTranslation();
+  const toast = useToast();
+
+  const [rateUp, setRateUp] = useState(
+    post.user_rate == 1 ?
+      <Icon as={MdThumbUp} boxSize={5} />
+      :
+      <Icon as={MdOutlineThumbUp} boxSize={5} />
+  );
+
+  const [rateDown, setRateDown] = useState(
+    post.user_rate == -1 ?
+      <Icon as={MdThumbDown} boxSize={5} />
+      :
+      <Icon as={MdOutlineThumbDown} boxSize={5} />
+  );
+
+  function rate(type) {
+    if (!user) {
+      return;
+    }
+
+    axios.post(process.env.REACT_APP_BACKEND_URL + "/posts/rate", {
+      post_id: post.id,
+      value: type == 'up' ? 1 : -1,
+    })
+      .then(function (response) {
+        setPostRate(response.data.data.post_rate);
+
+        if (response.data.data.user_rate == 1) {
+          setRateUp(<Icon as={MdThumbUp} boxSize={5} />);
+        }
+        else if (response.data.data.user_rate == -1) {
+          setRateDown(<Icon as={MdThumbDown} boxSize={5} />);
+        }
+      })
+      .catch(function (error) {
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  }
 
   return (
     <>
@@ -100,20 +150,22 @@ export function ShowPostCard({ post }) {
               <Tooltip label={t('actions.rate_up')}>
                 <IconButton
                   variant='ghost'
-                  icon={<Icon as={MdOutlineThumbUp} boxSize={5} />}
+                  icon={rateUp}
                   color='lime'
                   _hover={{ textDecoration: "none" }}
+                  onClick={(e) => { rate('up') }}
                 />
               </Tooltip>
 
-              <Text>{post.rate}</Text>
+              <Text>{postRate}</Text>
 
               <Tooltip label={t('actions.rate_down')}>
                 <IconButton
                   variant='ghost'
-                  icon={<Icon as={MdOutlineThumbDown} boxSize={5} />}
+                  icon={rateDown}
                   color='blue'
                   _hover={{ textDecoration: "none" }}
+                  onClick={(e) => { rate('down') }}
                 />
               </Tooltip>
             </HStack>
