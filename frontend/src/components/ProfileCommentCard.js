@@ -80,6 +80,7 @@ export function ProfileCommentCard({ comment }) {
         isOpen={isOpenConfirm}
         onClose={onCloseConfirm}
         title={t('actions.delete_comment')}
+        label={t('actions.delete')}
         handler={handleDelete}
       />
     </>

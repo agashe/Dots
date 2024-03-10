@@ -11,7 +11,7 @@ import {
 import { useRef } from 'react';
 import { useTranslation } from "react-i18next";
 
-export function Confirm({ isOpen, onClose, title, handler }) {
+export function Confirm({ isOpen, onClose, title, label, handler }) {
   const { t } = useTranslation();
   const cancelRef = useRef()
 
@@ -36,7 +36,7 @@ export function Confirm({ isOpen, onClose, title, handler }) {
               {t('actions.cancel')}
             </Button>
             <Button colorScheme='red' onClick={handler} ml={3}>
-              {t('actions.delete')}
+              {label}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

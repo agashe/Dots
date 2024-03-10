@@ -142,10 +142,23 @@ class PostsController < ApplicationController
     if params['entity'] == 'user'
       posts_query['user_id'] = params['entity_id']
       entity = UserResource::format(@user_model.find(params['entity_id']))
-    elsif params['entity'] == 'community'        
-      entity = CommunityResource::format(
-        @community_model.findBy('name', params['entity_id']).first
-      )
+    elsif params['entity'] == 'community'
+      community =  @community_model.findBy('name', params['entity_id']).first
+
+      if request.env['user_id'] != nil
+        community['is_member'] = false
+        
+        member = @member_model.query({
+          'community_id' => community['id'],
+          'user_id' => request.env['user_id'],
+        }).first
+
+        if member
+          community['is_member'] = true
+        end
+      end
+
+      entity = CommunityResource::format(community)
       posts_query['community_id'] = entity['id']
     elsif params['entity'] == 'tag'
       posts_query['tags'] = params['entity_id']

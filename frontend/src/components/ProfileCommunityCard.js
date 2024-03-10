@@ -119,6 +119,7 @@ export function ProfileCommunityCard({ community }) {
         isOpen={isOpenConfirm}
         onClose={onCloseConfirm}
         title={t('actions.delete_community')}
+        label={t('actions.delete')}
         handler={handleDelete}
       />
     </Card>

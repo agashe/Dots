@@ -191,6 +191,7 @@ export function ProfilePostCard({ post }) {
         isOpen={isOpenConfirm}
         onClose={onCloseConfirm}
         title={t('actions.delete_community')}
+        label={t('actions.delete')}
         handler={handleDelete}
       />
     </Card>

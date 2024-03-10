@@ -12,6 +12,7 @@ class CommunityResource < BaseResource
       'members_count' => data['members_count'],
       'logo' => data['logo'],
       'is_closed' => data['is_closed'],
+      'is_member' => data['is_member'],
     }
   end
 end
