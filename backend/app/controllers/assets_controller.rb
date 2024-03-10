@@ -112,7 +112,6 @@ class AssetsController < ApplicationController
       'entity' => 'required',
       'entity_id' => 'required',
       'type' => 'required',
-      'asset_id' => 'required',
     })
 
     if !validation_result['status']
@@ -138,7 +137,6 @@ class AssetsController < ApplicationController
       'entity' => params['entity'],
       'entity_id' => params['entity_id'],
       'asset_type' => params['type'],
-      'id' => params['asset_id']
     }).first
 
     if !asset
@@ -257,7 +255,7 @@ class AssetsController < ApplicationController
       end
     end    
 
-    return path + "/" + file_name + "." + info['meta']['mime']
+    return path + "/" + file_name + "." + info['meta']['mime'].split('/').last
   end
 
   ##

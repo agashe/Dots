@@ -53,8 +53,8 @@ Rails.application.routes.draw do
 
     # Assets Routes
     scope path: '/asset-files' do
-      post    '/', to: 'assets#upload', as: 'assets_upload'
-      delete  '/', to: 'assets#delete', as: 'assets_delete'
+      post    '/upload', to: 'assets#upload', as: 'assets_upload'
+      post    '/delete', to: 'assets#delete', as: 'assets_delete'
     end
   end
 end
