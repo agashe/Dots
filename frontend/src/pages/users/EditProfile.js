@@ -133,6 +133,8 @@ export function EditProfile() {
       .then(function (response) {
         user.avatar = null;
         localStorage.setItem("user", JSON.stringify(user));
+
+        document.getElementById('avatar-input').value = '';
         setAvatarInput(null);
         onCloseConfirm();
       })
@@ -189,7 +191,7 @@ export function EditProfile() {
                   />
                 </Box>
                 <Box mr={3} w='full'>
-                  <Input type='file' pt={1} onChange={handleFileInput} accept=".jpeg, .jpg, .png" />
+                  <Input type='file' id="avatar-input" pt={1} onChange={handleFileInput} accept=".jpeg, .jpg, .png" />
                 </Box>
                 <Box>
                   <Tooltip label={t('actions.remove')}>

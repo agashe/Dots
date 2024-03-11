@@ -21,9 +21,11 @@ import {
   MenuItem,
   Text,
   useColorModeValue,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { Footer } from "../../components/Footer";
+import { Confirm } from "../../components/Confirm";
 import { MdRemoveCircle, MdArrowDownward } from "react-icons/md";
 import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useState, useEffect } from "react";
@@ -40,10 +42,17 @@ export function Create() {
   const [tagsInput, setTagsInput] = useState('');
   const [communityInput, setCommunityInput] = useState('');
   const [textInput, setTextInput] = useState('');
+  const [bannerInput, setBannerInput] = useState(null);
   const [communitiesList, setCommunitiesList] = useState([]);
   const [tagsList, setTagsList] = useState([]);
   const { t } = useTranslation();
   const toast = useToast();
+
+  const {
+    isOpen: isOpenConfirm,
+    onOpen: onOpenConfirm,
+    onClose: onCloseConfirm,
+  } = useDisclosure();
 
   useEffect(function () {
     axios.get(process.env.REACT_APP_BACKEND_URL + "/users/communities")
@@ -60,25 +69,24 @@ export function Create() {
         });
       });
 
-    // axios.get(process.env.REACT_APP_BACKEND_URL + "/posts/tags")
-    //   .then(function (response) {
-    //     let tags = [];
-    //     response.data.data.forEach((tag) => {
-    //       tags.push(tag.name);
-    //     });
+    axios.get(process.env.REACT_APP_BACKEND_URL + "/posts/tags")
+      .then(function (response) {
+        let tags = [];
+        response.data.data.forEach((tag) => {
+          tags.push(tag.name);
+        });
 
-    //     setTagsList(tags);
-    //     console.log(tagsList)
-    //   })
-    //   .catch(function (error) {
-    //     toast({
-    //       title: error.response.data.message,
-    //       status: 'error',
-    //       position: 'top-right',
-    //       duration: 9000,
-    //       isClosable: true,
-    //     });
-    //   });
+        setTagsList(tags);
+      })
+      .catch(function (error) {
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   }, []);
 
   function submit(event) {
@@ -92,7 +100,12 @@ export function Create() {
     })
       .then(function (response) {
         const post = response.data.data;
-        window.location.href = '/p/' + post.id + '/' + post.title.replaceAll(' ', '+');
+
+        if (bannerInput) {
+          upload(post, bannerInput);
+        } else {
+          window.location.href = '/p/' + post.id + '/' + post.title.replaceAll(' ', '+');
+        }
       })
       .catch(function (error) {
         toast({
@@ -105,9 +118,66 @@ export function Create() {
       });
   }
 
+  function handleFileInput(event) {
+    event.preventDefault();
+    setBannerInput(URL.createObjectURL(event.target.files[0]));
+  }
+
+  function removeBanner(event) {
+    event.preventDefault();
+
+    document.getElementById('banner-input').value = '';
+    setBannerInput(null);
+
+    onCloseConfirm();
+  }
+
+  function upload(post) {
+    const file = document.getElementById('banner-input').files[0];
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = function () {
+      axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/upload", {
+        entity: 'post',
+        entity_id: post.id,
+        type: 'banner',
+        meta: {
+          name: file.name.replace(/\.[^/.]+$/, ''),
+          size: file.size,
+          mime: file.type
+        },
+        file: reader.result.replace(/data:(.*?)\/(.*?);base64,/, '')
+      })
+        .then(function (response) {
+          window.location.href = '/p/' + post.id + '/' + post.title.replaceAll(' ', '+');
+        })
+        .catch(function (error) {
+          toast({
+            title: error.message,
+            status: 'error',
+            position: 'top-right',
+            duration: 9000,
+            isClosable: true,
+          });
+        });
+    };
+
+    reader.onerror = function (error) {
+      toast({
+        title: error,
+        status: 'error',
+        position: 'top-right',
+        duration: 9000,
+        isClosable: true,
+      });
+    };
+  }
+
   const { value, options, onChange } = useMultiSelect({
     value: [],
-    options: tagsList ?? []
+    options: tagsList
   });
 
   return (
@@ -136,13 +206,16 @@ export function Create() {
 
             <FormControl my={5}>
               <FormLabel>{t('post.tags')}</FormLabel>
-              <MultiSelect
-                options={options}
-                value={value}
-                placeholder={t('placeholders.post_tags')}
-                onChange={onChange}
-                create
-              />
+              {
+                tagsList != null &&
+                <MultiSelect
+                  options={options}
+                  value={value}
+                  placeholder={t('placeholders.post_tags')}
+                  onChange={onChange}
+                  create
+                />
+              }
             </FormControl>
 
             <FormControl my={5}>
@@ -211,18 +284,25 @@ export function Create() {
               <HStack spacing={2}>
                 <Box w='200px' h='100px' mr={3}>
                   <Image
-                    src='images/placeholder-image.png'
+                    src={bannerInput}
                     fallbackSrc='images/placeholder-image.png'
                   />
                 </Box>
                 <Box mr={3} w='full'>
-                  <Input type='file' pt={1} />
+                  <Input type='file' id="banner-input" pt={1} onChange={handleFileInput} accept=".jpeg, .jpg, .png" />
                 </Box>
                 <Box>
                   <Tooltip label={t('actions.remove')}>
                     <IconButton
                       colorScheme='brand'
                       icon={<Icon as={MdRemoveCircle} boxSize={6} />}
+                      onClick={(e) => {
+                        if (!bannerInput) {
+                          return;
+                        }
+
+                        onOpenConfirm();
+                      }}
                     />
                   </Tooltip>
                 </Box>
@@ -258,6 +338,14 @@ export function Create() {
 
         <Footer />
       </Flex>
+
+      <Confirm
+        isOpen={isOpenConfirm}
+        onClose={onCloseConfirm}
+        title={t('actions.remove')}
+        label={t('actions.remove')}
+        handler={removeBanner}
+      />
     </>
   );
 }

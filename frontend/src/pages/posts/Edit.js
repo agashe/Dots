@@ -15,9 +15,11 @@ import {
   Tooltip,
   Button,
   Image,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { Footer } from "../../components/Footer";
+import { Confirm } from "../../components/Confirm";
 import { MdRemoveCircle } from "react-icons/md";
 import { useState, useEffect } from "react";
 import { Editor } from "../../components/Editor";
@@ -37,6 +39,12 @@ export function Edit() {
   const { t } = useTranslation();
   const { id } = useParams();
   const toast = useToast();
+
+  const {
+    isOpen: isOpenConfirm,
+    onOpen: onOpenConfirm,
+    onClose: onCloseConfirm,
+  } = useDisclosure();
 
   useEffect(function () {
     axios.post(process.env.REACT_APP_BACKEND_URL + '/posts/show', {
@@ -105,6 +113,75 @@ export function Edit() {
       });
   }
 
+  function handleFileInput(event) {
+    event.preventDefault();
+
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = function () {
+      axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/upload", {
+        entity: 'post',
+        entity_id: idInput,
+        type: 'banner',
+        meta: {
+          name: file.name.replace(/\.[^/.]+$/, ''),
+          size: file.size,
+          mime: file.type
+        },
+        file: reader.result.replace(/data:(.*?)\/(.*?);base64,/, '')
+      })
+        .then(function (response) {
+          setBannerInput(response.data.data.path);
+        })
+        .catch(function (error) {
+          toast({
+            title: error.response.data.message,
+            status: 'error',
+            position: 'top-right',
+            duration: 9000,
+            isClosable: true,
+          });
+        });
+    };
+
+    reader.onerror = function (error) {
+      toast({
+        title: error,
+        status: 'error',
+        position: 'top-right',
+        duration: 9000,
+        isClosable: true,
+      });
+    };
+  }
+
+  function removeBanner(event) {
+    event.preventDefault();
+
+    axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/delete", {
+      entity: 'post',
+      entity_id: idInput,
+      type: 'banner',
+    })
+      .then(function (response) {
+        document.getElementById('banner-input').value = '';
+        setBannerInput(null);
+        onCloseConfirm();
+      })
+      .catch(function (error) {
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  }
+
   const { value, options, onChange } = useMultiSelect({
     value: [],
     options: tagsList ?? []
@@ -155,13 +232,20 @@ export function Edit() {
                   />
                 </Box>
                 <Box mr={3} w='full'>
-                  <Input type='file' pt={1} />
+                  <Input type='file' id="banner-input" pt={1} onChange={handleFileInput} accept=".jpeg, .jpg, .png" />
                 </Box>
                 <Box>
                   <Tooltip label={t('actions.remove')}>
                     <IconButton
                       colorScheme='brand'
                       icon={<Icon as={MdRemoveCircle} boxSize={6} />}
+                      onClick={(e) => {
+                        if (!bannerInput) {
+                          return;
+                        }
+
+                        onOpenConfirm();
+                      }}
                     />
                   </Tooltip>
                 </Box>
@@ -197,6 +281,14 @@ export function Edit() {
 
         <Footer />
       </Flex>
+      
+      <Confirm
+        isOpen={isOpenConfirm}
+        onClose={onCloseConfirm}
+        title={t('actions.remove')}
+        label={t('actions.remove')}
+        handler={removeBanner}
+      />
     </>
   );
 }

@@ -66,7 +66,8 @@ class CommunitiesController < ApplicationController
     community_data = {}
 
     if params.has_key?('name')
-      if !check_community_name_is_available(params['name'])
+      if !check_community_name_is_available(params['name']) &&
+        (community['name'] != params['name'])
         return error(I18n.t('errors.community_exists'))
       end
 

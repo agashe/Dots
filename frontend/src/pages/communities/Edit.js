@@ -16,9 +16,11 @@ import {
   Icon,
   Tooltip,
   Button,
+  useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { Footer } from "../../components/Footer";
+import { Confirm } from "../../components/Confirm";
 import { MdRemoveCircle } from "react-icons/md";
 import { useTranslation } from "react-i18next";
 import { SEO } from "../../components/SEO";
@@ -34,6 +36,12 @@ export function Edit() {
   const { t } = useTranslation();
   const { name } = useParams();
   const toast = useToast();
+
+  const {
+    isOpen: isOpenConfirm,
+    onOpen: onOpenConfirm,
+    onClose: onCloseConfirm,
+  } = useDisclosure();
 
   useEffect(function () {
     window.scrollTo(0, 0);
@@ -70,6 +78,75 @@ export function Edit() {
     })
       .then(function (response) {
         window.location.href = "/c/" + response.data.data.name.replaceAll(' ', '+');
+      })
+      .catch(function (error) {
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  }
+
+  function handleFileInput(event) {
+    event.preventDefault();
+
+    const file = event.target.files[0];
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onload = function () {
+      axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/upload", {
+        entity: 'community',
+        entity_id: idInput,
+        type: 'logo',
+        meta: {
+          name: file.name.replace(/\.[^/.]+$/, ''),
+          size: file.size,
+          mime: file.type
+        },
+        file: reader.result.replace(/data:(.*?)\/(.*?);base64,/, '')
+      })
+        .then(function (response) {
+          setLogoInput(response.data.data.path);
+        })
+        .catch(function (error) {
+          toast({
+            title: error.response.data.message,
+            status: 'error',
+            position: 'top-right',
+            duration: 9000,
+            isClosable: true,
+          });
+        });
+    };
+
+    reader.onerror = function (error) {
+      toast({
+        title: error,
+        status: 'error',
+        position: 'top-right',
+        duration: 9000,
+        isClosable: true,
+      });
+    };
+  }
+
+  function removeLogo(event) {
+    event.preventDefault();
+
+    axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/delete", {
+      entity: 'community',
+      entity_id: idInput,
+      type: 'logo',
+    })
+      .then(function (response) {
+        document.getElementById('logo-input').value = '';
+        setLogoInput(null);
+        onCloseConfirm();
       })
       .catch(function (error) {
         toast({
@@ -121,13 +198,20 @@ export function Edit() {
                   />
                 </Box>
                 <Box mr={3} w='full'>
-                  <Input type='file' pt={1} />
+                  <Input type='file' id="logo-input" pt={1} onChange={handleFileInput} accept=".jpeg, .jpg, .png" />
                 </Box>
                 <Box>
                   <Tooltip label={t('actions.remove')}>
                     <IconButton
                       colorScheme='brand'
                       icon={<Icon as={MdRemoveCircle} boxSize={6} />}
+                      onClick={(e) => {
+                        if (!logoInput) {
+                          return;
+                        }
+
+                        onOpenConfirm();
+                      }}
                     />
                   </Tooltip>
                 </Box>
@@ -163,6 +247,14 @@ export function Edit() {
 
         <Footer />
       </Flex>
+
+      <Confirm
+        isOpen={isOpenConfirm}
+        onClose={onCloseConfirm}
+        title={t('actions.remove')}
+        label={t('actions.remove')}
+        handler={removeLogo}
+      />
     </>
   );
 }
