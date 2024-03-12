@@ -104,7 +104,7 @@ export function ProfilePostCard({ post }) {
             </Link>
           </Text>
 
-          <HStack spacing='24px' color='brand.main'>
+          <HStack spacing={5} color='brand.main' wrap='wrap'>
             {post.tags.map((tag, i) => {
               return (
                 <Text fontSize='md' key={i}>

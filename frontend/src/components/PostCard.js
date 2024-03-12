@@ -75,7 +75,7 @@ export function PostCard({ post }) {
           <Heading size='md'>{post.title}</Heading>
         </Link>
 
-        <HStack mt={5} spacing='24px' color='brand.main'>
+        <HStack mt={5} spacing={5} color='brand.main' wrap='wrap'>
           {post.tags.map((tag, i) => {
             return (
               <Text fontSize='md' key={i}>

@@ -132,7 +132,7 @@ export function ShowPostCard({ post }) {
         <CardBody py={0} my={5}>
           <Heading size='md'>{post.title}</Heading>
 
-          <HStack mt={5} spacing='24px' color='brand.main'>
+          <HStack mt={5} spacing={5} color='brand.main' wrap='wrap'>
             {post.tags.map((tag, i) => {
               return (
                 <Text fontSize='md' key={i}>
