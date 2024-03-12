@@ -98,7 +98,10 @@ export function ProfilePostCard({ post }) {
         </CardHeader>
         <CardBody py={0}>
           <Text fontSize='sm' my={1}>
-            {post.date} @ <Link reloadDocument to={'/c/' + post.community.name.replaceAll(' ', '+')}>{post.community.name}</Link>{" "}
+            {post.date} @ <Link reloadDocument to={'/c/' + post.community.name.replaceAll(' ', '+')}>
+              {post.community.name}
+              {post.community.is_closed ? " [" + t('statuses.closed_community') + "]" : ''}
+            </Link>
           </Text>
 
           <HStack spacing='24px' color='brand.main'>

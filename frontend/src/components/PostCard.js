@@ -59,6 +59,7 @@ export function PostCard({ post }) {
                 {post.created_at} @{" "}
                 <Link reloadDocument to={'/c/' + post.community.name.replaceAll(' ', '+')}>
                   {post.community.name}
+                  {post.community.is_closed ? " [" + t('statuses.closed_community') + "]" : ''}
                 </Link>{" "}
               </Text>
             </Box>
