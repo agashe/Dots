@@ -9,13 +9,14 @@ export function PageNotFound() {
 
   return (
     <>
-      <SEO info={{ title: t('page_not_found') }} />
-      <Flex pt={5} px={10}  minHeight='100vh' flexDirection='column'>
+      <SEO info={{ title: t('errors.page_not_found') }} />
+      <Flex pt={5} px={{ base: 5, lg: 10 }}  minHeight='100vh' flexDirection='column'>
         <Card
           boxSize='lg'
           mx='auto'
           mb={5}
           textAlign='center'
+          w={{base: '100%', lg: '40%'}}
           style={{
             display: "flex",
             justifyContent: "center",
