@@ -3,7 +3,6 @@ import {
   extendTheme,
   defineStyleConfig,
 } from "@chakra-ui/react";
-import {  MultiSelectTheme } from 'chakra-multiselect'
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import { SEO } from "./components/SEO";
@@ -43,7 +42,6 @@ const theme = extendTheme({
   },
   components: {
     Button,
-    MultiSelect: MultiSelectTheme,
   },
 });
 

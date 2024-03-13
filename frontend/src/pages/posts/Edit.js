@@ -14,22 +14,31 @@ import {
   Icon,
   Tooltip,
   Button,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  Text,
+  Badge,
   Image,
+  useColorModeValue,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
 import { Footer } from "../../components/Footer";
 import { Confirm } from "../../components/Confirm";
 import { MdRemoveCircle } from "react-icons/md";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import { useState, useEffect } from "react";
 import { Editor } from "../../components/Editor";
 import { useTranslation } from "react-i18next";
 import { useParams } from "react-router-dom";
 import { SEO } from "../../components/SEO";
-import { MultiSelect, useMultiSelect } from 'chakra-multiselect'
 import axios from 'axios';
 
 export function Edit() {
+  const selectMenuBg = useColorModeValue('gray.50', 'gray.700');
+  const selectMenuFontColor = useColorModeValue('black', '#b9c1cb');
   const [idInput, setIdInput] = useState('');
   const [titleInput, setTitleInput] = useState('');
   const [tagsInput, setTagsInput] = useState('');
@@ -68,25 +77,19 @@ export function Edit() {
         });
       });
 
-    // axios.get(process.env.REACT_APP_BACKEND_URL + "/posts/tags")
-    //   .then(function (response) {
-    //     let tags = [];
-    //     response.data.data.forEach((tag) => {
-    //       tags.push(tag.name);
-    //     });
-
-    //     setTagsList(tags);
-    //     console.log(tagsList)
-    //   })
-    //   .catch(function (error) {
-    //     toast({
-    //       title: error.response.data.message,
-    //       status: 'error',
-    //       position: 'top-right',
-    //       duration: 9000,
-    //       isClosable: true,
-    //     });
-    //   });
+    axios.get(process.env.REACT_APP_BACKEND_URL + "/posts/tags")
+      .then(function (response) {
+        setTagsList(response.data.data);
+      })
+      .catch(function (error) {
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   }, []);
 
   function submit(event) {
@@ -95,7 +98,7 @@ export function Edit() {
     axios.put(process.env.REACT_APP_BACKEND_URL + "/posts", {
       post_id: idInput,
       title: titleInput,
-      tags: [], // tagsInput,
+      tags: tagsInput,
       text: textInput,
     })
       .then(function (response) {
@@ -182,11 +185,6 @@ export function Edit() {
       });
   }
 
-  const { value, options, onChange } = useMultiSelect({
-    value: [],
-    options: tagsList ?? []
-  });
-
   return (
     <>
       <SEO info={{ title: t('actions.edit_post') }} />
@@ -213,13 +211,72 @@ export function Edit() {
 
             <FormControl my={5}>
               <FormLabel>{t('post.tags')}</FormLabel>
-              <MultiSelect
-                options={options}
-                value={value}
-                placeholder={t('placeholders.post_tags')}
-                onChange={onChange}
-                create
-              />
+              <Menu matchWidth={true}>
+                <MenuButton
+                  as={Button}
+                  rightIcon={<IconButton
+                    icon={<Icon as={ChevronDownIcon} color={selectMenuFontColor} boxSize='1.4rem' />}
+                    h='32px'
+                    w='32px'
+                    minW={0}
+                    bg={selectMenuBg}
+                    variant='ghost'
+                  />}
+                  matchWidth={true}
+                  bg={selectMenuBg}
+                  color={selectMenuFontColor}
+                  variant='outline'
+                  textAlign='left'
+                  w='100%'
+                  pr={1}
+                  fontSize='md'
+                  fontWeight='100'
+                  borderColor='#e2e8f0'
+                  borderWidth='1px'
+                  _hover={{ bg: selectMenuBg }}
+                >
+                  {
+                    tagsInput.length > 0 ?
+                      <HStack spacing={3}>
+                        {
+                          tagsInput.map(function (tag, i) {
+                            return (
+                              <Badge key={i} p={1} color={selectMenuFontColor}>
+                                {'#' + tag}
+                              </Badge>
+                            );
+                          })
+                        }
+                      </HStack>
+                      :
+                      t('placeholders.post_tags')
+                  }
+                </MenuButton>
+
+                <MenuList matchWidth={true} h='215px' overflowY='scroll'>
+                  {tagsList.length ? tagsList.map(function (tag, i) {
+                    return (
+                      <MenuItem matchWidth={true} key={tag.id} onClick={(e) => {
+                        if (tagsInput.length == 5) {
+                          return;
+                        }
+
+                        if (tagsInput.includes(tag.name)) {
+                          setTagsInput(tagsInput.filter((t) => {
+                            return (t !== tag.name);
+                          }));
+
+                          return;
+                        }
+
+                        setTagsInput(currentTags => [...currentTags, tag.name]);
+                      }}>
+                        <Text>{tag.name}</Text>
+                      </MenuItem>
+                    );
+                  }) : ''}
+                </MenuList>
+              </Menu>
             </FormControl>
 
             <FormControl my={5}>
@@ -281,7 +338,7 @@ export function Edit() {
 
         <Footer />
       </Flex>
-      
+
       <Confirm
         isOpen={isOpenConfirm}
         onClose={onCloseConfirm}
