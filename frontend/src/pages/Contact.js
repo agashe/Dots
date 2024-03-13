@@ -10,7 +10,7 @@ export function Contact() {
   const toast = useToast();
 
   useEffect(function () {
-    axios.get(process.env.REACT_APP_BACKEND_URL + "/pages/contact")
+    axios.get("/pages/contact")
       .then(function (response) {
         setContent(response.data.data);
       })

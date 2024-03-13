@@ -24,7 +24,7 @@ export function AddComment({ postId, commentId = '' }) {
       return;
     }
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/comments", {
+    axios.post("/comments", {
       post_id: postId,
       comment_id: commentId,
       user_id: user.id,

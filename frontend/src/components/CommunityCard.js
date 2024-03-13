@@ -31,7 +31,7 @@ export function CommunityCard({ community }) {
   }
 
   function communityAction(action) {
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/communities/" + action, {
+    axios.post("/communities/" + action, {
       community_id: community.id,
     })
       .then(function (response) {

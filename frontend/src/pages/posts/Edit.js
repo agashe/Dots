@@ -56,7 +56,7 @@ export function Edit() {
   } = useDisclosure();
 
   useEffect(function () {
-    axios.post(process.env.REACT_APP_BACKEND_URL + '/posts/show', {
+    axios.post('/posts/show', {
       post_id: id,
       page: 1
     })
@@ -77,7 +77,7 @@ export function Edit() {
         });
       });
 
-    axios.get(process.env.REACT_APP_BACKEND_URL + "/posts/tags")
+    axios.get("/posts/tags")
       .then(function (response) {
         setTagsList(response.data.data);
       })
@@ -95,7 +95,7 @@ export function Edit() {
   function submit(event) {
     event.preventDefault();
 
-    axios.put(process.env.REACT_APP_BACKEND_URL + "/posts", {
+    axios.put("/posts", {
       post_id: idInput,
       title: titleInput,
       tags: tagsInput,
@@ -125,7 +125,7 @@ export function Edit() {
     reader.readAsDataURL(file);
 
     reader.onload = function () {
-      axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/upload", {
+      axios.post("/asset-files/upload", {
         entity: 'post',
         entity_id: idInput,
         type: 'banner',
@@ -164,7 +164,7 @@ export function Edit() {
   function removeBanner(event) {
     event.preventDefault();
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/delete", {
+    axios.post("/asset-files/delete", {
       entity: 'post',
       entity_id: idInput,
       type: 'banner',

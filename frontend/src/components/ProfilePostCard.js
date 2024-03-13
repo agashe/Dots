@@ -48,7 +48,7 @@ export function ProfilePostCard({ post }) {
   function handleDelete(event) {
     event.preventDefault();
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/posts/delete", {
+    axios.post("/posts/delete", {
       post_id: postId,
     })
       .then(function (response) {

@@ -36,7 +36,7 @@ export function Search() {
   }
 
   function search(type) {
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/search", {
+    axios.post("/search", {
       entity: type,
       keyword: keyword,
       page: 1,

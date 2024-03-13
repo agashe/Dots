@@ -29,7 +29,7 @@ export function ProfileCommentCard({ comment }) {
   function handleDelete(event) {
     event.preventDefault();
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/comments/delete", {
+    axios.post("/comments/delete", {
       comment_id: commentId,
     })
       .then(function (response) {

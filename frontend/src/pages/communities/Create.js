@@ -43,7 +43,7 @@ export function Create() {
   function submit(event) {
     event.preventDefault();
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/communities", {
+    axios.post("/communities", {
       name: nameInput,
       description: descriptionInput,
     })
@@ -86,7 +86,7 @@ export function Create() {
     reader.readAsDataURL(file);
 
     reader.onload = function () {
-      axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/upload", {
+      axios.post("/asset-files/upload", {
         entity: 'community',
         entity_id: community.id,
         type: 'logo',

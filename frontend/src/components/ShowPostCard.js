@@ -64,7 +64,7 @@ export function ShowPostCard({ post }) {
       return;
     }
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/posts/rate", {
+    axios.post("/posts/rate", {
       post_id: post.id,
       value: type == 'up' ? 1 : -1,
     })

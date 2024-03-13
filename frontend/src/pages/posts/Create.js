@@ -55,7 +55,7 @@ export function Create() {
   } = useDisclosure();
 
   useEffect(function () {
-    axios.get(process.env.REACT_APP_BACKEND_URL + "/users/communities")
+    axios.get("/users/communities")
       .then(function (response) {
         setCommunitiesList(response.data.data);
       })
@@ -69,7 +69,7 @@ export function Create() {
         });
       });
 
-    axios.get(process.env.REACT_APP_BACKEND_URL + "/posts/tags")
+    axios.get("/posts/tags")
       .then(function (response) {
         setTagsList(response.data.data);
       })
@@ -87,7 +87,7 @@ export function Create() {
   function submit(event) {
     event.preventDefault();
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/posts", {
+    axios.post("/posts", {
       community_id: communityInput.id,
       title: titleInput,
       tags: tagsInput,
@@ -134,7 +134,7 @@ export function Create() {
     reader.readAsDataURL(file);
 
     reader.onload = function () {
-      axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/upload", {
+      axios.post("/asset-files/upload", {
         entity: 'post',
         entity_id: post.id,
         type: 'banner',

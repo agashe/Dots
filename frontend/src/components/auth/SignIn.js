@@ -25,7 +25,7 @@ export function SignIn({ isOpen, onClose, onOpenSignUp }) {
   function submitSignIn(event) {
     event.preventDefault();
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/auth/sign-in", {
+    axios.post("/auth/sign-in", {
       name: inputs['name'],
       email: inputs['email'],
       password: inputs['password'],

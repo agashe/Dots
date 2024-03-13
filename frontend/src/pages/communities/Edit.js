@@ -46,7 +46,7 @@ export function Edit() {
   useEffect(function () {
     window.scrollTo(0, 0);
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + '/posts/list', {
+    axios.post('/posts/list', {
       entity: 'community',
       entity_id: name.replaceAll('+', ' '),
       page: 1
@@ -71,7 +71,7 @@ export function Edit() {
   function submit(event) {
     event.preventDefault();
 
-    axios.put(process.env.REACT_APP_BACKEND_URL + "/communities", {
+    axios.put("/communities", {
       community_id: idInput,
       name: nameInput,
       description: descriptionInput,
@@ -99,7 +99,7 @@ export function Edit() {
     reader.readAsDataURL(file);
 
     reader.onload = function () {
-      axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/upload", {
+      axios.post("/asset-files/upload", {
         entity: 'community',
         entity_id: idInput,
         type: 'logo',
@@ -138,7 +138,7 @@ export function Edit() {
   function removeLogo(event) {
     event.preventDefault();
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/delete", {
+    axios.post("/asset-files/delete", {
       entity: 'community',
       entity_id: idInput,
       type: 'logo',

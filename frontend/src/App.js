@@ -6,6 +6,7 @@ import {
 import { RouterProvider } from "react-router-dom";
 import { router } from "./router";
 import { SEO } from "./components/SEO";
+import axios from 'axios';
 
 const Button = defineStyleConfig({
   variants: {
@@ -44,6 +45,8 @@ const theme = extendTheme({
     Button,
   },
 });
+
+axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
 
 export default function App() {
   return (

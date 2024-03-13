@@ -20,7 +20,7 @@ export function Show() {
   useEffect(function () {
     window.scrollTo(0, 0);
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + '/posts/show', {
+    axios.post('/posts/show', {
       post_id: id,
       page: 1
     })

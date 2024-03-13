@@ -35,7 +35,7 @@ export function Home() {
     window.scrollTo(0, 0);
 
     if (location.pathname.includes('/t/')) {
-      axios.post(process.env.REACT_APP_BACKEND_URL + '/posts/list', {
+      axios.post('/posts/list', {
         entity: 'tag',
         entity_id: name.replaceAll('+', ' '),
         page: 1
@@ -55,7 +55,7 @@ export function Home() {
         });
     }
     else if (location.pathname.includes('/c/')) {
-      axios.post(process.env.REACT_APP_BACKEND_URL + '/posts/list', {
+      axios.post('/posts/list', {
         entity: 'community',
         entity_id: name.replaceAll('+', ' '),
         page: 1
@@ -75,7 +75,7 @@ export function Home() {
         });
     }
     else if (location.pathname.includes('/u/')) {
-      axios.post(process.env.REACT_APP_BACKEND_URL + '/posts/list', {
+      axios.post('/posts/list', {
         entity: 'user',
         entity_id: id,
         page: 1
@@ -95,7 +95,7 @@ export function Home() {
         });
     }
     else {
-      axios.post(process.env.REACT_APP_BACKEND_URL + url, {
+      axios.post(url, {
         page: 1
       })
         .then(function (response) {

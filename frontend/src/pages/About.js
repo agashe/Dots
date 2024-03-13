@@ -10,7 +10,7 @@ export function About() {
   const toast = useToast();
 
   useEffect(function () {
-    axios.get(process.env.REACT_APP_BACKEND_URL + "/pages/about")
+    axios.get("/pages/about")
       .then(function (response) {
         setContent(response.data.data);
       })

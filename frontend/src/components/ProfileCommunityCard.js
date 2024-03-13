@@ -36,7 +36,7 @@ export function ProfileCommunityCard({ community }) {
   function handleDelete(event) {
     event.preventDefault();
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/communities/delete", {
+    axios.post("/communities/delete", {
       community_id: communityId,
     })
       .then(function (response) {

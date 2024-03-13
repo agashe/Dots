@@ -10,7 +10,7 @@ export function FAQ() {
   const toast = useToast();
 
   useEffect(function () {
-    axios.get(process.env.REACT_APP_BACKEND_URL + "/pages/faq")
+    axios.get("/pages/faq")
       .then(function (response) {
         setContent(response.data.data);
       })

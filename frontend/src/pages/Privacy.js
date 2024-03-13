@@ -10,7 +10,7 @@ export function Privacy() {
   const toast = useToast();
 
   useEffect(function () {
-    axios.get(process.env.REACT_APP_BACKEND_URL + "/pages/privacy")
+    axios.get("/pages/privacy")
       .then(function (response) {
         setContent(response.data.data);
       })

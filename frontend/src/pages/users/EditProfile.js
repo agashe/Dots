@@ -50,7 +50,7 @@ export function EditProfile() {
   function submitEditProfile(event) {
     event.preventDefault();
 
-    axios.put(process.env.REACT_APP_BACKEND_URL + "/users/profile", {
+    axios.put("/users/profile", {
       name: nameInput,
       location: locationInput,
       work: workInput,
@@ -84,7 +84,7 @@ export function EditProfile() {
     reader.readAsDataURL(file);
 
     reader.onload = function () {
-      axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/upload", {
+      axios.post("/asset-files/upload", {
         entity: 'user',
         entity_id: user.id,
         type: 'avatar',
@@ -125,7 +125,7 @@ export function EditProfile() {
   function removeAvatar(event) {
     event.preventDefault();
 
-    axios.post(process.env.REACT_APP_BACKEND_URL + "/asset-files/delete", {
+    axios.post("/asset-files/delete", {
       entity: 'user',
       entity_id: user.id,
       type: 'avatar',

@@ -38,7 +38,7 @@ export function Profile() {
   useEffect(function () {
     window.scrollTo(0, 0);
 
-    axios.get(process.env.REACT_APP_BACKEND_URL + '/users/profile')
+    axios.get('/users/profile')
       .then(function (response) {
         setUserProfile(response.data.data);
       })
