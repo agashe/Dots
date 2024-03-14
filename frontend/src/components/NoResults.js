@@ -15,7 +15,7 @@ export function NoResults({ message }) {
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        width: "100%"
+        width: "90%"
       }}
     >
       <Icon as={MdErrorOutline} boxSize={{ base: 24, lg: 48 }} color='brand.main' />
