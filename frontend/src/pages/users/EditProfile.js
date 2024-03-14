@@ -61,7 +61,13 @@ export function EditProfile() {
       confirm: confirmInput,
     })
       .then(function (response) {
-        localStorage.setItem("user", JSON.stringify(response.data.data));
+        user.name = response.data.data.name;
+        user.location = response.data.data.location;
+        user.work = response.data.data.work;
+        user.birth_date = response.data.data.birth_date;
+        user.bio = response.data.data.bio;
+
+        localStorage.setItem("user", JSON.stringify(user));
         window.location.href = "/profile";
       })
       .catch(function (error) {
@@ -213,23 +219,23 @@ export function EditProfile() {
 
             <FormControl my={5}>
               <FormLabel>{t('user.location')}</FormLabel>
-              <Input type='text' name="location" value={user.location} placeholder={t('placeholders.user_location')} onChange={(e) => { setLocationInput(e.target.value) }} />
+              <Input type='text' name="location" value={locationInput} placeholder={t('placeholders.user_location')} onChange={(e) => { setLocationInput(e.target.value) }} />
             </FormControl>
 
             <FormControl my={5}>
               <FormLabel>{t('user.work')}</FormLabel>
-              <Input type='text' name="work" value={user.work} placeholder={t('placeholders.user_work')} onChange={(e) => { setWorkInput(e.target.value) }} />
+              <Input type='text' name="work" value={workInput} placeholder={t('placeholders.user_work')} onChange={(e) => { setWorkInput(e.target.value) }} />
             </FormControl>
 
             <FormControl my={5}>
               <FormLabel>{t('user.birth_date')}</FormLabel>
-              <Input type='date' name="birth_date" value={user.birth_date} onChange={(e) => { setBirthDateInput(e.target.value) }} />
+              <Input type='date' name="birth_date" value={birthDateInput} onChange={(e) => { setBirthDateInput(e.target.value) }} />
             </FormControl>
 
             <FormControl my={5}>
               <FormLabel>{t('user.bio')}</FormLabel>
               <Textarea
-                name="bio" value={user.bio}
+                name="bio" value={bioInput}
                 placeholder={t('placeholders.user_bio')}
                 resize='none'
                 onChange={(e) => { setBioInput(e.target.value) }}

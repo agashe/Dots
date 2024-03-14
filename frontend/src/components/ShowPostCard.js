@@ -61,6 +61,14 @@ export function ShowPostCard({ post }) {
 
   function rate(type) {
     if (!user) {
+      toast({
+        title: t('errors.sign_in_please', {action: t('actions.rate')}),
+        status: 'error',
+        position: 'top-right',
+        duration: 9000,
+        isClosable: true,
+      });
+
       return;
     }
 

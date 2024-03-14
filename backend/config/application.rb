@@ -48,6 +48,9 @@ module Backend
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # Add auth middleware
+    config.middleware.insert_before 0, Middlewares::AuthMiddleware
+
     # Allow CORS
     config.middleware.insert_before 0, Rack::Cors do
       allow do
@@ -55,9 +58,6 @@ module Backend
         resource '*', headers: :any, methods: :any
       end
     end
-
-    # Add auth middleware
-    config.middleware.insert_before 0, Middlewares::AuthMiddleware
 
     # Allow public assets
     config.public_file_server.enabled = true

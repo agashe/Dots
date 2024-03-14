@@ -54,7 +54,8 @@
         "_": "Community",
         "name": "Name",
         "logo": "Logo",
-        "description": "Description"
+        "description": "Description",
+        "master": "Community Master"
     },
     "communities": "Communities",
     "post": {
@@ -105,7 +106,8 @@
         "page_not_found_message": "Oops ! It seems that the page you are looking for , doesn't exists",
         "account_has_no_items": "This Account didn't create any {{items}} yet",
         "no_notifications": "You haven't received any notifications yet",
-        "server_error": "500, Server Error"
+        "server_error": "500, Server Error",
+        "sign_in_please": "You need to sign in first , to {{action}}"
     },
     "placeholders": {
         "community_name": "The Avengers",

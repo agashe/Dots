@@ -7,31 +7,29 @@ module Middlewares
     end
   
     def call(env)
-      env['user_id'] = '7b13c8af-152e-49eb-8aec-74c8a616286b'
-      return @app.call(env)
-      # request = ActionDispatch::Request.new(env)      
+      request = ActionDispatch::Request.new(env)      
 
-      # # skip public and auth controllers
-      # if (request.fullpath.include? 'pages') || 
-      #    (request.fullpath.include? 'sign') ||
-      #    (request.fullpath.include? 'assets') ||
-      #    (request.fullpath.include? 'posts/list') ||
-      #    (request.fullpath.include? 'posts/show') ||
-      #    (request.fullpath.include? 'search') ||
-      #    (request.fullpath.include? 'home')
-      #   return @app.call(env)
-      # end
-      
-      # begin
-      #   if !validate_secure_token(request.headers['Authorization'].split(' ').last)
-      #     return [401, {}, [I18n.t('errors.unauthorized')]]
-      #   end
-      # rescue
-      #   return [401, {}, [I18n.t('errors.unauthorized')]]
-      # end
+      # skip public and auth controllers
+      if (request.fullpath.include? 'pages') || 
+         (request.fullpath.include? 'sign') ||
+         (request.fullpath.include? 'assets') ||
+         (request.fullpath.include? 'posts/list') ||
+         (request.fullpath.include? 'posts/show') ||
+         (request.fullpath.include? 'search') ||
+         (request.fullpath.include? 'home')
+        return @app.call(env)
+      end
 
-      # env['user_id'] = @user_id
-      # @app.call(env)
+      begin
+        if !validate_secure_token(request.headers['Authorization'].split(' ').last)
+          return [401, {}, [I18n.t('errors.unauthorized')]]
+        end
+      rescue
+        return [401, {}, [I18n.t('errors.unauthorized')]]
+      end
+
+      env['user_id'] = @user_id
+      @app.call(env)
     end
 
     private

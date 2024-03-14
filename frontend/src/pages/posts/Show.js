@@ -1,4 +1,12 @@
-import { Flex, Box, Show as ShowSideMenu, useToast } from "@chakra-ui/react";
+import {
+  Flex,
+  Box,
+  Card,
+  CardBody,
+  Heading,
+  Show as ShowSideMenu,
+  useToast
+} from "@chakra-ui/react";
 import { LatestPosts } from "../../components/LatestPosts";
 import { PopularCommunities } from "../../components/PopularCommunities";
 import { ShowPostCard } from "../../components/ShowPostCard";
@@ -12,6 +20,7 @@ import { SEO } from "../../components/SEO";
 import axios from 'axios';
 
 export function Show() {
+  const user = JSON.parse(localStorage.getItem("user"));
   const [postContent, setPostContent] = useState({});
   const { id, title } = useParams();
   const { t } = useTranslation();
@@ -51,12 +60,24 @@ export function Show() {
       <Flex spacing={5} pt={5} px={{ base: 3, lg: 10 }} mb={5} >
         <Box w={{ base: '100%', lg: '70%' }} mr={{ base: 0, lg: 5 }}>
           {
-            postContent.post != undefined ? 
-            <>
-              <ShowPostCard post={postContent.post} />
-              <AddComment postId={postContent.post.id} />
-              <Comments comments={postContent.comments} />
-            </> : ''
+            postContent.post != undefined ?
+              <>
+                <ShowPostCard post={postContent.post} />
+
+                {
+                  !user ?
+                    <Card ml={{ base: 0, lg: 5 }} mb={5}>
+                      <CardBody>
+                        <Heading size='md'>
+                          {t('errors.sign_in_please', { action: t('actions.comment') })}
+                        </Heading>
+                      </CardBody>
+                    </Card> :
+                    <AddComment postId={postContent.post.id} />
+                }
+
+                <Comments comments={postContent.comments} />
+              </> : ''
           }
         </Box>
 

@@ -14,22 +14,14 @@ import { SEO } from "../components/SEO";
 import axios from 'axios';
 
 export function Home() {
-  const { t } = useTranslation();
-
-  // check current route , to load the posts data 
-  // this could be for : user, tag, community or homepage
-  let { id, name } = useParams();
-  const location = useLocation();
+  const user = JSON.parse(localStorage.getItem('user'));
   const [homePageContent, setHomePageContent] = useState({});
   const [cardContent, setCardContent] = useState('');
+  const { id, name } = useParams();
+  const { t } = useTranslation();
+  const location = useLocation();
   const toast = useToast();
-  const user = JSON.parse(localStorage.getItem('user'));
   const url = user !== null ? "/users/timeline" : "/home";
-  // const headers = user !== null ? {
-  //   headers: {
-  //     "Authorization": `Bearer ${user.token}`
-  //   },
-  // } : "";
 
   useEffect(function () {
     window.scrollTo(0, 0);

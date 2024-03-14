@@ -16,6 +16,7 @@ import { useState } from "react";
 import axios from 'axios';
 
 export function CommunityCard({ community }) {
+  const user = JSON.parse(localStorage.getItem("user"));
   const [isMember, setIsMember] = useState(community.is_member);
   const { t } = useTranslation();
   const toast = useToast();
@@ -31,11 +32,23 @@ export function CommunityCard({ community }) {
   }
 
   function communityAction(action) {
+    if (!user) {
+      toast({
+        title: t('errors.sign_in_please', { action: t('actions.join') }),
+        status: 'error',
+        position: 'top-right',
+        duration: 9000,
+        isClosable: true,
+      });
+
+      return;
+    }
+
     axios.post("/communities/" + action, {
       community_id: community.id,
     })
       .then(function (response) {
-        window.location.reload();
+        setIsMember(!isMember);
       })
       .catch(function (error) {
         toast({
@@ -78,14 +91,20 @@ export function CommunityCard({ community }) {
         {
           !community.is_closed &&
           <Box w='100%'>
-            <Button w='100%' onClick={(e) => {
-              !community.is_member ?
-                communityAction('join') :
-                onOpenConfirm();
+            {
+              user && (community.user_id == user.id) ?
+                <Button w='100%' variant='outline'>
+                  {t('community.master')}
+                </Button> :
+                <Button w='100%' onClick={(e) => {
+                  !isMember ?
+                    communityAction('join') :
+                    onOpenConfirm();
+                }
+                }>
+                  {t('actions.' + (isMember ? 'leave' : 'join'))}
+                </Button>
             }
-            }>
-              {t('actions.' + (community.is_member ? 'leave' : 'join'))}
-            </Button>
           </Box>
         }
       </CardBody>
