@@ -121,7 +121,7 @@ export function Home() {
             </Box>
           </Show>
 
-          {homePageContent.posts ? (
+          {homePageContent.posts && (homePageContent.posts.length > 0) ? (
             homePageContent.posts.map((post, i) => {
               return <PostCard post={post} key={i} />;
             })

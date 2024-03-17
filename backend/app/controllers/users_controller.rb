@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     @member_model = Member.new
     @post_model = Post.new
     @tag_model = Tag.new
+    @common_data_service = CommonDataService.new
   end
 
   ##
@@ -106,44 +107,19 @@ class UsersController < ApplicationController
       return error(validation_result['message'])
     end
 
-    tags = []
     posts = []
     per_page = 10
-    top_posts = []
-    list_items_count = 5
-    popular_communities = []
 
-    posts_query = {
+    timeline_posts_query = {
       'is_published' => true,
       'deleted_at' => nil,
+      # 'community_id' => {'$in' => get_user_communities(true)},
     }
 
     # timeline posts
-    timeline_posts_query = posts_query.clone
-    timeline_posts_query['community_id'] = {'$in' => get_user_communities(true)}
     total_pages = (@post_model.count(timeline_posts_query).to_f / per_page).ceil()
     posts = @post_model.paginate(params['page'], per_page, timeline_posts_query)
-
-    # top posts
-    top_posts = @post_model.sort(
-      list_items_count, 
-      'comments_count', 
-      false, 
-      posts_query
-    )
-
-    # popular communities
-    popular_communities = @community_model.sort(
-      list_items_count, 
-      'members_count', 
-      false, 
-      {
-        'is_closed' => false
-      }
-    )
-
-    # tags    
-    tags = @tag_model.all
+    top_posts, popular_communities, tags = @common_data_service.get_homepage_data
 
     ok({
       'posts' => PostResource::format_array(posts),
@@ -164,7 +140,6 @@ class UsersController < ApplicationController
   # @param  [bool] ids_only
   # @return [array]
   def get_user_communities(ids_only = false)
-    communities = []
     communities_ids = []
       
     @member_model.findBy('user_id', request.env['user_id']).each do |member|
@@ -182,14 +157,14 @@ class UsersController < ApplicationController
       return communities_ids
     end
 
-    @community_model.in('id', communities_ids).each do |community|
-      if community['is_closed']
-        next
-      end
-
-      communities.push(community)
-    end
-
-    return communities
+    return @community_model.sort(
+      communities_ids.length, 
+      'name', 
+      true, 
+      {
+        'is_closed' => false,
+        'id' => {'$in': communities_ids}
+      }
+    )
   end
 end

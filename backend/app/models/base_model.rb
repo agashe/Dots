@@ -170,7 +170,7 @@ class BaseModel
   # @return [array]
   def latest(n, q = {:deleted_at => nil})
     return @collection.find(q)
-      .sort({created_at: -1})
+      .sort({'_id' => -1})
       .limit(n).to_a
   end
   
@@ -183,7 +183,7 @@ class BaseModel
   # @return [array]
   def paginate(page, per_page, query = {:deleted_at => nil})
     return @collection.find(query)
-      .sort({created_at: -1})
+      .sort({'_id' => -1})
       .skip((page - 1) * per_page)
       .limit(per_page).to_a
   end
@@ -244,7 +244,7 @@ class BaseModel
   # @return [array]
   def sort(n, sort_by, asc = false, q = {:deleted_at => nil})
     return @collection.find(q)
-      .sort({sort_by: (asc ? 1 : -1) })
+      .sort({sort_by => (asc ? 1 : -1)})
       .limit(n).to_a
   end
 

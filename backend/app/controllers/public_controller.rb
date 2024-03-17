@@ -7,6 +7,7 @@ class PublicController < ApplicationController
     @post_model = Post.new
     @tag_model = Tag.new
     @user_model = User.new
+    @common_data_service = CommonDataService.new
   end
 
   ##
@@ -26,7 +27,6 @@ class PublicController < ApplicationController
     posts = []
     per_page = 10
     top_posts = []
-    list_items_count = 5
     popular_communities = []
 
     # timeline
@@ -37,27 +37,7 @@ class PublicController < ApplicationController
     
     total_pages = (@post_model.count(posts_query).to_f / per_page).ceil()
     posts = @post_model.paginate(params['page'], per_page, posts_query)
-
-    # top posts
-    top_posts = @post_model.sort(
-      list_items_count, 
-      'comments_count', 
-      false, 
-      posts_query
-    )
-
-    # popular communities
-    popular_communities = @community_model.sort(
-      list_items_count, 
-      'members_count', 
-      false, 
-      {
-        'is_closed' => false
-      }
-    )
-
-    # tags    
-    tags = @tag_model.get_fields(['name'])
+    top_posts, popular_communities, tags = @common_data_service.get_homepage_data
 
     ok({
       'posts' => PostResource::format_array(posts),
@@ -86,7 +66,6 @@ class PublicController < ApplicationController
 
     results = []
     per_page = 10
-    list_items_count = 5
 
     # search results
     if params['entity'] == 'post'
@@ -121,27 +100,7 @@ class PublicController < ApplicationController
       return error(I18n.t('errors.invalid_operation'))
     end
     
-    # top posts
-    top_posts = @post_model.sort(
-      list_items_count, 
-      'comments_count', 
-      false, 
-      posts_query
-    )
-
-    # popular communities
-    popular_communities = @community_model.sort(
-      list_items_count, 
-      'members_count', 
-      false, 
-      {
-        'is_closed' => false
-      }
-    )
-
-    # tags    
-    tags = @tag_model.get_fields(['name'])
-
+    top_posts, popular_communities, tags = @common_data_service.get_homepage_data
 
     ok({
       'entity' => params['entity'],

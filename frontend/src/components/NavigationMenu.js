@@ -23,8 +23,8 @@ import { Footer } from "./Footer";
 export function NavigationMenu({ tags }) {
   const { t } = useTranslation();
 
-  const rightTags = tags.slice(0, (tags.length / 2));
-  const leftTags = tags.slice(tags.length / 2);
+  const rightTags = tags.slice(tags.length / 2);
+  const leftTags = tags.slice(0, (tags.length / 2));
 
   return (
     <>
