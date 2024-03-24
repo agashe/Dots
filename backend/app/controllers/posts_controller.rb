@@ -34,12 +34,18 @@ class PostsController < ApplicationController
       return error(I18n.t('errors.model_not_found'))
     end
 
+    # load parent comments (comment_id == nil)
     comments_query = {
-      'post_id' => params['post_id']
+      'post_id' => params['post_id'],
+      'comment_id' =>nil
     }
 
     total_pages = (@comment_model.count(comments_query).to_f / per_page).ceil()
     comments = @comment_model.paginate(params['page'], per_page, comments_query)
+
+    # show if user is among raters , obviously by fetching all raters
+    # ids and send them along each comment , then the front check 
+    # if user id among them
 
     posts_query = {
       'is_published' => true,
@@ -47,8 +53,6 @@ class PostsController < ApplicationController
     }
 
     # check user rate
-    user_rate = nil
-
     if request.env['user_id'] != nil
       rate = @rate_model.query({
         'entity' => 'post',

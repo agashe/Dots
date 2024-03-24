@@ -19,10 +19,11 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  useToast,
 } from "@chakra-ui/react";
 import {
-  // MdThumbUp,
-  // MdThumbDown,
+  MdThumbUp,
+  MdThumbDown,
   MdOutlineThumbUp,
   MdOutlineThumbDown,
   MdChat,
@@ -35,14 +36,69 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import parse from "html-react-parser";
+import axios from 'axios';
 
 export function Comment({ comment }) {
   const user = JSON.parse(localStorage.getItem("user"));
   const [addComment, setAddComment] = useState(false);
+  const [commentRate, setCommentRate] = useState(comment.rate);
   const { t } = useTranslation();
+  const toast = useToast();
+
+  const [rateUp, setRateUp] = useState(
+    comment.user_rate == 1 ?
+      <Icon as={MdThumbUp} />
+      :
+      <Icon as={MdOutlineThumbUp} />
+  );
+
+  const [rateDown, setRateDown] = useState(
+    comment.user_rate == -1 ?
+      <Icon as={MdThumbDown} />
+      :
+      <Icon as={MdOutlineThumbDown} />
+  );
 
   function showAddComment() {
     setAddComment(!addComment);
+  }
+
+  function rate(type) {
+    if (!user) {
+      toast({
+        title: t('errors.sign_in_please', { action: t('actions.rate') }),
+        status: 'error',
+        position: 'top-right',
+        duration: 9000,
+        isClosable: true,
+      });
+
+      return;
+    }
+
+    axios.post("/comments/rate", {
+      comment_id: comment.id,
+      value: type == 'up' ? 1 : -1,
+    })
+      .then(function (response) {
+        setCommentRate(response.data.data.comment_rate);
+
+        if (response.data.data.user_rate == 1) {
+          setRateUp(<Icon as={MdThumbUp} />);
+        }
+        else if (response.data.data.user_rate == -1) {
+          setRateDown(<Icon as={MdThumbDown} />);
+        }
+      })
+      .catch(function (error) {
+        toast({
+          title: error.response.data.message,
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   }
 
   return (
@@ -87,26 +143,28 @@ export function Comment({ comment }) {
             <Tooltip label='Rate Up'>
               <IconButton
                 variant='ghost'
-                icon={<Icon as={MdOutlineThumbUp} />}
+                icon={rateUp}
                 boxSize={4}
                 color='lime'
                 _hover={{ textDecoration: "none" }}
                 w={{ base: 5, md: 10 }}
                 minW={{ base: 5, md: 10 }}
+                onClick={(e) => { rate('up') }}
               />
             </Tooltip>
 
-            <Text>{comment.rate}</Text>
+            <Text>{commentRate}</Text>
 
             <Tooltip label='Rate Down'>
               <IconButton
                 variant='ghost'
-                icon={<Icon as={MdOutlineThumbDown} />}
+                icon={rateDown}
                 boxSize={4}
                 color='blue'
                 _hover={{ textDecoration: "none" }}
                 w={{ base: 5, md: 10 }}
                 minW={{ base: 5, md: 10 }}
+                onClick={(e) => { rate('down') }}
               />
             </Tooltip>
           </HStack>

@@ -18,6 +18,7 @@ class CommentResource < BaseResource
       'is_reported' => data['is_reported'],
       'is_deleted' => (data['deleted_at'] != nil),
       'sub_comments' => [],
+      'user_rate' => data['user_rate'],
       'created_at' => Date.parse(data['created_at']).to_fs(:rfc822),
     }
   end

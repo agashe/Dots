@@ -12,7 +12,6 @@ import { useTranslation } from "react-i18next";
 import axios from 'axios';
 
 export function AddComment({ postId, commentId = '' }) {
-  const user = JSON.parse(localStorage.getItem("user"));
   const [textInput, setTextInput] = useState("");
   const { t } = useTranslation();
   const toast = useToast();
@@ -27,7 +26,6 @@ export function AddComment({ postId, commentId = '' }) {
     axios.post("/comments", {
       post_id: postId,
       comment_id: commentId,
-      user_id: user.id,
       text: textInput,
     })
       .then(function (response) {

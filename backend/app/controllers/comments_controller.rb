@@ -14,7 +14,6 @@ class CommentsController < ApplicationController
   def create
     validation_result = validate(params, {
       'post_id' => 'required',
-      'user_id' => 'required',
       'text' => 'required|max_len:200',
     })
 
@@ -99,20 +98,23 @@ class CommentsController < ApplicationController
       return error(I18n.t('errors.already_rated'))
     else
       created_rate = @rate_model.create({
-      'entity' => 'comment',
-      'entity_id' => comment['id'],
-      'user_id' => request.env['user_id'],
-      'value' => params['value']
-    }).first
+        'entity' => 'comment',
+        'entity_id' => comment['id'],
+        'user_id' => request.env['user_id'],
+        'value' => params['value']
+      }, true)
     end
 
     updated_comment = @comment_model.update(params['comment_id'], {
       'rate' => comment['rate'] + params['value'],
-    })
+    }, true)
 
     log("Comment (#{updated_comment['id']}) was rated by (#{request.env['user_id']})")
 
-    ok({}, I18n.t('messages.success.rate'))
+    ok({
+      'user_rate' => created_rate['value'],
+      'comment_rate' => updated_comment['rate']
+    }, I18n.t('messages.success.rate'))
   end
 
   ##
