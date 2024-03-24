@@ -48,22 +48,22 @@ const theme = extendTheme({
 
 axios.defaults.baseURL = process.env.REACT_APP_BACKEND_URL;
 
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-axios.defaults.headers.post['Accept'] = 'application/json';
-axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
-axios.defaults.headers.put['Content-Type'] = 'application/json';
-axios.defaults.headers.put['Accept'] = 'application/json';
-axios.defaults.headers.put['Access-Control-Allow-Origin'] = '*';
-axios.defaults.headers.get['Accept'] = 'application/json';
-axios.defaults.headers.get['Access-Control-Allow-Origin'] = '*';
-axios.defaults.headers.delete['Accept'] = 'application/json';
-axios.defaults.headers.delete['Access-Control-Allow-Origin'] = '*';
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common['Accept'] = 'application/json';
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
+// check user token is valid
 const user = JSON.parse(localStorage.getItem('user'));
 
 if (user) {
   axios.defaults.headers.common['Authorization'] = user.token;
 }
+
+axios.interceptors.response.use(null, function (error) {
+  if (error.response === 401) {
+    localStorage.removeItem('user');
+  }
+});
 
 export default function App() {
   return (

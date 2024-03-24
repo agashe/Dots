@@ -22,10 +22,18 @@ module Middlewares
 
       begin
         if !validate_secure_token(request.headers['Authorization'].split(' ').last)
-          return [401, {}, [I18n.t('errors.unauthorized')]]
+          return [
+            401, 
+            {'Content-Type' => 'application/json'}, 
+            [I18n.t('errors.unauthorized').to_json]
+          ]
         end
       rescue
-        return [401, {}, [I18n.t('errors.unauthorized')]]
+        return [
+          401, 
+          {'Content-Type' => 'application/json'}, 
+          [I18n.t('errors.unauthorized').to_json]
+        ]
       end
 
       env['user_id'] = @user_id
