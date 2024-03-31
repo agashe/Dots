@@ -60,7 +60,7 @@ if (user) {
 }
 
 axios.interceptors.response.use(null, function (error) {
-  if (error.response !== undefined && error.response === 401) {
+  if (error.response !== undefined && error.response.status === 401) {
     localStorage.removeItem('user');
   }
 
