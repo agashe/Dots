@@ -129,12 +129,10 @@ export function Comment({ comment }) {
       </CardHeader>
 
       <CardBody py={0} my={2} px={{ base: 1, md: 5 }}>
-        <Text>
-          {
-            comment.is_deleted ?
-              "[" + t('statuses.deleted_comment') + "]" : parse(comment.text)
-          }
-        </Text>
+        {
+          comment.is_deleted ?
+            "[" + t('statuses.deleted_comment') + "]" : parse(comment.text)
+        }
       </CardBody>
 
       <CardFooter py={2} pl='10px'>

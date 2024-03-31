@@ -78,6 +78,7 @@ class PostsController < ApplicationController
     per_page = 10
     top_posts = []
     popular_communities = []
+    current_page = params['page'].to_i
 
     posts_query = {
       'is_published' => true,
@@ -115,7 +116,7 @@ class PostsController < ApplicationController
     end
     
     total_pages = (@post_model.count(posts_query).to_f / per_page).ceil()
-    posts = @post_model.paginate(params['page'], per_page, posts_query)
+    posts = @post_model.paginate(current_page, per_page, posts_query)
     top_posts, popular_communities, tags = @common_data_service.get_homepage_data
 
     ok({
@@ -124,7 +125,7 @@ class PostsController < ApplicationController
       'popular_communities' => CommunityResource::format_array(popular_communities),
       'top_posts' => PostResource::format_array(top_posts),
       'tags' => TagResource::format_array(tags),
-      'current_page' => params['page'],
+      'current_page' => current_page,
       'per_page' => per_page,
       'pages' => total_pages,
     }, I18n.t('messages.success.load'))

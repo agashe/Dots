@@ -131,7 +131,7 @@ export function EditProfile() {
   function removeAvatar(event) {
     event.preventDefault();
 
-    axios.post("/asset-files/delete", {
+    axios.delete("/asset-files/delete", {
       entity: 'user',
       entity_id: user.id,
       type: 'avatar',

@@ -164,7 +164,7 @@ export function Edit() {
   function removeBanner(event) {
     event.preventDefault();
 
-    axios.post("/asset-files/delete", {
+    axios.delete("/asset-files/delete", {
       entity: 'post',
       entity_id: idInput,
       type: 'banner',

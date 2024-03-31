@@ -36,10 +36,12 @@ export function Search() {
   }
 
   function search(type) {
-    axios.post("/search", {
-      entity: type,
-      keyword: keyword,
-      page: 1,
+    axios.get("/search", {
+      params: {
+        entity: type,
+        keyword: keyword,
+        page: 1,
+      }
     })
       .then(function (response) {
         setSearchResults(response.data.data);

@@ -138,7 +138,7 @@ export function Edit() {
   function removeLogo(event) {
     event.preventDefault();
 
-    axios.post("/asset-files/delete", {
+    axios.delete("/asset-files/delete", {
       entity: 'community',
       entity_id: idInput,
       type: 'logo',

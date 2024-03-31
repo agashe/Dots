@@ -27,7 +27,8 @@ class CommentsController < ApplicationController
 
     # load parent comments (comment_id == nil)
     comments_query = {
-      'post_id' => params['post_id']
+      'post_id' => params['post_id'],
+      'comment_id' => nil
     }
 
     if params['comment_id']
@@ -89,6 +90,7 @@ class CommentsController < ApplicationController
       return error(I18n.t('errors.model_not_found'))
     end
 
+    comment_id = nil
     if params.has_key?('comment_id') && !params['comment_id'].empty?
       comment = @comment_model.query({
         'id' => params['comment_id'],
@@ -98,12 +100,14 @@ class CommentsController < ApplicationController
 
       if !comment
         return error(I18n.t('errors.model_not_found'))
+      else
+        comment_id = comment['id']
       end
     end
 
     created_comment = @comment_model.create({
       'post_id' => params['post_id'],
-      'comment_id' => params['comment_id'],
+      'comment_id' => comment_id,
       'user_id' => request.env['user_id'],
       'text' => params['text'],
       'rate' => 0,

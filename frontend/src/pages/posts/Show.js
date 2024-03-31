@@ -22,6 +22,7 @@ import axios from 'axios';
 export function Show() {
   const user = JSON.parse(localStorage.getItem("user"));
   const [postContent, setPostContent] = useState({});
+  const [postComments, setPostComments] = useState({});
   const { id, title } = useParams();
   const { t } = useTranslation();
   const toast = useToast();
@@ -29,12 +30,32 @@ export function Show() {
   useEffect(function () {
     window.scrollTo(0, 0);
 
-    axios.post('/posts/show', {
-      post_id: id,
-      page: 1
+    axios.get('/posts/show', {
+      params: {
+        post_id: id,
+      }
     })
       .then(function (response) {
         setPostContent(response.data.data);
+      })
+      .catch(function (error) {
+        toast({
+          title: t('errors.server_error'),
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+
+    axios.get('/comments/list', {
+      params: {
+        post_id: id,
+        page: 1,
+      }
+    })
+      .then(function (response) {
+        setPostComments(response.data.data.comments);
       })
       .catch(function (error) {
         toast({
@@ -76,7 +97,7 @@ export function Show() {
                     <AddComment postId={postContent.post.id} />
                 }
 
-                <Comments comments={postContent.comments} />
+                <Comments comments={postComments} />
               </> : ''
           }
         </Box>

@@ -21,88 +21,58 @@ export function Home() {
   const { t } = useTranslation();
   const location = useLocation();
   const toast = useToast();
-  const url = user !== null ? "/users/timeline" : "/home";
+  let url = '/posts/list';
+  let params = {
+    entity: '',
+    entity_id: '',
+    page: 1
+  };
 
   useEffect(function () {
     window.scrollTo(0, 0);
 
     if (location.pathname.includes('/t/')) {
-      axios.post('/posts/list', {
-        entity: 'tag',
-        entity_id: name.replaceAll('+', ' '),
-        page: 1
-      })
-        .then(function (response) {
-          setCardContent(<TagCard tag={response.data.data.entity} />);
-          setHomePageContent(response.data.data);
-        })
-        .catch(function (error) {
-          toast({
-            title: t('errors.server_error'),
-            status: 'error',
-            position: 'top-right',
-            duration: 9000,
-            isClosable: true,
-          });
-        });
+      params.entity =  'tag';
+      params.entity_id = name.replaceAll('+', ' ');
     }
     else if (location.pathname.includes('/c/')) {
-      axios.post('/posts/list', {
-        entity: 'community',
-        entity_id: name.replaceAll('+', ' '),
-        page: 1
-      })
-        .then(function (response) {
-          setCardContent(<CommunityCard community={response.data.data.entity} />);
-          setHomePageContent(response.data.data);
-        })
-        .catch(function (error) {
-          toast({
-            title: t('errors.server_error'),
-            status: 'error',
-            position: 'top-right',
-            duration: 9000,
-            isClosable: true,
-          });
-        });
+      params.entity =  'community';
+      params.entity_id = name.replaceAll('+', ' ');
     }
     else if (location.pathname.includes('/u/')) {
-      axios.post('/posts/list', {
-        entity: 'user',
-        entity_id: id,
-        page: 1
-      })
-        .then(function (response) {
-          setCardContent(<UserCard user={response.data.data.entity} />);
-          setHomePageContent(response.data.data);
-        })
-        .catch(function (error) {
-          toast({
-            title: t('errors.server_error'),
-            status: 'error',
-            position: 'top-right',
-            duration: 9000,
-            isClosable: true,
-          });
-        });
+      params.entity =  'user';
+      params.entity_id = id;
     }
     else {
-      axios.post(url, {
+      url = user !== null ? "/users/timeline" : "/home";
+      params = {
         page: 1
-      })
-        .then(function (response) {
-          setHomePageContent(response.data.data);
-        })
-        .catch(function (error) {
-          toast({
-            title: t('errors.server_error'),
-            status: 'error',
-            position: 'top-right',
-            duration: 9000,
-            isClosable: true,
-          });
-        });
+      };
     }
+
+    axios.get(url, {params: params})
+      .then(function (response) {
+        if (location.pathname.includes('/t/')) {
+          setCardContent(<TagCard tag={response.data.data.entity} />);
+        }
+        else if (location.pathname.includes('/c/')) {
+          setCardContent(<CommunityCard community={response.data.data.entity} />);
+        }
+        else if (location.pathname.includes('/u/')) {
+          setCardContent(<UserCard user={response.data.data.entity} />);
+        }
+
+        setHomePageContent(response.data.data);
+      })
+      .catch(function (error) {
+        toast({
+          title: t('errors.server_error'),
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
   }, []);
 
   return (
