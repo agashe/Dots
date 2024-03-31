@@ -4,22 +4,25 @@ module Middlewares
       @app = app
       @session_model = Session.new
       @user_id = nil
+      @public_routes = [
+        'sign',
+        'assets',
+        'posts/list',
+        'posts/show',
+        'comments/list',
+        'pages',
+        'search',
+        'home',
+      ]
     end
   
     def call(env)
       request = ActionDispatch::Request.new(env)      
 
       # skip public and auth controllers
-      if request.headers['Authorization'] == nil
-        if (request.fullpath.include? 'pages') || 
-          (request.fullpath.include? 'sign') ||
-          (request.fullpath.include? 'assets') ||
-          (request.fullpath.include? 'posts/list') ||
-          (request.fullpath.include? 'posts/show') ||
-          (request.fullpath.include? 'search') ||
-          (request.fullpath.include? 'home')
-          return @app.call(env)
-        end
+      if request.headers['Authorization'] == nil && 
+        @public_routes.any? { |route| request.fullpath.include?(route) }
+        return @app.call(env)
       end
 
       begin

@@ -50,11 +50,18 @@ class ValidationService
             error = I18n.t('errors.validation.max_len', field: field, count: max_len)
             break
           end
+        elsif condition == "number"
+          if !(field_value.to_f.to_s == field_value) && 
+            !(field_value.to_i.to_s == field_value)
+            all_good = false
+            error = I18n.t('errors.validation.number', field: field)
+            break
+          end
         elsif condition.include? "min"
           # we take the number => min:X 
           min = condition.split(":")[1].to_i
           
-          if field_value < min
+          if field_value.to_f < min
             all_good = false
             error = I18n.t('errors.validation.min', field: field, number: min)
             break
@@ -63,16 +70,9 @@ class ValidationService
           # we take the number => max:X 
           max = condition.split(":")[1].to_i
           
-          if field_value > max
+          if field_value.to_f > max
             all_good = false
             error = I18n.t('errors.validation.max', field: field, number: max)
-            break
-          end
-        elsif condition == "number"
-          if !(field_value.is_a? Integer) && !(field_value.is_a? Float)
-            puts field_value.is_a? Integer
-            all_good = false
-            error = I18n.t('errors.validation.number', field: field)
             break
           end
         end

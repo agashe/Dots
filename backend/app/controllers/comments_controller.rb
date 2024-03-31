@@ -8,6 +8,64 @@ class CommentsController < ApplicationController
   end
 
   ##
+  # list comments for a post 
+  #
+  # @return [Response]
+  def list
+    validation_result = validate(params, {
+      'post_id' => 'required',
+      'page' => 'required|number|min:1',
+    })
+    
+    if !validation_result['status']
+      return error(validation_result['message'])
+    end
+
+    comments = []
+    per_page = 50
+    current_page = params['page'].to_i
+
+    # load parent comments (comment_id == nil)
+    comments_query = {
+      'post_id' => params['post_id']
+    }
+
+    if params['comment_id']
+      comments_query['comment_id'] = params['comment_id']
+    end
+
+    total_pages = (@comment_model.count(comments_query).to_f / per_page).ceil()
+    comments = @comment_model.paginate(current_page, per_page, comments_query)
+
+    if request.env['user_id'] != nil
+      comments_with_rates = []
+      
+      comments.each do |comment|
+        rate = @rate_model.query({
+          'entity' => 'comment',
+          'entity_id' => comment['id'],
+          'user_id' => request.env['user_id'],
+        }).first
+  
+        if rate != nil
+          comment['user_rate'] = rate['value']
+        end
+
+        comments_with_rates.push(comment)
+      end
+
+      comments = comments_with_rates
+    end
+
+    ok({
+      'comments' => CommentResource::format_array(comments),
+      'current_page' => current_page,
+      'per_page' => per_page,
+      'pages' => total_pages,
+    }, I18n.t('messages.success.load'))
+  end
+
+  ##
   # Create comment
   #
   # @return [Response] 

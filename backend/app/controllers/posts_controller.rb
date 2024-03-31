@@ -19,38 +19,23 @@ class PostsController < ApplicationController
   def show
     validation_result = validate(params, {
       'post_id' => 'required',
-      'page' => 'required|number|min:1',
     })
     
     if !validation_result['status']
       return error(validation_result['message'])
     end
 
-    per_page = 50
-    post = @post_model.find(params['post_id'])
-    top_posts, popular_communities, tags = @common_data_service.get_homepage_data
-
+    post = @post_model.query({
+      'is_published' => true,
+      'deleted_at' => nil,
+      'id' => params['post_id']
+    }).first
+      
     if !post
       return error(I18n.t('errors.model_not_found'))
     end
 
-    # load parent comments (comment_id == nil)
-    comments_query = {
-      'post_id' => params['post_id'],
-      'comment_id' =>nil
-    }
-
-    total_pages = (@comment_model.count(comments_query).to_f / per_page).ceil()
-    comments = @comment_model.paginate(params['page'], per_page, comments_query)
-
-    # show if user is among raters , obviously by fetching all raters
-    # ids and send them along each comment , then the front check 
-    # if user id among them
-
-    posts_query = {
-      'is_published' => true,
-      'deleted_at' => nil
-    }
+    top_posts, popular_communities, tags = @common_data_service.get_homepage_data
 
     # check user rate
     if request.env['user_id'] != nil
@@ -67,12 +52,8 @@ class PostsController < ApplicationController
 
     ok({
       'post' => PostResource::format(post), 
-      'comments' => CommentResource::format_array(comments),
       'popular_communities' => CommunityResource::format_array(popular_communities),
       'top_posts' => PostResource::format_array(top_posts),
-      'current_page' => params['page'],
-      'per_page' => per_page,
-      'pages' => total_pages,
     }, I18n.t('messages.success.load')
     )
   end

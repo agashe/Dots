@@ -40,7 +40,7 @@ class AuthController < ApplicationController
 
     ok(
       UserResource::format(user).merge({'token' => token}),
-      I18n.t('messages.auth.sign_up')
+      I18n.t('messages.auth.sign_in')
     )
   end
 
