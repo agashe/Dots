@@ -29,6 +29,7 @@ en:
     user_is_community_master: "This user is the master of this community"
     invalid_rate_value: "Rate value should be 1 or -1"
     already_rated: "This user already submitted his rate"
+    invalid_comments_filter: "Unknown comments filter %{filter}"
     validation:
       required: "The field '%{field}' is required"
       email: "Invalid email address"

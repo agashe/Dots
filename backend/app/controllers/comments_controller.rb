@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
     @comment_model = Comment.new
     @post_model = Post.new
     @rate_model = Rate.new
+    @filters = ['popular', 'latest', 'oldest', 'unpopular']
   end
 
   ##
@@ -19,6 +20,24 @@ class CommentsController < ApplicationController
     
     if !validation_result['status']
       return error(validation_result['message'])
+    end
+
+    comments_sort = {'rate' => -1}
+    if params['filter'] 
+      if !@filters.include? params['filter']
+        return error(I18n.t('errors.invalid_comments_filter', filter: params['filter']))
+      end
+      puts params['filter']
+      case params['filter']
+        when 'popular' 
+          comments_sort = {'rate' => -1}
+        when 'latest' 
+          comments_sort = {'_id' => -1}
+        when 'oldest' 
+          comments_sort = {'_id' => 1}
+        when 'unpopular'
+          comments_sort = {'rate' => 1}
+      end
     end
 
     comments = []
@@ -36,7 +55,12 @@ class CommentsController < ApplicationController
     end
 
     total_pages = (@comment_model.count(comments_query).to_f / per_page).ceil()
-    comments = @comment_model.paginate(current_page, per_page, comments_query)
+    comments = @comment_model.paginate(
+      current_page, 
+      per_page, 
+      comments_query,
+      comments_sort
+    )
 
     if request.env['user_id'] != nil
       comments_with_rates = []

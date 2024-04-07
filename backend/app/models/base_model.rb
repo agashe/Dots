@@ -180,10 +180,11 @@ class BaseModel
   # @param  [int]        page
   # @param  [int]        per_page
   # @param  [HashMap]    query
+  # @param  [HashMap]    sort
   # @return [array]
-  def paginate(page, per_page, query = {:deleted_at => nil})
+  def paginate(page, per_page, query = {:deleted_at => nil}, sort = {'_id' => -1})
     return @collection.find(query)
-      .sort({'_id' => -1})
+      .sort(sort)
       .skip((page - 1) * per_page)
       .limit(per_page).to_a
   end
