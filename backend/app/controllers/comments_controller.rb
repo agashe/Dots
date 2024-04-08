@@ -97,11 +97,16 @@ class CommentsController < ApplicationController
   def create
     validation_result = validate(params, {
       'post_id' => 'required',
-      'text' => 'required|max_len:200',
+      'text' => 'required',
     })
 
     if !validation_result['status']
       return error(validation_result['message'])
+    end
+
+    comment_max_length = 200
+    if ActionController::Base.helpers.strip_tags(params['text']).length > comment_max_length
+      return error(I18n.t('errors.validation.max_len', field: 'text', count: comment_max_length))
     end
 
     post = @post_model.query({
