@@ -33,7 +33,7 @@ import {
 } from "react-icons/md";
 import { AddComment } from "./AddComment";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import parse from "html-react-parser";
 import axios from 'axios';
@@ -42,6 +42,7 @@ export function Comment({ comment }) {
   const user = JSON.parse(localStorage.getItem("user"));
   const [addComment, setAddComment] = useState(false);
   const [commentRate, setCommentRate] = useState(comment.rate);
+  const [subComments, setSubComments] = useState(false);
   const { t } = useTranslation();
   const toast = useToast();
 
@@ -100,6 +101,28 @@ export function Comment({ comment }) {
         });
       });
   }
+
+  useEffect(function () {
+    axios.get('/comments/list', {
+      params: {
+        post_id: comment.post_id,
+        comment_id: comment.id,
+        page: 1,
+      }
+    })
+      .then(function (response) {
+        setSubComments(response.data.data.comments);
+      })
+      .catch(function (error) {
+        toast({
+          title: t('errors.server_error'),
+          status: 'error',
+          position: 'top-right',
+          duration: 9000,
+          isClosable: true,
+        });
+      });
+  }, []);
 
   return (
     <Card mb={5} mx={1}>
@@ -220,14 +243,14 @@ export function Comment({ comment }) {
 
       {addComment && (
         <Box mr={5}>
-          <AddComment postId={1} />
+          <AddComment postId={comment.post_id} commentId={comment.id} />
         </Box>
       )}
 
       <Box mx={{ base: 1, md: 5 }}>
-        {comment.sub_comments.length
-          ? comment.sub_comments.map((comment, i) => {
-            return <Comment comment={comment} key={i} />;
+        {subComments.length
+          ? subComments.map((subComment, i) => {
+            return <Comment comment={subComment} key={subComment.id} />;
           })
           : ""}
       </Box>

@@ -41,7 +41,7 @@ class CommentsController < ApplicationController
     end
 
     comments = []
-    per_page = 50
+    per_page = 10
     current_page = params['page'].to_i
 
     # load parent comments (comment_id == nil)
