@@ -27,7 +27,7 @@ class CommentsController < ApplicationController
       if !@filters.include? params['filter']
         return error(I18n.t('errors.invalid_comments_filter', filter: params['filter']))
       end
-      puts params['filter']
+
       case params['filter']
         when 'popular' 
           comments_sort = {'rate' => -1}

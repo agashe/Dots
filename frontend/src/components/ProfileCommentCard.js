@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { Confirm } from "./Confirm";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import parse from "html-react-parser";
 import axios from 'axios';
 
 export function ProfileCommentCard({ comment }) {
@@ -52,7 +53,7 @@ export function ProfileCommentCard({ comment }) {
         {/* <Heading fontSize='xl'>{comment.title}</Heading> */}
         <Link reloadDocument _hover={{ textDecoration: "none" }}>
           <Text fontSize='md' my={1}>
-            {comment.text}
+            { parse(comment.text) }
           </Text>
         </Link>
         <Text fontSize='sm' mt={5}>

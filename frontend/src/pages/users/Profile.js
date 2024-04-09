@@ -4,6 +4,7 @@ import {
   CardBody,
   Heading,
   CardHeader,
+  HStack,
   Text,
   Spacer,
   Avatar,
@@ -30,17 +31,43 @@ import { SEO } from "../../components/SEO";
 import axios from 'axios';
 
 export function Profile() {
-  const user = JSON.parse(localStorage.getItem("user"));
   const [userProfile, setUserProfile] = useState({});
   const { t } = useTranslation();
   const toast = useToast();
 
+  // counts
+  const [postsCount, setPostsCount] = useState(0);
+  const [commentsCount, setCommentsCount] = useState(0);
+  const [communitiesCount, setCommunitiesCount] = useState(0);
+
+  // pagination
+  const [postsPages, setPostsPages] = useState(1);
+  const [currentPostsPage, setCurrentPostsPage] = useState(1);
+  const [commentsPages, setCommentsPages] = useState(1);
+  const [currentCommentsPage, setCurrentCommentsPage] = useState(1);
+  const [communitiesPages, setCommunitiesPages] = useState(1);
+  const [currentCommunitiesPage, setCurrentCommunitiesPage] = useState(1);
+
   useEffect(function () {
     window.scrollTo(0, 0);
 
-    axios.get('/users/profile')
+    axios.get('/users/profile', {
+      params: {
+        posts_page: currentPostsPage,
+        comments_page: currentCommentsPage,
+        communities_page: currentCommunitiesPage,
+      }
+    })
       .then(function (response) {
         setUserProfile(response.data.data);
+        
+        setPostsCount(response.data.data.posts_count);
+        setCommentsCount(response.data.data.comments_count);
+        setCommunitiesCount(response.data.data.communities_count);
+        
+        setPostsPages(response.data.data.posts_total_pages);
+        setCommentsPages(response.data.data.comments_total_pages);
+        setCommunitiesPages(response.data.data.communities_total_pages);
       })
       .catch(function (error) {
         toast({
@@ -51,15 +78,11 @@ export function Profile() {
           isClosable: true,
         });
       });
-  }, []);
-
-  // pagination
-  const [postsPages, setPostsPages] = useState(1);
-  const [currentPostsPage, setCurrentPostsPage] = useState(1);
-  const [commentsPages, setCommentsPages] = useState(1);
-  const [currentCommentsPage, setCurrentCommentsPage] = useState(1);
-  const [communitiesPages, setCommunitiesPages] = useState(1);
-  const [currentCommunitiesPage, setCurrentCommunitiesPage] = useState(1);
+  }, [
+    currentPostsPage,
+    currentCommentsPage,
+    currentCommunitiesPage
+  ]);
 
   return (
     <>
@@ -87,20 +110,26 @@ export function Profile() {
 
           <CardBody py={0} my={5}>
             <Stack spacing={{ base: 3, lg: 8 }} direction={{ base: 'column', lg: 'row' }}>
-              <Text>
+              <HStack spacing={1}>
                 <Icon as={MdCake} mr={2} />
-                {userProfile.user != undefined ? userProfile.user.birth_date : ''}
-              </Text>
+                <Text>
+                  {userProfile.user != undefined ? userProfile.user.birth_date : ''}
+                </Text>
+              </HStack>
 
-              <Text>
+              <HStack spacing={1}>
                 <Icon as={MdMap} mr={2} />
-                {userProfile.user != undefined ? userProfile.user.location : ''}
-              </Text>
+                <Text pb={1}>
+                  {userProfile.user != undefined ? userProfile.user.location : ''}
+                </Text>
+              </HStack>
 
-              <Text>
+              <HStack spacing={1}>
                 <Icon as={MdCardMembership} mr={2} />
-                {userProfile.user != undefined ? userProfile.user.work : ''}
-              </Text>
+                <Text pb={1}>
+                  {userProfile.user != undefined ? userProfile.user.work : ''}
+                </Text>
+              </HStack>
             </Stack>
           </CardBody>
         </Card>
@@ -112,19 +141,19 @@ export function Profile() {
                 <Tab>
                   {t('posts')}
                   <Badge ml={2} borderRadius='lg' bg='gray' color='white'>
-                    {userProfile.posts ? userProfile.posts.length : 0}
+                    {postsCount}
                   </Badge>
                 </Tab>
                 <Tab>
                   {t('comments')}
                   <Badge ml={2} borderRadius='lg' bg='gray' color='white'>
-                    {userProfile.comments ? userProfile.comments.length : 0}
+                    {commentsCount}
                   </Badge>
                 </Tab>
                 <Tab>
                   {t('communities')}
                   <Badge ml={2} borderRadius='lg' bg='gray' color='white'>
-                    {userProfile.communities ? userProfile.communities.length : 0}
+                    {communitiesCount}
                   </Badge>
                 </Tab>
               </TabList>

@@ -5,6 +5,7 @@ class UsersController < ApplicationController
     @asset_model = Asset.new
     @user_model = User.new
     @community_model = Community.new
+    @comment_model = Comment.new
     @member_model = Member.new
     @post_model = Post.new
     @tag_model = Tag.new
@@ -16,16 +17,62 @@ class UsersController < ApplicationController
   #
   # @return [Response]
   def profile
+    validation_result = validate(params, {
+      'posts_page' => 'required|number|min:1',
+      'comments_page' => 'required|number|min:1',
+      'communities_page' => 'required|number|min:1',
+    })
+    
+    if !validation_result['status']
+      return error(validation_result['message'])
+    end
+
+    posts = []
+    comments = []
+    per_page = 10
+    communities = []
+    posts_page = params['posts_page'].to_i
+    comments_page = params['comments_page'].to_i
+    communities_page = params['communities_page'].to_i
+    
     user = @user_model.find(request.env['user_id'])
-    posts = @user_model.posts(user['id'])
-    comments = @user_model.comments(user['id'])
-    communities = @user_model.communities(user['id'])
+    
+    if !user
+      return error(I18n.t('errors.model_not_found'))
+    end
+    
+    items_query = {
+      'user_id' => user['id'],
+      'deleted_at' => nil
+    }
+
+    posts_total_pages = (@post_model.count(items_query).to_f / per_page).ceil()
+    posts = @post_model.paginate(posts_page, per_page, items_query)
+    posts_count = @post_model.count(items_query)
+      
+    comments_total_pages = (@comment_model.count(items_query).to_f / per_page).ceil()
+    comments = @comment_model.paginate(comments_page, per_page, items_query)
+    comments_count = @comment_model.count(items_query)
+    
+    communities_total_pages = (@community_model.count(items_query).to_f / per_page).ceil()
+    communities = @community_model.paginate(communities_page, per_page, items_query)
+    communities_count = @community_model.count(items_query)
 
     ok({
       'user' => UserResource::format(user),
       'posts' => PostResource::format_array(posts),
       'comments' => CommentResource::format_array(comments),
       'communities' => CommunityResource::format_array(communities),
+      'per_page' => per_page,
+      'posts_page' => posts_page,
+      'posts_total_pages' => posts_total_pages,
+      'posts_count' => posts_count,
+      'comments_page' => comments_page,
+      'comments_total_pages' => comments_total_pages,
+      'comments_count' => comments_count,
+      'communities_page' => communities_page,
+      'communities_total_pages' => communities_total_pages,
+      'communities_count' => communities_count,
     }, I18n.t('messages.success.load'))
   end
 
