@@ -16,6 +16,9 @@ import axios from 'axios';
 export function Home() {
   const user = JSON.parse(localStorage.getItem('user'));
   const [homePageContent, setHomePageContent] = useState({});
+  const [homePagePosts, setHomePagePosts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const [cardContent, setCardContent] = useState('');
   const { id, name } = useParams();
   const { t } = useTranslation();
@@ -25,32 +28,30 @@ export function Home() {
   let params = {
     entity: '',
     entity_id: '',
-    page: 1
+    page: currentPage
   };
 
   useEffect(function () {
-    window.scrollTo(0, 0);
-
     if (location.pathname.includes('/t/')) {
-      params.entity =  'tag';
+      params.entity = 'tag';
       params.entity_id = name.replaceAll('+', ' ');
     }
     else if (location.pathname.includes('/c/')) {
-      params.entity =  'community';
+      params.entity = 'community';
       params.entity_id = name.replaceAll('+', ' ');
     }
     else if (location.pathname.includes('/u/')) {
-      params.entity =  'user';
+      params.entity = 'user';
       params.entity_id = id;
     }
     else {
       url = user !== null ? "/users/timeline" : "/home";
       params = {
-        page: 1
+        page: currentPage
       };
     }
 
-    axios.get(url, {params: params})
+    axios.get(url, { params: params })
       .then(function (response) {
         if (location.pathname.includes('/t/')) {
           setCardContent(<TagCard tag={response.data.data.entity} />);
@@ -63,6 +64,8 @@ export function Home() {
         }
 
         setHomePageContent(response.data.data);
+        setHomePagePosts([...homePagePosts, ...response.data.data.posts]);
+        setTotalPages(response.data.data.pages);
       })
       .catch(function (error) {
         toast({
@@ -73,7 +76,27 @@ export function Home() {
           isClosable: true,
         });
       });
-  }, []);
+  }, [currentPage]);
+
+  const handleScroll = () => {
+    const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight;
+
+    if (bottom) {
+      if ((currentPage + 1) <= totalPages) {
+        setCurrentPage(currentPage + 1);
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, {
+      passive: true
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [currentPage, totalPages]);
 
   return (
     <>
@@ -91,8 +114,8 @@ export function Home() {
             </Box>
           </Show>
 
-          {homePageContent.posts && (homePageContent.posts.length > 0) ? (
-            homePageContent.posts.map((post, i) => {
+          {homePagePosts.length > 0 ? (
+            homePagePosts.map((post, i) => {
               return <PostCard post={post} key={i} />;
             })
           ) : (

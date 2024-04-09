@@ -28,6 +28,10 @@ export function Search() {
   const { t } = useTranslation();
   let { keyword } = useParams();
   const [searchResults, setSearchResults] = useState({});
+  const [searchResultItems, setSearchResultItems] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [searchType, setSearchType] = useState('post');
   const toast = useToast();
 
   const searchInput = document.getElementById('search-input');
@@ -40,11 +44,13 @@ export function Search() {
       params: {
         entity: type,
         keyword: keyword,
-        page: 1,
+        page: currentPage,
       }
     })
       .then(function (response) {
         setSearchResults(response.data.data);
+        setSearchResultItems([...searchResultItems, ...response.data.data.results]);
+        setTotalPages(response.data.data.pages);
       })
       .catch(function (error) {
         toast({
@@ -59,8 +65,29 @@ export function Search() {
 
   useEffect(function () {
     window.scrollTo(0, 0);
-    search('post');
-  }, []);
+    search(searchType);
+  }, [searchType]);
+
+  const handleScroll = () => {
+    const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight;
+
+    if (bottom) {
+      if ((currentPage + 1) <= totalPages) {
+        setCurrentPage(currentPage + 1);
+        search(searchType);
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll, {
+      passive: true
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [currentPage, totalPages]);
 
   return (
     <>
@@ -74,16 +101,16 @@ export function Search() {
         <Box w={{ base: '100%', md: '65%', lg: '50%' }}>
           <Tabs colorScheme='brand'>
             <TabList w={{ base: '100%', lg: '90%' }} mx='auto'>
-              <Tab onClick={(e) => { search('post') }}>{t('posts')}</Tab>
-              <Tab onClick={(e) => { search('user') }}>{t('users')}</Tab>
-              <Tab onClick={(e) => { search('community') }}>{t('communities')}</Tab>
+              <Tab onClick={(e) => { setSearchResultItems([]);setSearchType('post'); }}>{t('posts')}</Tab>
+              <Tab onClick={(e) => { setSearchResultItems([]);setSearchType('user'); }}>{t('users')}</Tab>
+              <Tab onClick={(e) => { setSearchResultItems([]);setSearchType('community'); }}>{t('communities')}</Tab>
             </TabList>
 
             <TabPanels>
               <TabPanel px={{ base: 0, lg: 5 }}>
                 {searchResults.entity == 'post' &&
-                  searchResults.results.length ? (
-                  searchResults.results.map((post, i) => {
+                  searchResultItems.length ? (
+                  searchResultItems.map((post, i) => {
                     return <PostCard post={post} key={post.id} />;
                   })
                 ) : (
@@ -93,10 +120,10 @@ export function Search() {
 
               <TabPanel px={{ base: 0, lg: 5 }}>
                 {searchResults.entity == 'user' &&
-                  searchResults.results.length ? (
+                  searchResultItems.length ? (
                   <>
                     <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={5}>
-                      {searchResults.results.map((user, i) => {
+                      {searchResultItems.map((user, i) => {
                         return <SearchUserCard user={user} key={user.id} />;
                       })}
                     </SimpleGrid>
@@ -108,10 +135,10 @@ export function Search() {
 
               <TabPanel px={{ base: 0, lg: 5 }}>
                 {searchResults.entity == 'community' &&
-                  searchResults.results.length ? (
+                  searchResultItems.length ? (
                   <>
                     <SimpleGrid columns={{ base: 1, lg: 2 }} spacing={5}>
-                      {searchResults.results.map((community, i) => {
+                      {searchResultItems.map((community, i) => {
                         return (
                           <SearchCommunityCard community={community} key={community.id} />
                         );
