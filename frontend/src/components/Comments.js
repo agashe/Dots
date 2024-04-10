@@ -17,9 +17,10 @@ import { useState, useEffect } from "react";
 import axios from 'axios';
 
 export function Comments({ postId }) {
-  const user = JSON.parse(localStorage.getItem("user"));
   const [filter, setFilter] = useState('popular');
   const [comments, setComments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const { t } = useTranslation();
   const toast = useToast();
 
@@ -28,11 +29,12 @@ export function Comments({ postId }) {
       params: {
         post_id: postId,
         filter: filter,
-        page: 1,
+        page: currentPage,
       }
     })
       .then(function (response) {
-        setComments(response.data.data.comments);
+        setComments([...comments, ...response.data.data.comments]);
+        setTotalPages(response.data.data.pages);
       })
       .catch(function (error) {
         toast({
@@ -43,7 +45,13 @@ export function Comments({ postId }) {
           isClosable: true,
         });
       });
-  }, [filter]);
+  }, [filter, currentPage]);
+
+  function loadMore(event) {
+    if ((currentPage + 1) <= totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  }
 
   return (
     <Card ml={{ base: 0, lg: 5 }} mb={5}>
@@ -79,16 +87,16 @@ export function Comments({ postId }) {
       </CardBody>
 
       {
-    comments.length ? (
-      <CardFooter pt={0} pb={5}>
-        <Button mx='auto' variant='outline'>
-          {t('actions.load_more')}
-        </Button>
-      </CardFooter>
-    ) : (
-    ""
-  )
-  }
+        (currentPage < totalPages) ? (
+          <CardFooter pt={0} pb={5}>
+            <Button mx='auto' variant='outline' onClick={loadMore}>
+              {t('actions.load_more')}
+            </Button>
+          </CardFooter>
+        ) : (
+          ""
+        )
+      }
     </Card >
   );
 }
