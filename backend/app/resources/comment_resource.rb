@@ -15,7 +15,7 @@ class CommentResource < BaseResource
       'id' => data['id'],
       'post_id' => data['post_id'],
       'parent_comment' => data['comment_id'],
-      'post_title' => post['title'],
+      'post' => PostResource.format(post),
       'user' => UserResource.format(user),
       'text' => (data['deleted_at'] != nil) ? '' : data['text'],
       'rate' => data['rate'],

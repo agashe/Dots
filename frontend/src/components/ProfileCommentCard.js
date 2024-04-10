@@ -52,11 +52,20 @@ export function ProfileCommentCard({ comment }) {
   return (
     <>
       <Box p={3} shadow='md' borderWidth='1px' position='relative'>
-        <Heading fontSize='xl'>{comment.post_title}</Heading>
-        <Link reloadDocument _hover={{ textDecoration: "none" }}>
-          <Text fontSize='md' my={1}>
-            {parse(comment.text)}
-          </Text>
+        <Text fontSize='sm' my={1}>
+          {t('comment_was_added')}
+        </Text>
+        <Text fontSize='md' my={1} as='em' ml={5} display='inline-block'>
+          {parse(comment.text)}
+        </Text>
+        <Text fontSize='sm' my={2}>
+          {t('comment_on_post')}
+        </Text>
+        <Link reloadDocument
+          _hover={{ textDecoration: "none" }}
+          to={'/p/' + comment.post.id + '/' + comment.post.title.replaceAll(' ', '+')}          
+        >
+          <Heading fontSize='lg' ml={5}>{comment.post.title}</Heading>
         </Link>
         <Text fontSize='sm' mt={5}>
           {comment.created_at}

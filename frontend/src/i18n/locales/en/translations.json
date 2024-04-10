@@ -14,6 +14,10 @@
     "light_mode": "Light Mode",
     "notifications": "Notifications",
     "search_results": "Search results for : ",
+    "members": "Members",
+    "options": "Options",
+    "copyrights_text": "All Rights Reserved",
+    "are_you_sure": "Are you sure? You can't undo this action afterwards.",
     "comments": "Comments",
     "comments_sort": {
         "popular": "Popular",
@@ -21,11 +25,9 @@
         "oldest": "Oldest",
         "unpopular": "Unpopular"
     },
-    "comment_hint": "Be first to comment !",    
-    "members": "Members",
-    "options": "Options",
-    "copyrights_text": "All Rights Reserved",
-    "are_you_sure": "Are you sure? You can't undo this action afterwards.",
+    "comment_hint": "Be first to comment !",
+    "comment_was_added": "You added a comment :",
+    "comment_on_post": "On post :",
     "user": {
         "_": "User",
         "sign_in_hint": "Sign in to your account",
@@ -58,16 +60,16 @@
         "master": "Community Master"
     },
     "communities": "Communities",
+    "statuses": {
+        "closed_community": "CLOSED",
+        "deleted_comment": "DELETED"
+    },
     "post": {
         "_": "Post",
         "title": "Title",
         "tags": "Tags",
         "banner": "Banner",
         "text": "Text"
-    },
-    "statuses": {
-        "closed_community": "CLOSED",
-        "deleted_comment": "DELETED"
     },
     "posts": "Posts",
     "actions": {
