@@ -40,8 +40,8 @@ export function Create() {
     onClose: onCloseConfirm,
   } = useDisclosure();
 
-  function submit(event) {
-    event.preventDefault();
+  function submit(el) {
+    el.preventDefault();
 
     axios.post("/communities", {
       name: nameInput,
@@ -65,13 +65,13 @@ export function Create() {
       });
   }
 
-  function handleFileInput(event) {
-    event.preventDefault();
-    setLogoInput(URL.createObjectURL(event.target.files[0]));
+  function handleFileInput(el) {
+    el.preventDefault();
+    setLogoInput(URL.createObjectURL(el.target.files[0]));
   }
 
-  function removeLogo(event) {
-    event.preventDefault();
+  function removeLogo(el) {
+    el.preventDefault();
     
     document.getElementById('logo-input').value = '';
     setLogoInput(null);

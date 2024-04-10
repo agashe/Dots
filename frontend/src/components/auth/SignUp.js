@@ -22,8 +22,8 @@ export function SignUp({ isOpen, onClose }) {
   const { t } = useTranslation();
   const toast = useToast();
 
-  function submitSignUp(event) {
-    event.preventDefault();
+  function submitSignUp(el) {
+    el.preventDefault();
 
     axios.post("/auth/sign-up", {
       name: inputs['name'],
@@ -46,9 +46,9 @@ export function SignUp({ isOpen, onClose }) {
       });
   }
 
-  function handleInput(event) {
+  function handleInput(el) {
     let newInputs = inputs;
-    newInputs[event.target.name] = event.target.value;
+    newInputs[el.target.name] = el.target.value;
     setInputs(newInputs);
   }
 

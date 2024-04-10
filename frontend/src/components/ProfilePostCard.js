@@ -45,8 +45,8 @@ export function ProfilePostCard({ post }) {
     window.location.href = '/p/' + post.id + '/' + post.title.replaceAll(' ', '+');
   }
 
-  function handleDelete(event) {
-    event.preventDefault();
+  function handleDelete(el) {
+    el.preventDefault();
 
     axios.delete("/posts/delete", {
       params: {

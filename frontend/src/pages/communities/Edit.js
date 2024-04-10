@@ -68,8 +68,8 @@ export function Edit() {
       });
   }, []);
 
-  function submit(event) {
-    event.preventDefault();
+  function submit(el) {
+    el.preventDefault();
 
     axios.put("/communities", {
       community_id: idInput,
@@ -90,10 +90,10 @@ export function Edit() {
       });
   }
 
-  function handleFileInput(event) {
-    event.preventDefault();
+  function handleFileInput(el) {
+    el.preventDefault();
 
-    const file = event.target.files[0];
+    const file = el.target.files[0];
     const reader = new FileReader();
 
     reader.readAsDataURL(file);
@@ -135,8 +135,8 @@ export function Edit() {
     };
   }
 
-  function removeLogo(event) {
-    event.preventDefault();
+  function removeLogo(el) {
+    el.preventDefault();
 
     axios.delete("/asset-files/delete", {
       entity: 'community',

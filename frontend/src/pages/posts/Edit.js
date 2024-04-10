@@ -92,8 +92,8 @@ export function Edit() {
       });
   }, []);
 
-  function submit(event) {
-    event.preventDefault();
+  function submit(el) {
+    el.preventDefault();
 
     axios.put("/posts", {
       post_id: idInput,
@@ -116,10 +116,10 @@ export function Edit() {
       });
   }
 
-  function handleFileInput(event) {
-    event.preventDefault();
+  function handleFileInput(el) {
+    el.preventDefault();
 
-    const file = event.target.files[0];
+    const file = el.target.files[0];
     const reader = new FileReader();
 
     reader.readAsDataURL(file);
@@ -161,8 +161,8 @@ export function Edit() {
     };
   }
 
-  function removeBanner(event) {
-    event.preventDefault();
+  function removeBanner(el) {
+    el.preventDefault();
 
     axios.delete("/asset-files/delete", {
       entity: 'post',

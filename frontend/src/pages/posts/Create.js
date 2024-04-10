@@ -84,8 +84,8 @@ export function Create() {
       });
   }, []);
 
-  function submit(event) {
-    event.preventDefault();
+  function submit(el) {
+    el.preventDefault();
 
     axios.post("/posts", {
       community_id: communityInput.id,
@@ -113,13 +113,13 @@ export function Create() {
       });
   }
 
-  function handleFileInput(event) {
-    event.preventDefault();
-    setBannerInput(URL.createObjectURL(event.target.files[0]));
+  function handleFileInput(el) {
+    el.preventDefault();
+    setBannerInput(URL.createObjectURL(el.target.files[0]));
   }
 
-  function removeBanner(event) {
-    event.preventDefault();
+  function removeBanner(el) {
+    el.preventDefault();
 
     document.getElementById('banner-input').value = '';
     setBannerInput(null);

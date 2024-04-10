@@ -33,8 +33,8 @@ export function ProfileCommunityCard({ community }) {
     window.location.href = '/c/' + community.name.replaceAll(' ', '+');
   }
 
-  function handleDelete(event) {
-    event.preventDefault();
+  function handleDelete(el) {
+    el.preventDefault();
 
     axios.delete("/communities/delete", {
       params: {

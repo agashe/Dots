@@ -19,8 +19,8 @@ export function SearchModal({ isOpen, onClose }) {
   const { t } = useTranslation();
   const [searchKeyword, setSearchKeyword] = useState("");
 
-  function handleSearchInput(event) {
-    setSearchKeyword(event.target.value);
+  function handleSearchInput(el) {
+    setSearchKeyword(el.target.value);
   }
 
   function submitSearch() {

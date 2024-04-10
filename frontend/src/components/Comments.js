@@ -47,7 +47,7 @@ export function Comments({ postId }) {
       });
   }, [filter, currentPage]);
 
-  function loadMore(event) {
+  function loadMore(el) {
     if ((currentPage + 1) <= totalPages) {
       setCurrentPage(currentPage + 1);
     }

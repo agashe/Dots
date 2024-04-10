@@ -16,8 +16,8 @@ export function AddComment({ postId, commentId = '' }) {
   const { t } = useTranslation();
   const toast = useToast();
 
-  function submit(event) {
-    event.preventDefault();
+  function submit(el) {
+    el.preventDefault();
 
     if (!textInput) {
       return;

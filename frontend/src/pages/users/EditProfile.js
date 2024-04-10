@@ -47,8 +47,8 @@ export function EditProfile() {
     onClose: onCloseConfirm,
   } = useDisclosure();
 
-  function submitEditProfile(event) {
-    event.preventDefault();
+  function submitEditProfile(el) {
+    el.preventDefault();
 
     axios.put("/users/profile", {
       name: nameInput,
@@ -81,10 +81,10 @@ export function EditProfile() {
       });
   }
 
-  function handleFileInput(event) {
-    event.preventDefault();
+  function handleFileInput(el) {
+    el.preventDefault();
 
-    const file = event.target.files[0];
+    const file = el.target.files[0];
     const reader = new FileReader();
 
     reader.readAsDataURL(file);
@@ -128,8 +128,8 @@ export function EditProfile() {
     };
   }
 
-  function removeAvatar(event) {
-    event.preventDefault();
+  function removeAvatar(el) {
+    el.preventDefault();
 
     axios.delete("/asset-files/delete", {
       entity: 'user',

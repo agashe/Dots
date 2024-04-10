@@ -73,8 +73,8 @@ export function Layout() {
     onClose: onCloseSearchModal,
   } = useDisclosure();
 
-  function handleSearchInput(event) {
-    setSearchKeyword(event.target.value);
+  function handleSearchInput(el) {
+    setSearchKeyword(el.target.value);
   }
 
   function submitSearch() {

@@ -27,8 +27,8 @@ export function ProfileCommentCard({ comment }) {
     onClose: onCloseConfirm,
   } = useDisclosure();
 
-  function handleDelete(event) {
-    event.preventDefault();
+  function handleDelete(el) {
+    el.preventDefault();
 
     axios.delete("/comments/delete", {
       params: {
