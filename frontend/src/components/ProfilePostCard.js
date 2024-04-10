@@ -49,7 +49,9 @@ export function ProfilePostCard({ post }) {
     event.preventDefault();
 
     axios.delete("/posts/delete", {
-      post_id: postId,
+      params: {
+        post_id: postId,
+      }
     })
       .then(function (response) {
         window.location.href = '/profile';

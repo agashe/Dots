@@ -54,7 +54,7 @@ class CommentsController < ApplicationController
       comments_query['comment_id'] = params['comment_id']
     end
 
-    total_pages = (@comment_model.count(comments_query).to_f / per_page).ceil()
+    total_pages = (@comment_model.count(comments_query, false).to_f / per_page).ceil()
     comments = @comment_model.paginate(
       current_page, 
       per_page, 

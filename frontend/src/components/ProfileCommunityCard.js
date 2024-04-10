@@ -37,7 +37,9 @@ export function ProfileCommunityCard({ community }) {
     event.preventDefault();
 
     axios.delete("/communities/delete", {
-      community_id: communityId,
+      params: {
+        community_id: communityId,
+      }
     })
       .then(function (response) {
         window.location.href = '/profile';

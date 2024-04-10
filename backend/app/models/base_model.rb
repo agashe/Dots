@@ -151,12 +151,15 @@ class BaseModel
   # Get count of models
   #
   # @param  [HashMap]    q
+  # @param  [bool]       skip_deleted
   # @return [int]
-  def count(q = nil)
-    if q == nil
-      q = {:deleted_at => nil}
-    else 
-      q['deleted_at'] = nil
+  def count(q = nil, skip_deleted = true)
+    if skip_deleted
+      if q == nil
+        q = {:deleted_at => nil}
+      else 
+        q['deleted_at'] = nil
+      end
     end
 
     return @collection.find(q).count()

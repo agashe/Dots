@@ -31,7 +31,9 @@ export function ProfileCommentCard({ comment }) {
     event.preventDefault();
 
     axios.delete("/comments/delete", {
-      comment_id: commentId,
+      params: {
+        comment_id: commentId,
+      }
     })
       .then(function (response) {
         window.location.href = '/profile';
@@ -50,10 +52,10 @@ export function ProfileCommentCard({ comment }) {
   return (
     <>
       <Box p={3} shadow='md' borderWidth='1px' position='relative'>
-        {/* <Heading fontSize='xl'>{comment.title}</Heading> */}
+        <Heading fontSize='xl'>{comment.post_title}</Heading>
         <Link reloadDocument _hover={{ textDecoration: "none" }}>
           <Text fontSize='md' my={1}>
-            { parse(comment.text) }
+            {parse(comment.text)}
           </Text>
         </Link>
         <Text fontSize='sm' mt={5}>
@@ -72,7 +74,7 @@ export function ProfileCommentCard({ comment }) {
             height={{ base: '30px', md: '10px' }}
             padding='0'
             as='button'
-            onClick={(e) => { onOpenConfirm();setCommentId(comment.id); }}
+            onClick={(e) => { onOpenConfirm(); setCommentId(comment.id); }}
           />
         </Tooltip>
       </Box>
