@@ -19,6 +19,10 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    ulimits:
+      nofile:
+        soft: 65000
+        hard: 65000
 
   database_admin:
     image: mongo-express
@@ -35,10 +39,6 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
       - ME_CONFIG_BASICAUTH_USERNAME=${ME_CONFIG_MONGODB_ADMINUSERNAME}
       - ME_CONFIG_BASICAUTH_PASSWORD=${ME_CONFIG_MONGODB_ADMINPASSWORD}
-    ulimits:
-      nofile:
-        soft: 65000
-        hard: 65000
 
 volumes:
   cache:
